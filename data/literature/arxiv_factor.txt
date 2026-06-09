@@ -1,0 +1,241 @@
+﻿
+
+id               : http://arxiv.org/abs/2004.12510v1
+title            : Self-consistent Nonlinear Force-free Field Reconstruction from Weighted Boundary Conditions
+updated          : 2020-04-26T23:57:12Z
+link             : {link, link, link}
+summary          : Vector magnetogram data are often used as photospheric boundary conditions for force-free coronal ma
+                   gnetic field extrapolations. In general, however, vector magnetogram data are not consistent with th
+                   e force-free assumption. In this article, we demonstrate a way to deal with inconsistent boundary da
+                   ta, by generalizing the "self-consistency procedure" of Wheatland & Regnier (2009). In that procedur
+                   e, the inconsistency is resolved by an iterative process of constructing two solutions based on the 
+                   values of the force-free parameter alpha on the two polarities of the field in the boundary (the P a
+                   nd N polarities), and taking uncertainty-weighted averages of the boundary alpha values in the P and
+                    N solutions. When the alpha values in the P and N regions are very different, the self-consistent s
+                   olution may lose high alpha values from the boundary conditions. We show how, by altering the weight
+                   ing of the uncertainties in the P or N boundary conditions, we can preserve high alpha values in the
+                    self-consistent solution. The weighted self-consistent extrapolation method is demonstrated on an a
+                   nalytic bipole field and applied to vector magnetogram data taken by the Helioseismic and Magnetic I
+                   mager (HMI) instrument for NOAA active region AR 12017 on 2014 March 29.
+category         : category
+published        : 2020-04-26T23:57:12Z
+comment          : 12 pages, 5 figures, submitted to Solar Physics
+primary_category : primary_category
+author           : {Alpha Mastrano, Kai E. Yang, Michael S. Wheatland}
+doi              : 10.1007/s11207-020-01663-7
+
+id               : http://arxiv.org/abs/0805.4082v1
+title            : Particle Physics Aspects of Antihydrogen Studies with ALPHA at CERN
+updated          : 2008-05-27T09:36:57Z
+link             : {link, link, link}
+summary          :   We discuss aspects of antihydrogen studies, that relate to particle physics ideas and techniques, 
+                   within the context of the ALPHA experiment at CERN's Antiproton Decelerator facility. We review the 
+                   fundamental physics motivations for antihydrogen studies, and their potential physics reach. We argu
+                   e that initial spectroscopy measurements, once antihydrogen is trapped, could provide competitive te
+                   sts of CPT, possibly probing physics at the Planck Scale. We discuss some of the particle detection 
+                   techniques used in ALPHA. Preliminary results from commissioning studies of a partial system of the 
+                   ALPHA Si vertex detector are presented, the results of which highlight the power of annihilation ver
+                   tex detection capability in antihydrogen studies.
+category         : {category, category, category, category}
+published        : 2008-05-27T09:36:57Z
+comment          : Invited talk at Pbar08 - Workshop on Cold Antimatter Plasmas and Application to Fundamental Physics,
+                    Okinawa, Japan, 2008. 14 pages, 8 figures
+primary_category : primary_category
+journal_ref      : AIP Conf.Proc.1037:208-220,2008
+author           : { ALPHA Collaboration, M. C. Fujiwara, G. B. Andresen, W. Bertsche...}
+doi              : 10.1063/1.2977840
+
+id               : http://arxiv.org/abs/1104.4661v1
+title            : Alpha Antihydrogen Experiment
+updated          : 2011-04-24T22:13:34Z
+link             : {link, link}
+summary          : ALPHA is an experiment at CERN, whose ultimate goal is to perform a precise test of CPT symmetry wit
+                   h trapped antihydrogen atoms. After reviewing the motivations, we discuss our recent progress toward
+                    the initial goal of stable trapping of antihydrogen, with some emphasis on particle detection techn
+                   iques.
+category         : {category, category, category, category...}
+published        : 2011-04-24T22:13:34Z
+comment          : Invited talk presented at the Fifth Meeting on CPT and Lorentz Symmetry, Bloomington, Indiana, June 
+                   28-July 2, 2010
+primary_category : primary_category
+journal_ref      : Proceedings of the Fifth Meeting on CPT and Lorentz Symmetry, Ed. V.A. Kostelecky, pp. 50-54, World 
+                   Scientific (2011)
+author           : { ALPHA Collaboration, M. C. Fujiwara, G. B. Andresen, M. D. Ashkezari...}
+
+id               : http://arxiv.org/abs/2512.11913v2
+title            : Not All Factors Crowd Equally: Modeling, Measuring, and Trading on Alpha Decay
+updated          : 2025-12-27T04:28:33Z
+link             : {link, link}
+summary          : We derive a specific functional form for factor alpha decay -- hyperbolic decay alpha(t) = K/(1+lamb
+                   da*t) -- from a game-theoretic equilibrium model, and test it against linear and exponential alterna
+                   tives. Using eight Fama-French factors (1963--2024), we find: (1) Hyperbolic decay fits mechanical f
+                   actors. Momentum exhibits clear hyperbolic decay (R^2 = 0.65), outperforming linear (0.51) and expon
+                   ential (0.61) baselines -- validating the equilibrium foundation. (2) Not all factors crowd equally.
+                    Mechanical factors (momentum, reversal) fit the model; judgment-based factors (value, quality) do n
+                   ot -- consistent with a signal-ambiguity taxonomy paralleling Hua and Sun's "barriers to entry." (3)
+                    Crowding accelerated post-2015. Out-of-sample, the model over-predicts remaining alpha (0.30 vs. 0.
+                   15), correlating with factor ETF growth (rho = -0.63). (4) Average returns are efficiently priced. C
+                   rowding-based factor selection fails to generate alpha (Sharpe: 0.22 vs. 0.39 factor momentum benchm
+                   ark). (5) Crowding predicts tail risk. Out-of-sample (2001--2024), crowded reversal factors show 1.7
+                   --1.8x higher crash probability (bottom decile returns), while crowded momentum shows lower crash ri
+                   sk (0.38x, p = 0.006). Our findings extend equilibrium crowding models (DeMiguel et al.) to temporal
+                    dynamics and show that crowding predicts crashes, not means -- useful for risk management, not alph
+                   a generation.
+category         : category
+published        : 2025-12-11T07:40:50Z
+comment          : Withdrawal for major revision. Further analysis revealed that empirical validation in Sections 5-7 i
+                   s insufficient to support the global applicability claims. The theoretical contributions remain vali
+                   d. A revised version is in preparation
+primary_category : primary_category
+author           : author
+
+id               : http://arxiv.org/abs/2502.16789v2
+title            : AlphaAgent: LLM-Driven Alpha Mining with Regularized Exploration to Counteract Alpha Decay
+updated          : 2025-06-09T01:44:51Z
+link             : {link, link}
+summary          : Alpha mining, a critical component in quantitative investment, focuses on discovering predictive sig
+                   nals for future asset returns in increasingly complex financial markets. However, the pervasive issu
+                   e of alpha decay, where factors lose their predictive power over time, poses a significant challenge
+                    for alpha mining. Traditional methods like genetic programming face rapid alpha decay from overfitt
+                   ing and complexity, while approaches driven by Large Language Models (LLMs), despite their promise, 
+                   often rely too heavily on existing knowledge, creating homogeneous factors that worsen crowding and 
+                   accelerate decay. To address this challenge, we propose AlphaAgent, an autonomous framework that eff
+                   ectively integrates LLM agents with ad hoc regularizations for mining decay-resistant alpha factors.
+                    AlphaAgent employs three key mechanisms: (i) originality enforcement through a similarity measure b
+                   ased on abstract syntax trees (ASTs) against existing alphas, (ii) hypothesis-factor alignment via L
+                   LM-evaluated semantic consistency between market hypotheses and generated factors, and (iii) complex
+                   ity control via AST-based structural constraints, preventing over-engineered constructions that are 
+                   prone to overfitting. These mechanisms collectively guide the alpha generation process to balance or
+                   iginality, financial rationale, and adaptability to evolving market conditions, mitigating the risk 
+                   of alpha decay. Extensive evaluations show that AlphaAgent outperforms traditional and LLM-based met
+                   hods in mitigating alpha decay across bull and bear markets, consistently delivering significant alp
+                   ha in Chinese CSI 500 and US S&P 500 markets over the past four years. Notably, AlphaAgent showcases
+                    remarkable resistance to alpha decay, elevating the potential for yielding powerful factors.
+category         : {category, category}
+published        : 2025-02-24T02:56:46Z
+comment          : 9 pages; Code is available at: https://github.com/RndmVariableQ/AlphaAgent
+primary_category : primary_category
+author           : {Ziyi Tang, Zechuan Chen, Jiarui Yang, Jiayao Mai...}
+
+id               : http://arxiv.org/abs/2404.02155v2
+title            : Alpha Invariance: On Inverse Scaling Between Distance and Volume Density in Neural Radiance Fields
+updated          : 2024-04-17T01:41:59Z
+link             : {link, link}
+summary          : Scale-ambiguity in 3D scene dimensions leads to magnitude-ambiguity of volumetric densities in neura
+                   l radiance fields, i.e., the densities double when scene size is halved, and vice versa. We call thi
+                   s property alpha invariance. For NeRFs to better maintain alpha invariance, we recommend 1) paramete
+                   rizing both distance and volume densities in log space, and 2) a discretization-agnostic initializat
+                   ion strategy to guarantee high ray transmittance. We revisit a few popular radiance field models and
+                    find that these systems use various heuristics to deal with issues arising from scene scaling. We t
+                   est their behaviors and show our recipe to be more robust.
+category         : category
+published        : 2024-04-02T17:58:57Z
+comment          : CVPR 2024. project page https://pals.ttic.edu/p/alpha-invariance
+primary_category : primary_category
+author           : {Joshua Ahn, Haochen Wang, Raymond A. Yeh, Greg Shakhnarovich}
+
+id               : http://arxiv.org/abs/astro-ph/9807145v1
+title            : The Mass and Age of Very Low Mass Members of the Open Cluster Alpha Persei
+updated          : 1998-07-14T22:18:37Z
+link             : {link, link, link}
+summary          :   We present spectroscopic optical and photometric infrared observations of 12 faint candidate membe
+                   rs of the young open cluster Alpha Persei found by Prosser (1994). Keck HIRES echelle spectra provid
+                   e radial and rotational velocity measurements for five objects, two of which are clearly nonmembers 
+                   based on the radial velocities. These kinematic nonmembers also do not fit well in the V-I vs I-J cl
+                   uster sequence. One additional faint object is likely a nonmember based on a low-resolution spectrum
+                   .
+                     Using HIRES, we have searched for the Li I resonance line. Combining the absence/presence of lithi
+                   um and photometry of the faint Alpha Persei targets with confirmed membership constrains their ages 
+                   and masses. The lack of lithium in AP J0323+4853 implies its age is greater than about 65 Myr, which
+                    is older than the cluster classical upper main-sequence turnoff age of 50 Myr. A similar age discre
+                   pancy is found in the Pleiades. We detect lithium in the faintest of our program stars, AP270, which
+                    implies a mass for it just at the substellar mass limit, given our adopted age and its luminosity. 
+                   The membership of AP281 is in question because of its high radial velocity compared with the cluster
+                    mean. On the other hand AP281 lies on the photometric cluster sequence, and has a very high rotatio
+                   n velocity and H-alpha emission, indicating youth. If a member, its lack of lithium would push the m
+                   inimum age of the cluster to 75 Myr, in agreement with a very recent upper main-sequence determinati
+                   on. In that case, AP270 would not be a brown dwarf.
+category         : category
+published        : 1998-07-14T22:18:37Z
+comment          : Accepted by ApJ. The first lithium detection of a VLM star in Alpha Per
+primary_category : primary_category
+author           : {Gibor Basri, Eduardo L. Martin}
+doi              : 10.1086/306564
+
+id               : http://arxiv.org/abs/1209.4200v1
+title            : Luminescence of alpha-quartz
+updated          : 2012-09-19T10:08:54Z
+link             : {link, link}
+summary          : Among the host materials luminescence the luminescence of the self-trapped exciton (STE) is reviewed
+                   . This luminescence, which band is situated at 2.6 to 2.7 eV, could be observed mainly under ionisin
+                   g radiation with energetic yield about 0.2. The STE does not participate in pure recombination proce
+                   sses. Host material defect luminescence at 5 eV appears in alpha-quartz after heavy irradiation. It 
+                   is constituted of permanent defect after neutron irradiation and transient defect after dens electro
+                   n beam irradiation. This luminescence could be observed well at temperatures below 60 K. All another
+                    luminescence are of impurity nature. The Ge impurity luminescence in alpha-quartz explained as STE 
+                   near Ge. The aluminium and alkali complexes. One of them is with UV band at 6 eV, appears at low tem
+                   peratures and could be excited only in tunnelling recombination process between pairs (AlO4 Me), whe
+                   re Me is an alkali ion captured an electron and a hole remains on aluminium tetrahedron. Another lum
+                   inescence with band at 3.4 eV is also luminescence of complexes (AlO4 Me), which behaviour is simila
+                   r to the luminescence of alkali alumosilicate glass. The third luminescence with band at 3 eV could 
+                   be observed mainly in natural alpha-quartz, bright at temperatures below 200 K and is interpreted as
+                    STE like luminescence at alumosilicate clasters. The exchange of alkali ions to noble ions of coppe
+                   r of silver reduces original luminescence of alumo alkali complexes and luminescence of noble ions a
+                   ppears. The main band of copper related luminescence is at 3.4 eV and that of silver is at 4.75 eV, 
+                   both could be observed up to 500 K. their nature could be well described in terms of intraions trans
+                   ition. Exchange of noble ions back to alkali ions renews initial luminescence of the samples.
+category         : category
+published        : 2012-09-19T10:08:54Z
+comment          : this is review of 30 years investigation of the luminescence of alpha-quartz
+primary_category : primary_category
+author           : {Anatoly Trukhin, Kaspars Truhins}
+
+id               : http://arxiv.org/abs/2312.03818v2
+title            : Alpha-CLIP: A CLIP Model Focusing on Wherever You Want
+updated          : 2023-12-13T05:52:05Z
+link             : {link, link}
+summary          : Contrastive Language-Image Pre-training (CLIP) plays an essential role in extracting valuable conten
+                   t information from images across diverse tasks. It aligns textual and visual modalities to comprehen
+                   d the entire image, including all the details, even those irrelevant to specific tasks. However, for
+                    a finer understanding and controlled editing of images, it becomes crucial to focus on specific reg
+                   ions of interest, which can be indicated as points, masks, or boxes by humans or perception models. 
+                   To fulfill the requirements, we introduce Alpha-CLIP, an enhanced version of CLIP with an auxiliary 
+                   alpha channel to suggest attentive regions and fine-tuned with constructed millions of RGBA region-t
+                   ext pairs. Alpha-CLIP not only preserves the visual recognition ability of CLIP but also enables pre
+                   cise control over the emphasis of image contents. It demonstrates effectiveness in various tasks, in
+                   cluding but not limited to open-world recognition, multimodal large language models, and conditional
+                    2D / 3D generation. It has a strong potential to serve as a versatile tool for image-related tasks.
+category         : {category, category, category, category}
+published        : 2023-12-06T18:59:30Z
+comment          : project page: https://aleafy.github.io/alpha-clip code: https://github.com/SunzeY/AlphaCLIP
+primary_category : primary_category
+author           : {Zeyi Sun, Ye Fang, Tong Wu, Pan Zhang...}
+
+id               : http://arxiv.org/abs/astro-ph/9902180v2
+title            : Scattered Lyman-alpha Radiation Around Sources Before Cosmological Reionization
+updated          : 1999-06-04T19:19:19Z
+link             : {link, link, link}
+summary          :   The spectra of the first galaxies and quasars in the Universe should be strongly absorbed shortwar
+                   d of their rest-frame Lyman-alpha wavelength by neutral hydrogen (HI) in the intervening intergalact
+                   ic medium. However, the Lyman-alpha line photons emitted by these sources are not eliminated but rat
+                   her scatter until they redshift out of resonance and escape due to the Hubble expansion of the surro
+                   unding intergalactic HI. We calculate the resulting brightness distribution and the spectral shape o
+                   f the diffuse Lyman-alpha line emission around high redshift sources, before the intergalactic mediu
+                   m was reionized. Typically, the Lyman-alpha photons emitted by a source at z=10 scatter over a chara
+                   cteristic angular radius of order 15 arcseconds around the source and compose a line which is broade
+                   ned and redshifted by about a thousand km/s relative to the source. The scattered photons are highly
+                    polarized. Detection of the diffuse Lyman-alpha halos around high redshift sources would provide a 
+                   unique tool for probing the neutral intergalactic medium before the epoch of reionization. On suffic
+                   iently large scales where the Hubble flow is smooth and the gas is neutral, the Lyman-alpha brightne
+                   ss distribution can be used to determine the cosmological mass densities of baryons and matter.
+category         : category
+published        : 1999-02-12T01:05:47Z
+comment          : 21 pages, 5 Postscript figures, accepted by ApJ; figures 1--3 corrected; new section added on the de
+                   tectability of Lyman alpha halos; conclusions updated
+primary_category : primary_category
+journal_ref      : Astrophys.J.524:527-535,1999
+author           : {Abraham Loeb, George Rybicki}
+doi              : 10.1086/307844
+
+
+

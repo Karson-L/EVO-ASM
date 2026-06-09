@@ -1,0 +1,235 @@
+﻿
+
+id               : http://arxiv.org/abs/1912.02684v1
+title            : Stylized Facts and Agent-Based Modeling
+updated          : 2019-12-02T19:51:53Z
+link             : {link, link}
+summary          : The existence of stylized facts in financial data has been documented in many studies. In the past d
+                   ecade the modeling of financial markets by agent-based computational economic market models has beco
+                   me a frequently used modeling approach. The main purpose of these models is to replicate stylized fa
+                   cts and to identify sufficient conditions for their creations. In this paper we introduce the most p
+                   rominent examples of stylized facts and especially present stylized facts of financial data. Further
+                   more, we given an introduction to agent-based modeling. Here, we not only provide an overview of thi
+                   s topic but introduce the idea of universal building blocks for agent-based economic market models.
+category         : {category, category}
+published        : 2019-12-02T19:51:53Z
+comment          : arXiv admin note: text overlap with arXiv:1812.02726
+primary_category : primary_category
+author           : {Simon Cramer, Torsten Trimborn}
+
+id               : http://arxiv.org/abs/1902.02040v1
+title            : Development of an agent-based speculation game for higher reproducibility of financial stylized fact
+                   s
+updated          : 2019-02-06T06:24:47Z
+link             : {link, link, link}
+summary          : Simultaneous reproduction of all financial stylized facts is so difficult that most existing stochas
+                   tic process-based and agent-based models are unable to achieve the goal. In this study, by extending
+                    the decision-making structure of Minority Game, we propose a novel agent-based model called "Specul
+                   ation Game," for a better reproducibility of the stylized facts. The new model has three distinct ch
+                   aracteristics comparing with preceding agent-based adaptive models for the financial market: the ena
+                   bling of nonuniform holding and idling periods, the inclusion of magnitude information of price chan
+                   ge in history, and the implementation of a cognitive world for the evaluation of investment strategi
+                   es with capital gains and losses. With these features, Speculation Game succeeds in reproducing 10 o
+                   ut of the currently well studied 11 stylized facts under a single parameter setting.
+category         : category
+published        : 2019-02-06T06:24:47Z
+comment          : 37 pages, 15 figures
+primary_category : primary_category
+author           : {Kei Katahira, Yu Chen, Gaku Hashimoto, Hiroshi Okuda}
+doi              : 10.1016/j.physa.2019.04.157
+
+id               : http://arxiv.org/abs/0808.3562v1
+title            : Minimal Agent Based Model for Financial Markets I: Origin and Self-Organization of Stylized Facts
+updated          : 2008-08-26T18:13:34Z
+link             : {link, link, link}
+summary          :   We introduce a minimal Agent Based Model for financial markets to understand the nature and Self-O
+                   rganization of the Stylized Facts. The model is minimal in the sense that we try to identify the ess
+                   ential ingredients to reproduce the main most important deviations of price time series from a Rando
+                   m Walk behavior. We focus on four essential ingredients: fundamentalist agents which tend to stabili
+                   ze the market; chartist agents which induce destabilization; analysis of price behavior for the two 
+                   strategies; herding behavior which governs the possibility of changing strategy. Bubbles and crashes
+                    correspond to situations dominated by chartists, while fundamentalists provide a long time stabilit
+                   y (on average). The Stylized Facts are shown to correspond to an intermittent behavior which occurs 
+                   only for a finite value of the number of agents N. Therefore they correspond to finite size effect w
+                   hich, however, can occur at different time scales. We propose a new mechanism for the Self-Organizat
+                   ion of this state which is linked to the existence of a threshold for the agents to be active or not
+                    active. The feedback between price fluctuations and number of active agents represent a crucial ele
+                   ment for this state of Self-Organized-Intermittency. The model can be easily generalized to consider
+                    more realistic variants.
+category         : {category, category, category}
+published        : 2008-08-26T18:13:34Z
+primary_category : primary_category
+author           : {V. Alfi, M. Cristelli, L. Pietronero, A. Zaccaria}
+doi              : 10.1140/epjb/e2009-00028-4
+
+id               : http://arxiv.org/abs/0807.1888v1
+title            : Minimal Agent Based Model For The Origin And Self-Organization Of Stylized Facts In Financial Market
+                   s
+updated          : 2008-07-11T16:45:24Z
+link             : {link, link}
+summary          :   We introduce a minimal Agent Based Model with two classes of agents, fundamentalists (stabilizing)
+                    and chartists (destabilizing) and we focus on the essential features which can generate the stylize
+                   d facts. This leads to a detailed understanding of the origin of fat tails and volatility clustering
+                    and we propose a mechanism for the self-organization of the market dynamics in the quasi-critical s
+                   tate. The stylized facts are shown to correspond to finite size effects which, however, can be activ
+                   e at different time scales. This implies that universality cannot be expected in describing these pr
+                   operties in terms of effective critical exponents. The introduction of a threshold in the agents' ac
+                   tion (small price fluctuations lead to no-action) triggers the self-organization towards the quasi-c
+                   ritical state. Non-stationarity in the number of active agents and in their action plays a fundament
+                   al role. The model can be easily generalized to more realistic variants in a systematic way.
+category         : {category, category, category}
+published        : 2008-07-11T16:45:24Z
+comment          : 9 pages, 5 figures
+primary_category : primary_category
+author           : {V. Alfi, L. Pietronero, A. Zaccaria}
+
+id               : http://arxiv.org/abs/1604.08824v1
+title            : A new structural stochastic volatility model of asset pricing and its stylized facts
+updated          : 2016-04-29T13:36:37Z
+link             : {link, link}
+summary          : Building on a prominent agent-based model, we present a new structural stochastic volatility asset p
+                   ricing model of fundamentalists vs. chartists where the prices are determined based on excess demand
+                   . Specifically, this allows for modelling stochastic interactions between agents, based on a herding
+                    process corrected by a price misalignment, and incorporating strong noise components in the agents'
+                    demand. The model's parameters are estimated using the method of simulated moments, where the momen
+                   ts reflect the basic properties of the daily returns of a stock market index. In addition, for the f
+                   irst time we apply a (parametric) bootstrap method in a setting where the switching between strategi
+                   es is modelled using a discrete choice approach. As we demonstrate, the resulting dynamics replicate
+                    a rich set of the stylized facts of the daily financial data including: heavy tails, volatility clu
+                   stering, long memory in absolute returns, as well as the absence of autocorrelation in raw returns, 
+                   volatility-volume correlations, aggregate Gaussianity, concave price impact and extreme price events
+                   .
+category         : {category, category}
+published        : 2016-04-29T13:36:37Z
+primary_category : primary_category
+author           : {Radu T. Pruna, Maria Polukarov, Nicholas R. Jennings}
+
+id               : http://arxiv.org/abs/1404.0243v1
+title            : Physics and Financial Economics (1776-2014): Puzzles, Ising and Agent-Based models
+updated          : 2014-04-01T14:01:25Z
+link             : {link, link, link}
+summary          : This short review presents a selected history of the mutual fertilization between physics and econom
+                   ics, from Isaac Newton and Adam Smith to the present. The fundamentally different perspectives embra
+                   ced in theories developed in financial economics compared with physics are dissected with the exampl
+                   es of the volatility smile and of the excess volatility puzzle. The role of the Ising model of phase
+                    transitions to model social and financial systems is reviewed, with the concepts of random utilitie
+                   s and the logit model as the analog of the Boltzmann factor in statistic physics. Recent extensions 
+                   in term of quantum decision theory are also covered. A wealth of models are discussed briefly that b
+                   uild on the Ising model and generalize it to account for the many stylized facts of financial market
+                   s. A summary of the relevance of the Ising model and its extensions is provided to account for finan
+                   cial bubbles and crashes. The review would be incomplete if it would not cover the dynamical field o
+                   f agent based models (ABMs), also known as computational economic models, of which the Ising-type mo
+                   dels are just special ABM implementations. We formulate the ``Emerging Market Intelligence hypothesi
+                   s'' to reconcile the pervasive presence of ``noise traders'' with the near efficiency of financial m
+                   arkets. Finally, we note that evolutionary biology, more than physics, is now playing a growing role
+                    to inspire models of financial markets.
+category         : {category, category}
+published        : 2014-04-01T14:01:25Z
+comment          : 76 pages, in press in Reports on Progress in Physics (2014)
+primary_category : primary_category
+journal_ref      : Rep. Prog. Phys. 77, 062001 (2014)
+author           : author
+doi              : 10.1088/0034-4885/77/6/062001
+
+id               : http://arxiv.org/abs/2104.09863v1
+title            : Calibrating an adaptive Farmer-Joshi agent-based model for financial markets
+updated          : 2021-04-20T09:53:29Z
+link             : {link, link, link}
+summary          : We replicate the contested calibration of the Farmer and Joshi agent based model of financial market
+                   s using a genetic algorithm and a Nelder-Mead with threshold accepting algorithm following Fabretti.
+                    The novelty of the Farmer-Joshi model is that the dynamics are driven by trade entry and exit thres
+                   holds alone. We recover the known claim that some important stylized facts observed in financial mar
+                   kets cannot be easily found under calibration -- in particular those relating to the auto-correlatio
+                   ns in the absolute values of the price fluctuations, and sufficient kurtosis. However, rather than c
+                   oncerns relating to the calibration method, what is novel here is that we extended the Farmer-Joshi 
+                   model to include agent adaptation using an Brock and Hommes approach to strategy fitness based on tr
+                   ading strategy profitability. We call this an adaptive Farmer-Joshi model: the model allows trading 
+                   agents to switch between strategies by favouring strategies that have been more profitable over some
+                    period of time determined by a free-parameter fixing the profit monitoring time-horizon. In the ada
+                   ptive model we are able to calibrate and recover additional stylized facts, despite apparent degener
+                   acy's. This is achieved by combining the interactions of trade entry levels with trade strategy swit
+                   ching. We use this to argue that for low-frequency trading across days, as calibrated to daily sampl
+                   ed data, feed-backs can be accounted for by strategy die-out based on intermediate term profitabilit
+                   y; we find that the average trade monitoring horizon is approximately two to three months (or 40 to 
+                   60 days) of trading.
+category         : {category, category}
+published        : 2021-04-20T09:53:29Z
+comment          : 9 pages, 13 figures
+primary_category : primary_category
+author           : {Ivan Jericevich, Murray McKechnie, Tim Gebbie}
+doi              : 10.25375/uct.11636922.v1
+
+id               : http://arxiv.org/abs/2311.15974v1
+title            : Adaptive Agents and Data Quality in Agent-Based Financial Markets
+updated          : 2023-11-27T16:18:30Z
+link             : {link, link}
+summary          : We present our Agent-Based Market Microstructure Simulation (ABMMS), an Agent-Based Financial Market
+                    (ABFM) that captures much of the complexity present in the US National Market System for equities (
+                   NMS). Agent-Based models are a natural choice for understanding financial markets. Financial markets
+                    feature a constrained action space that should simplify model creation, produce a wealth of data th
+                   at should aid model validation, and a successful ABFM could strongly impact system design and policy
+                    development processes. Despite these advantages, ABFMs have largely remained an academic novelty. W
+                   e hypothesize that two factors limit the usefulness of ABFMs. First, many ABFMs fail to capture rele
+                   vant microstructure mechanisms, leading to differences in the mechanics of trading. Second, the simp
+                   le agents that commonly populate ABFMs do not display the breadth of behaviors observed in human tra
+                   ders or the trading systems that they create. We investigate these issues through the development of
+                    ABMMS, which features a fragmented market structure, communication infrastructure with propagation 
+                   delays, realistic auction mechanisms, and more. As a baseline, we populate ABMMS with simple trading
+                    agents and investigate properties of the generated data. We then compare the baseline with experime
+                   ntal conditions that explore the impacts of market topology or meta-reinforcement learning agents. T
+                   he combination of detailed market mechanisms and adaptive agents leads to models whose generated dat
+                   a more accurately reproduce stylized facts observed in actual markets. These improvements increase t
+                   he utility of ABFMs as tools to inform design and policy decisions.
+category         : category
+published        : 2023-11-27T16:18:30Z
+comment          : 11 pages, 6 figures, and 1 table. Contains 12 pages of supplemental information with 1 figure and 22
+                    tables
+primary_category : primary_category
+author           : {Colin M. Van Oort, Ethan Ratliff-Crain, Brian F. Tivnan, Safwan Wshah}
+
+id               : http://arxiv.org/abs/2409.00742v1
+title            : Simulation of Social Media-Driven Bubble Formation in Financial Markets using an Agent-Based Model w
+                   ith Hierarchical Influence Network
+updated          : 2024-09-01T15:09:35Z
+link             : {link, link, link}
+summary          : We propose that a tree-like hierarchical structure represents a simple and effective way to model th
+                   e emergent behaviour of financial markets, especially markets where there exists a pronounced inters
+                   ection between social media influences and investor behaviour. To explore this hypothesis, we introd
+                   uce an agent-based model of financial markets, where trading agents are embedded in a hierarchical n
+                   etwork of communities, and communities influence the strategies and opinions of traders. Empirical a
+                   nalysis of the model shows that its behaviour conforms to several stylized facts observed in real fi
+                   nancial markets; and the model is able to realistically simulate the effects that social media-drive
+                   n phenomena, such as echo chambers and pump-and-dump schemes, have on financial markets.
+category         : {category, category, category}
+published        : 2024-09-01T15:09:35Z
+comment          : 11 pages, 7 figures, To appear in Proceedings of 36th European Modeling and Simulation Symposium (EM
+                   SS), 21st International Multidisciplinary Modelling and Simulation Multiconference (I3M), Tenerife, 
+                   Spain, Sep. 2024
+primary_category : primary_category
+journal_ref      : 36th European Modeling & Simulation Symposium (EMSS 2024), 026
+author           : {Gonzalo Bohorquez, John Cartlidge}
+doi              : 10.46354/i3m.2024.emss.026
+
+id               : http://arxiv.org/abs/2312.14903v2
+title            : Scalable Agent-Based Modeling for Complex Financial Market Simulations
+updated          : 2024-01-31T10:25:38Z
+link             : {link, link}
+summary          : In this study, we developed a computational framework for simulating large-scale agent-based financi
+                   al markets. Our platform supports trading multiple simultaneous assets and leverages distributed com
+                   puting to scale the number and complexity of simulated agents. Heterogeneous agents make decisions i
+                   n parallel, and their orders are processed through a realistic, continuous double auction matching e
+                   ngine. We present a baseline model implementation and show that it captures several known statistica
+                   l properties of real financial markets (i.e., stylized facts). Further, we demonstrate these results
+                    without fitting models to historical financial data. Thus, this framework could be used for direct 
+                   applications such as human-in-the-loop machine learning or to explore theoretically exciting questio
+                   ns about market microstructure's role in forming the statistical regularities of real markets. To th
+                   e best of our knowledge, this study is the first to implement multiple assets, parallel agent decisi
+                   on-making, a continuous double auction mechanism, and intelligent agent types in a scalable real-tim
+                   e environment.
+category         : {category, category, category}
+published        : 2023-12-22T18:29:07Z
+primary_category : primary_category
+author           : {Aaron Wheeler, Jeffrey D. Varner}
+
+
+

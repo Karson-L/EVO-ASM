@@ -1,0 +1,32 @@
+﻿
+
+id               : http://arxiv.org/abs/2104.09863v1
+title            : Calibrating an adaptive Farmer-Joshi agent-based model for financial markets
+updated          : 2021-04-20T09:53:29Z
+link             : {link, link, link}
+summary          : We replicate the contested calibration of the Farmer and Joshi agent based model of financial market
+                   s using a genetic algorithm and a Nelder-Mead with threshold accepting algorithm following Fabretti.
+                    The novelty of the Farmer-Joshi model is that the dynamics are driven by trade entry and exit thres
+                   holds alone. We recover the known claim that some important stylized facts observed in financial mar
+                   kets cannot be easily found under calibration -- in particular those relating to the auto-correlatio
+                   ns in the absolute values of the price fluctuations, and sufficient kurtosis. However, rather than c
+                   oncerns relating to the calibration method, what is novel here is that we extended the Farmer-Joshi 
+                   model to include agent adaptation using an Brock and Hommes approach to strategy fitness based on tr
+                   ading strategy profitability. We call this an adaptive Farmer-Joshi model: the model allows trading 
+                   agents to switch between strategies by favouring strategies that have been more profitable over some
+                    period of time determined by a free-parameter fixing the profit monitoring time-horizon. In the ada
+                   ptive model we are able to calibrate and recover additional stylized facts, despite apparent degener
+                   acy's. This is achieved by combining the interactions of trade entry levels with trade strategy swit
+                   ching. We use this to argue that for low-frequency trading across days, as calibrated to daily sampl
+                   ed data, feed-backs can be accounted for by strategy die-out based on intermediate term profitabilit
+                   y; we find that the average trade monitoring horizon is approximately two to three months (or 40 to 
+                   60 days) of trading.
+category         : {category, category}
+published        : 2021-04-20T09:53:29Z
+comment          : 9 pages, 13 figures
+primary_category : primary_category
+author           : {Ivan Jericevich, Murray McKechnie, Tim Gebbie}
+doi              : 10.25375/uct.11636922.v1
+
+
+

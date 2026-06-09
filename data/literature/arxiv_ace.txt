@@ -1,0 +1,220 @@
+﻿
+
+id               : http://arxiv.org/abs/1812.02726v2
+title            : Simulation of Stylized Facts in Agent-Based Computational Economic Market Models
+updated          : 2019-11-15T14:37:06Z
+link             : {link, link}
+summary          : We study the qualitative and quantitative appearance of stylized facts in several agent-based comput
+                   ational economic market (ABCEM) models. We perform our simulations with the SABCEMM (Simulator for A
+                   gent-Based Computational Economic Market Models) tool recently introduced by the authors (Trimborn e
+                   t al. 2019). Furthermore, we present novel ABCEM models created by recombining existing models and s
+                   tudy them with respect to stylized facts as well. This can be efficiently performed by the SABCEMM t
+                   ool thanks to its object-oriented software design. The code is available on GitHub (Trimborn et al. 
+                   2018), such that all results can be reproduced by the reader.
+category         : {category, category, category}
+published        : 2018-11-27T22:07:46Z
+comment          : arXiv admin note: substantial text overlap with arXiv:1801.01811
+primary_category : primary_category
+author           : {Maximilian Beikirch, Simon Cramer, Martin Frank, Philipp Otte...}
+
+id               : http://arxiv.org/abs/1801.01811v2
+title            : SABCEMM-A Simulator for Agent-Based Computational Economic Market Models
+updated          : 2018-10-09T23:10:22Z
+link             : {link, link}
+summary          : We introduce the simulation tool SABCEMM (Simulator for Agent-Based Computational Economic Market Mo
+                   dels) for agent-based computational economic market (ABCEM) models. Our simulation tool is implement
+                   ed in C++ and we can easily run ABCEM models with several million agents. The object-oriented softwa
+                   re design enables the isolated implementation of building blocks for ABCEM models, such as agent typ
+                   es and market mechanisms. The user can design and compare ABCEM models in a unified environment by r
+                   ecombining existing building blocks using the XML-based SABCEMM configuration file. We introduce an 
+                   abstract ABCEM model class which our simulation tool is built upon. Furthermore, we present the soft
+                   ware architecture as well as computational aspects of SABCEMM. Here, we focus on the efficiency of S
+                   ABCEMM with respect to the run time of our simulations. We show the great impact of different random
+                    number generators on the run time of ABCEM models. The code and documentation is published on GitHu
+                   b at https://github.com/SABCEMM/SABCEMM, such that all results can be reproduced by the reader.
+category         : {category, category, category, category}
+published        : 2018-01-05T16:08:14Z
+primary_category : primary_category
+author           : {Torsten Trimborn, Philipp Otte, Simon Cramer, Max Beikirch...}
+
+id               : http://arxiv.org/abs/1703.06597v1
+title            : Artificial Intelligence and Economic Theories
+updated          : 2017-03-20T04:47:14Z
+link             : {link, link}
+summary          : The advent of artificial intelligence has changed many disciplines such as engineering, social scien
+                   ce and economics. Artificial intelligence is a computational technique which is inspired by natural 
+                   intelligence such as the swarming of birds, the working of the brain and the pathfinding of the ants
+                   . These techniques have impact on economic theories. This book studies the impact of artificial inte
+                   lligence on economic theories, a subject that has not been extensively studied. The theories that ar
+                   e considered are: demand and supply, asymmetrical information, pricing, rational choice, rational ex
+                   pectation, game theory, efficient market hypotheses, mechanism design, prospect, bounded rationality
+                   , portfolio theory, rational counterfactual and causality. The benefit of this book is that it evalu
+                   ates existing theories of economics and update them based on the developments in artificial intellig
+                   ence field.
+category         : category
+published        : 2017-03-20T04:47:14Z
+comment          : Marwala, T. and Hurwitz, E. (2017) Artificial Intelligence and Economic Theory: Skynet in the Market
+                   . Springer. (Accepted)
+primary_category : primary_category
+author           : {Tshilidzi Marwala, Evan Hurwitz}
+
+id               : http://arxiv.org/abs/1904.04951v3
+title            : Robust Mathematical Formulation and Probabilistic Description of Agent-Based Computational Economic 
+                   Market Models
+updated          : 2021-03-11T22:33:43Z
+link             : {link, link}
+summary          : In science and especially in economics, agent-based modeling has become a widely used modeling appro
+                   ach. These models are often formulated as a large system of difference equations. In this study, we 
+                   discuss two aspects, numerical modeling and the probabilistic description for two agent-based comput
+                   ational economic market models: the Levy-Levy-Solomon model and the Franke-Westerhoff model. We deri
+                   ve time-continuous formulations of both models, and in particular we discuss the impact of the time-
+                   scaling on the model behavior for the Levy-Levy-Solomon model. For the Franke-Westerhoff model, we p
+                   roof that a constraint required in the original model is not necessary for stability of the time-con
+                   tinuous model. It is shown that a semi-implicit discretization of the time-continuous system preserv
+                   es this unconditional stability. In addition, this semi-implicit discretization can be computed at c
+                   ost comparable to the original model. Furthermore, we discuss possible probabilistic descriptions of
+                    time continuous agent-based computational economic market models. Especially, we present the potent
+                   ial advantages of kinetic theory in order to derive mesoscopic desciptions of agent-based models. Ex
+                   emplified, we show two probabilistic descriptions of the Levy-Levy-Solomon and Franke-Westerhoff mod
+                   el.
+category         : {category, category, category, category}
+published        : 2019-04-10T00:05:45Z
+primary_category : primary_category
+author           : {Maximilian Beikirch, Simon Cramer, Martin Frank, Philipp Otte...}
+
+id               : http://arxiv.org/abs/2002.10222v1
+title            : Novel Insights in the Levy-Levy-Solomon Agent-Based Economic Market Model
+updated          : 2020-02-13T19:00:11Z
+link             : {link, link}
+summary          : The Levy-Levy-Solomon model (A microscopic model of the stock market: cycles, booms, and crashes, Ec
+                   onomic Letters 45 (1))is one of the most influential agent-based economic market models. In several 
+                   publications this model has been discussed and analyzed. Especially Lux and Zschischang (Some new re
+                   sults on the Levy, Levy and Solomon microscopic stock market model, Physica A, 291(1-4)) have shown 
+                   that the model exhibits finite-size effects. In this study we extend existing work in several direct
+                   ions. First, we show simulations which reveal finite-size effects of the model. Secondly, we shed li
+                   ght on the origin of these finite-size effects. Furthermore, we demonstrate the sensitivity of the L
+                   evy-Levy-Solomon model with respect to random numbers. Especially, we can conclude that a low-qualit
+                   y pseudo random number generator has a huge impact on the simulation results. Finally, we study the 
+                   impact of the stopping criteria in the market clearance mechanism of the Levy-Levy-Solomon model.
+category         : {category, category, category}
+published        : 2020-02-13T19:00:11Z
+comment          : arXiv admin note: text overlap with arXiv:1904.04951
+primary_category : primary_category
+author           : {Maximilian Beikirch, Torsten Trimborn}
+
+id               : http://arxiv.org/abs/1311.5108v1
+title            : A Methodology to Engineer and Validate Dynamic Multi-level Multi-agent Based Simulations
+updated          : 2013-11-20T15:44:26Z
+link             : {link, link, link}
+summary          : This article proposes a methodology to model and simulate complex systems, based on IRM4MLS, a gener
+                   ic agent-based meta-model able to deal with multi-level systems. This methodology permits the engine
+                   ering of dynamic multi-level agent-based models, to represent complex systems over several scales an
+                   d domains of interest. Its goal is to simulate a phenomenon using dynamically the lightest represent
+                   ation to save computer resources without loss of information. This methodology is based on two mecha
+                   nisms: (1) the activation or deactivation of agents representing different domain parts of the same 
+                   phenomenon and (2) the aggregation or disaggregation of agents representing the same phenomenon at d
+                   ifferent scales.
+category         : category
+published        : 2013-11-20T15:44:26Z
+comment          : Presented at 3th International Workshop on Multi-Agent Based Simulation, Valencia, Spain, 5th June 2
+                   012
+primary_category : primary_category
+journal_ref      : Multi-Agent-Based Simulation XIII LNCS 7838 p 130-142, 2013
+author           : {Jean-Baptiste Soyez, Gildas Morvan, Daniel Dupont, Rochdi Merzouki}
+doi              : 10.1007/978-3-642-38859-0_10
+
+id               : http://arxiv.org/abs/2601.20452v1
+title            : Manipulation in Prediction Markets: An Agent-based Modeling Experiment
+updated          : 2026-01-28T10:20:47Z
+link             : {link, link}
+summary          : Prediction markets mobilize financial incentives to forecast binary event outcomes through the aggre
+                   gation of dispersed beliefs and heterogeneous information. Their growing popularity and demonstrated
+                    predictive accuracy in political elections have raised speculation and concern regarding their susc
+                   eptibility to manipulation and the potential consequences for democratic processes. Using agent-base
+                   d simulations combined with an analytic characterization of price dynamics, we study how high-budget
+                    agents can introduce price distortions in prediction markets. We explore the persistence and stabil
+                   ity of these distortions in the presence of herding or stubborn agents, and analyze how agent expert
+                   ise affects market-price variance. Firstly we propose an agent-based model of a prediction market in
+                    which bettors with heterogeneous expertise, noisy private information, variable learning rates and 
+                   budgets observe the evolution of public opinion on a binary election outcome to inform their betting
+                    strategies in the market. The model exhibits stability across a broad parameter space, with complex
+                    agent behaviors and price interactions producing self-regulatory price discovery. Second, using thi
+                   s simulation framework, we investigate the conditions under which a highly resourced minority, or ''
+                   whale'' agent, with a biased valuation can distort the market price, and for how long. We find that 
+                   biased whales can temporarily shift prices, with the magnitude and duration of distortion increasing
+                    when non-whale bettors exhibit herding behavior and slow learning. Our theoretical analysis corrobo
+                   rates these results, showing that whales can shift prices proportionally to their share of market ca
+                   pital, with distortion duration depending on non-whale learning rates and herding intensity.
+category         : {category, category, category}
+published        : 2026-01-28T10:20:47Z
+comment          : Open source code for the agent-based model and Dash application available at https://github.com/ebba
+                   m/power_prediction/ 14 pages, 4 figures
+primary_category : primary_category
+author           : {Bridget Smart, Ebba Mark, Anne Bastian, Josefina Waugh}
+
+id               : http://arxiv.org/abs/2604.03350v1
+title            : From Model-Based Screening to Data-Driven Surrogates: A Multi-Stage Workflow for Exploring Stochasti
+                   c Agent-Based Models
+updated          : 2026-04-03T15:32:49Z
+link             : {link, link}
+summary          : Systematic exploration of Agent-Based Models (ABMs) is challenged by the curse of dimensionality and
+                    their inherent stochasticity. We present a multi-stage pipeline integrating the systematic design o
+                   f experiments with machine learning surrogates. Using a predator-prey case study, our methodology pr
+                   oceeds in two steps. First, an automated model-based screening identifies dominant variables, assess
+                   es outcome variability, and segments the parameter space. Second, we train Machine Learning models t
+                   o map the remaining nonlinear interaction effects. This approach automates the discovery of unstable
+                    regions where system outcomes are highly dependent on nonlinear interactions between many variables
+                   . Thus, this work provides modelers with a rigorous, hands-off framework for sensitivity analysis an
+                   d policy testing, even when dealing with high-dimensional stochastic simulators.
+category         : {category, category}
+published        : 2026-04-03T15:32:49Z
+comment          : Published in MABS 2026 - The 27th International Workshop on Multi-Agent-Based Simulation
+primary_category : primary_category
+journal_ref      : Multi-Agent-Based Simulation (MABS) XXVII. LCNS Springer, 2026
+author           : {Paul Saves, Matthieu Mastio, Nicolas Verstaevel, Benoit Gaudou}
+
+id               : http://arxiv.org/abs/2010.01043v2
+title            : Preventing crash in stock market: The role of economic policy uncertainty during COVID-19
+updated          : 2021-08-17T15:36:35Z
+link             : {link, link, link}
+summary          : This paper investigates the impact of economic policy uncertainty (EPU) on the crash risk of US stoc
+                   k market during the COVID-19 pandemic. To this end, we use the GARCH-S (GARCH with skewness) model t
+                   o estimate daily skewness as a proxy for the stock market crash risk. The empirical results show the
+                    significantly negative correlation between EPU and stock market crash risk, indicating the aggravat
+                   ion of EPU increase the crash risk. Moreover, the negative correlation gets stronger after the globa
+                   l COVID-19 outbreak, which shows the crash risk of the US stock market will be more affected by EPU 
+                   during the pandemic.
+category         : {category, category}
+published        : 2020-10-02T15:18:25Z
+comment          : 25 pages
+primary_category : primary_category
+journal_ref      : Financial Innovation, 2021, 7(1): 1-15,
+author           : {Peng-Fei Dai, Xiong Xiong, Zhifeng Liu, Toan Luu Duc Huynh...}
+doi              : 10.1186/s40854-021-00248-y
+
+id               : http://arxiv.org/abs/2007.03477v1
+title            : Real-time estimation of the short-run impact of COVID-19 on economic activity using electricity mark
+                   et data
+updated          : 2020-07-07T14:10:41Z
+link             : {link, link}
+summary          : The COVID-19 pandemic has caused more than 8 million confirmed cases and 500,000 death to date. In r
+                   esponse to this emergency, many countries have introduced a series of social-distancing measures inc
+                   luding lockdowns and businesses' temporary shutdowns, in an attempt to curb the spread of the infect
+                   ion. Accordingly, the pandemic has been generating unprecedent disruption on practically every aspec
+                   t of society. This paper demonstrates that high-frequency electricity market data can be used to est
+                   imate the causal, short-run impact of COVID-19 on the economy. In the current uncertain economic con
+                   ditions, timeliness is essential. Unlike official statistics, which are published with a delay of a 
+                   few months, with our approach one can monitor virtually every day the impact of the containment poli
+                   cies, the extent of the recession and measure whether the monetary and fiscal stimuli introduced to 
+                   address the crisis are being effective. We illustrate our methodology on daily data for the Italian 
+                   day-ahead power market. Not surprisingly, we find that the containment measures caused a significant
+                    reduction in economic activities and that the GDP at the end of in May 2020 is still about 11% lowe
+                   r that what it would have been without the outbreak.
+category         : category
+published        : 2020-07-07T14:10:41Z
+comment          : Accepted for publication in Environmental and Resource Economics
+primary_category : primary_category
+author           : {Carlo Fezzi, Valeria Fanghella}
+
+
+

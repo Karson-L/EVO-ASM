@@ -1,0 +1,213 @@
+﻿
+
+id               : http://arxiv.org/abs/2105.02782v1
+title            : The Homogenous Properties of Automated Market Makers
+updated          : 2021-03-31T09:39:10Z
+link             : {link, link}
+summary          : Automated market makers (AMM) have grown to obtain significant market share within the cryptocurrenc
+                   y ecosystem, resulting in a proliferation of new products pursuing exotic strategies for horizontal 
+                   differentiation. Yet, their theoretical properties are curiously homogeneous when a set of basic ass
+                   umptions are met. In this paper, we start by presenting a universal approach to deriving a formula f
+                   or liquidity provisioning for AMMs. Next, we show that the constant function market maker and token 
+                   swap market maker models are theoretically equivalent when liquidity reserves are uniform. Proceedin
+                   g with an examination of AMM market microstructure, we show how non-linear price effect translates i
+                   nto slippage for traders and impermanent losses for liquidity providers. We proceed by showing how i
+                   mpermanent losses are a function of both volatility and market depth and discuss the implications of
+                    these findings within the context of the literature.
+category         : {category, category}
+published        : 2021-03-31T09:39:10Z
+comment          : Automated Market Maker, DeFi, Blockchain, Constant Function Market Maker
+primary_category : primary_category
+author           : {Johannes Rude Jensen, Mohsen Pourpouneh, Kurt Nielsen, Omri Ross}
+
+id               : http://arxiv.org/abs/2210.11344v2
+title            : Towards Evology: a Market Ecology Agent-Based Model of US Equity Mutual Funds
+updated          : 2022-10-25T09:49:07Z
+link             : {link, link}
+summary          : The profitability of various investment styles in investment funds depends on macroeconomic conditio
+                   ns. Market ecology, which views financial markets as ecosystems of diverse, interacting and evolving
+                    trading strategies, has shown that endogenous interactions between strategies determine market beha
+                   viour and styles' performance. We present Evology: a heterogeneous, empirically calibrated multi-age
+                   nt market ecology agent-based model to quantify endogenous interactions between US equity mutual fun
+                   ds, particularly Value and Growth investment styles. We outline the model design, validation and cal
+                   ibration approach and its potential for optimising investment strategies using machine learning algo
+                   rithms.
+category         : {category, category}
+published        : 2022-10-20T15:30:38Z
+primary_category : primary_category
+journal_ref      : 2022 ACM International Conference on Artificial Intelligence in Finance - Benchmarks in AI workshop
+author           : {Aymeric Vie, Maarten Scholl, Alissa M. Kleinnijenhuis, J. Doyne Farmer}
+
+id               : http://arxiv.org/abs/2302.01216v1
+title            : Towards Evology: a Market Ecology Agent-Based Model of US Equity Mutual Funds II
+updated          : 2023-02-02T16:53:28Z
+link             : {link, link}
+summary          : Agent-based models (ABMs) are fit to model heterogeneous, interacting systems like financial markets
+                   . We present the latest advances in Evology: a heterogeneous, empirically calibrated market ecology 
+                   agent-based model of the US stock market. Prices emerge endogenously from the interactions of market
+                    participants with diverse investment behaviours and their reactions to fundamentals. This approach 
+                   allows testing trading strategies while accounting for the interactions of this strategy with other 
+                   market participants and conditions. Those early results encourage a closer association between ABMs 
+                   and ML algorithms for testing and optimising investment strategies using machine learning algorithms
+                   .
+category         : {category, category}
+published        : 2023-02-02T16:53:28Z
+comment          : AI4ABM, ICLR23
+primary_category : primary_category
+author           : {Aymeric Vie, J. Doyne Farmer}
+
+id               : http://arxiv.org/abs/1407.3390v1
+title            : Slow decay of impact in equity markets
+updated          : 2014-07-12T14:32:20Z
+link             : {link, link}
+summary          : Using a proprietary dataset of meta-orders and prediction signals, and assuming a quasi-linear impac
+                   t model, we deconvolve market impact from past correlated trades and a predictable return component 
+                   to elicit the temporal dependence of the market impact of a single daily meta-order, over a ten day 
+                   horizon in various equity markets. We find that the impact of single meta-orders is to a first appro
+                   ximation universal and slowly decays to zero (or to a small value), possibly as a power-law. We show
+                    that auto-correlated order-flows and trade information contents fully accounts for the apparent pla
+                   teau observed in the raw data. We discuss the possible bias introduced by the quasi-linear assumptio
+                   n.
+category         : {category, category}
+published        : 2014-07-12T14:32:20Z
+comment          : 6 pages, submitted to "Market Microstructure & Liquidity"
+primary_category : primary_category
+author           : {X. Brokmann, E. Serie, J. Kockelkoren, J. -P. Bouchaud}
+
+id               : http://arxiv.org/abs/2602.00948v1
+title            : FinEvo: From Isolated Backtests to Ecological Market Games for Multi-Agent Financial Strategy Evolut
+                   ion
+updated          : 2026-02-01T00:52:01Z
+link             : {link, link}
+summary          : Conventional financial strategy evaluation relies on isolated backtests in static environments. Such
+                    evaluations assess each policy independently, overlook correlations and interactions, and fail to e
+                   xplain why strategies ultimately persist or vanish in evolving markets. We shift to an ecological pe
+                   rspective, where trading strategies are modeled as adaptive agents that interact and learn within a 
+                   shared market. Instead of proposing a new strategy, we present FinEvo, an ecological game formalism 
+                   for studying the evolutionary dynamics of multi-agent financial strategies. At the individual level,
+                    heterogeneous ML-based traders-rule-based, deep learning, reinforcement learning, and large languag
+                   e model (LLM) agents-adapt using signals such as historical prices and external news. At the populat
+                   ion level, strategy distributions evolve through three designed mechanisms-selection, innovation, an
+                   d environmental perturbation-capturing the dynamic forces of real markets. Together, these two layer
+                   s of adaptation link evolutionary game theory with modern learning dynamics, providing a principled 
+                   environment for studying strategic behavior. Experiments with external shocks and real-world news st
+                   reams show that FinEvo is both stable for reproducibility and expressive in revealing context-depend
+                   ent outcomes. Strategies may dominate, collapse, or form coalitions depending on their competitors-p
+                   atterns invisible to static backtests. By reframing strategy evaluation as an ecological game formal
+                   ism, FinEvo provides a unified, mechanism-level protocol for analyzing robustness, adaptation, and e
+                   mergent dynamics in multi-agent financial markets, and may offer a means to explore the potential im
+                   pact of macroeconomic policies and financial regulations on price evolution and equilibrium.
+category         : {category, category, category, category}
+published        : 2026-02-01T00:52:01Z
+comment          : Preprint. Submitted to a conference
+primary_category : primary_category
+author           : {Mingxi Zou, Jiaxiang Chen, Aotian Luo, Jingyi Dai...}
+
+id               : http://arxiv.org/abs/1712.00235v1
+title            : Empirical comparison of three models for determining market clearing prices in Turkish day-ahead ele
+                   ctricity market
+updated          : 2017-12-01T09:01:16Z
+link             : {link, link}
+summary          : Bidders in day-ahead electricity markets want to sell/buy electricity when their bids generate posit
+                   ive surplus and not to take an action when the reverse holds. However, non-convexities in these mark
+                   ets cause conflicts between the actions that the bidders want to take and the actual market results.
+                    In this work, we investigate the non-convex market clearing problem of Turkish market operator and 
+                   propose three different rule sets. The first rule set allows both rejection of bids with positive su
+                   rplus and acceptance of bids with negative surplus. The second and the third sets only allow one of 
+                   these conflicted cases. By using total surplus maximization as the objective, we formulate three mod
+                   els and statistically explore their performance with the real data taken from Turkish market operato
+                   r.
+category         : category
+published        : 2017-12-01T09:01:16Z
+comment          : 7 pages, 3 figures, 14th International Conference on the European Energy Market (EEM), 2017
+primary_category : primary_category
+author           : {Gökhan Ceyhan, Nermin Elif Kurt, H. Bahadir Sahin, Kürşad Derinkuyu}
+
+id               : http://arxiv.org/abs/0907.3282v8
+title            : An Optimal Execution Problem with Market Impact
+updated          : 2014-12-13T11:00:20Z
+link             : {link, link, link}
+summary          : We study an optimal execution problem in a continuous-time market model that considers market impact
+                   . We formulate the problem as a stochastic control problem and investigate properties of the corresp
+                   onding value function. We find that right-continuity at the time origin is associated with the stren
+                   gth of market impact for large sales, otherwise the value function is continuous. Moreover, we show 
+                   the semi-group property (Bellman principle) and characterise the value function as a viscosity solut
+                   ion of the corresponding Hamilton-Jacobi-Bellman equation. We introduce some examples where the form
+                   s of the optimal strategies change completely, depending on the amount of the trader's security hold
+                   ings and where optimal strategies in the Black-Scholes type market with nonlinear market impact are 
+                   not block liquidation but gradual liquidation, even when the trader is risk-neutral.
+category         : {category, category, category}
+published        : 2009-07-20T09:56:35Z
+comment          : 36 pages, 8 figures, a modified version of the article "An optimal execution problem with market imp
+                   act" in Finance and Stochastics (2014)
+primary_category : primary_category
+journal_ref      : Finance and Stochastics, 18(3), pp.695-732 (2014)
+author           : author
+doi              : 10.1007/s00780-014-0232-0
+
+id               : http://arxiv.org/abs/1809.10554v1
+title            : An Adaptive Tabu Search Algorithm for Market Clearing Problem in Turkish Day-Ahead Market
+updated          : 2018-09-26T11:37:52Z
+link             : {link, link, link}
+summary          : In this study, we focus on the market clearing problem of Turkish day-ahead electricity market. We p
+                   ropose a mathematical model by extending the variety of bid types for different price regions. The c
+                   ommercial solvers may not find any feasible solution for the proposed problem in some instances with
+                   in the given time limits. Hence, we design an adaptive tabu search (ATS) algorithm to solve the prob
+                   lem. ATS discretizes continuous search space arising from the flow variables. Our method has adaptiv
+                   e radius and it achieves backtracking by a commercial solver. Then, we compare the performance of AT
+                   S with a heuristic decomposition method from the literature by using synthetic data sets. We evaluat
+                   e the performances of the algorithms with respect to their solution times and surplus differences. A
+                   TS performs better in most of the sets.
+category         : {category, category}
+published        : 2018-09-26T11:37:52Z
+comment          : 6 pages, 2 figures, 2018 15th International Conference on the European Energy Market (EEM)
+primary_category : primary_category
+author           : {Nermin Elif Kurt, H. Bahadir Sahin, Kürşad Derinkuyu}
+doi              : 10.1109/EEM.2018.8469926
+
+id               : http://arxiv.org/abs/2009.09454v2
+title            : How Market Ecology Explains Market Malfunction
+updated          : 2021-01-25T05:20:29Z
+link             : {link, link, link}
+summary          : Standard approaches to the theory of financial markets are based on equilibrium and efficiency. Here
+                    we develop an alternative based on concepts and methods developed by biologists, in which the wealt
+                   h invested in a financial strategy is like the abundance of a species. We study a toy model of a mar
+                   ket consisting of value investors, trend followers and noise traders. We show that the average retur
+                   ns of strategies are strongly density dependent, i.e. they depend on the wealth invested in each str
+                   ategy at any given time. In the absence of noise the market would slowly evolve toward an efficient 
+                   equilibrium, but the statistical uncertainty in profitability (which is adjusted to match real marke
+                   ts) makes this noisy and uncertain. Even in the long term, the market spends extended periods of tim
+                   e away from perfect efficiency. We show how core concepts from ecology, such as the community matrix
+                    and food webs, give insight into market behavior. The wealth dynamics of the market ecology explain
+                    how market inefficiencies spontaneously occur and gives insight into the origins of excess price vo
+                   latility and deviations of prices from fundamental values.
+category         : category
+published        : 2020-09-20T15:17:54Z
+comment          : 9 pages, 5 figures, Conference on Evolutionary Models of Financial Markets, includes responses to re
+                   viewers
+primary_category : primary_category
+author           : {Maarten P. Scholl, Anisoara Calinescu, J. Doyne Farmer}
+doi              : 10.1073/pnas.2015574118
+
+id               : http://arxiv.org/abs/1802.06101v4
+title            : Market Impact in a Latent Order Book
+updated          : 2020-09-02T05:42:06Z
+link             : {link, link, link}
+summary          : The latent order book of \cite{donier2015fully} is one of the most promising agent-based models for 
+                   market impact. This work extends the minimal model by allowing agents to exhibit mean-reversion, a c
+                   ommonly observed pattern in real markets. This modification leads to new order book dynamics, which 
+                   we explicitly study and analyze. Underlying our analysis is a mean-field assumption that views the o
+                   rder book through its \textit{average} density. We show how price impact develops in this new model,
+                    providing a flexible family of solutions that can potentially improve calibration to real data. Whi
+                   le no closed-form solution is provided, we complement our theoretical investigation with extensive n
+                   umerical results, including a simulation scheme for the entire order book.
+category         : category
+published        : 2018-02-16T19:41:02Z
+comment          : 36 pages, 15 figures
+primary_category : primary_category
+journal_ref      : Market Microstructure and Liquidity 2020
+author           : author
+doi              : 10.1142/S2382626620500045
+
+
+

@@ -1,0 +1,229 @@
+﻿
+
+id               : http://arxiv.org/abs/2603.09219v1
+title            : AlgoXpert Alpha Research Framework. A Rigorous IS WFA OOS Protocol for Mitigating Overfitting in Qua
+                   ntitative Strategies
+updated          : 2026-03-10T05:40:23Z
+link             : {link, link}
+summary          : Transitioning a strategy from backtest to live trading is a common failure point for quantitative sy
+                   stems due to parameter overfitting, selection bias, and sensitivity to regime changes. This paper pr
+                   esents the AlgoXpert Alpha Research Framework, a standardized protocol that evaluates strategies acr
+                   oss three stages: In Sample (IS), which focuses on stable parameter regions instead of single optima
+                   ; Walk Forward Analysis (WFA) using rolling windows and purge gaps to reduce information leakage, su
+                   pported by majority pass and catastrophic veto rules; and Out of Sample (OOS) testing under strict p
+                   arameter lock with no further tuning.
+                     The framework applies a defense in depth structure that includes structural safeguards such as cli
+                   ff veto, execution controls such as spread and leverage guards, and equity protection mechanisms suc
+                   h as circuit breakers and a kill switch. A case study on USDJPY M5 intraday data demonstrates how to
+                    detect overfitting through performance decay and drawdown behavior across chronological stages. A p
+                   ost validation comparison of four alpha variants (v1 to v4) shows rank reversal when the objective c
+                   hanges from maximizing Sharpe to minimizing maximum drawdown, highlighting the trade off between ris
+                   k adjusted performance and tail risk control.
+category         : category
+published        : 2026-03-10T05:40:23Z
+comment          : Alpha Research Framework; Walk-Forward Analysis; Purged Validation; Pa rameter Stability; Backtest O
+                   verfitting; Selection Bias; Execution-Aware Backtesting; Stress Testing; Kill Switch; Out-of-Sample 
+                   Verification. 19 Pages, 2 figures
+primary_category : primary_category
+author           : {The Anh Pham, Bao Chan Nguyen, Nguyet Nguyen Thi}
+
+id               : http://arxiv.org/abs/2004.12510v1
+title            : Self-consistent Nonlinear Force-free Field Reconstruction from Weighted Boundary Conditions
+updated          : 2020-04-26T23:57:12Z
+link             : {link, link, link}
+summary          : Vector magnetogram data are often used as photospheric boundary conditions for force-free coronal ma
+                   gnetic field extrapolations. In general, however, vector magnetogram data are not consistent with th
+                   e force-free assumption. In this article, we demonstrate a way to deal with inconsistent boundary da
+                   ta, by generalizing the "self-consistency procedure" of Wheatland & Regnier (2009). In that procedur
+                   e, the inconsistency is resolved by an iterative process of constructing two solutions based on the 
+                   values of the force-free parameter alpha on the two polarities of the field in the boundary (the P a
+                   nd N polarities), and taking uncertainty-weighted averages of the boundary alpha values in the P and
+                    N solutions. When the alpha values in the P and N regions are very different, the self-consistent s
+                   olution may lose high alpha values from the boundary conditions. We show how, by altering the weight
+                   ing of the uncertainties in the P or N boundary conditions, we can preserve high alpha values in the
+                    self-consistent solution. The weighted self-consistent extrapolation method is demonstrated on an a
+                   nalytic bipole field and applied to vector magnetogram data taken by the Helioseismic and Magnetic I
+                   mager (HMI) instrument for NOAA active region AR 12017 on 2014 March 29.
+category         : category
+published        : 2020-04-26T23:57:12Z
+comment          : 12 pages, 5 figures, submitted to Solar Physics
+primary_category : primary_category
+author           : {Alpha Mastrano, Kai E. Yang, Michael S. Wheatland}
+doi              : 10.1007/s11207-020-01663-7
+
+id               : http://arxiv.org/abs/0805.4082v1
+title            : Particle Physics Aspects of Antihydrogen Studies with ALPHA at CERN
+updated          : 2008-05-27T09:36:57Z
+link             : {link, link, link}
+summary          :   We discuss aspects of antihydrogen studies, that relate to particle physics ideas and techniques, 
+                   within the context of the ALPHA experiment at CERN's Antiproton Decelerator facility. We review the 
+                   fundamental physics motivations for antihydrogen studies, and their potential physics reach. We argu
+                   e that initial spectroscopy measurements, once antihydrogen is trapped, could provide competitive te
+                   sts of CPT, possibly probing physics at the Planck Scale. We discuss some of the particle detection 
+                   techniques used in ALPHA. Preliminary results from commissioning studies of a partial system of the 
+                   ALPHA Si vertex detector are presented, the results of which highlight the power of annihilation ver
+                   tex detection capability in antihydrogen studies.
+category         : {category, category, category, category}
+published        : 2008-05-27T09:36:57Z
+comment          : Invited talk at Pbar08 - Workshop on Cold Antimatter Plasmas and Application to Fundamental Physics,
+                    Okinawa, Japan, 2008. 14 pages, 8 figures
+primary_category : primary_category
+journal_ref      : AIP Conf.Proc.1037:208-220,2008
+author           : { ALPHA Collaboration, M. C. Fujiwara, G. B. Andresen, W. Bertsche...}
+doi              : 10.1063/1.2977840
+
+id               : http://arxiv.org/abs/1104.4661v1
+title            : Alpha Antihydrogen Experiment
+updated          : 2011-04-24T22:13:34Z
+link             : {link, link}
+summary          : ALPHA is an experiment at CERN, whose ultimate goal is to perform a precise test of CPT symmetry wit
+                   h trapped antihydrogen atoms. After reviewing the motivations, we discuss our recent progress toward
+                    the initial goal of stable trapping of antihydrogen, with some emphasis on particle detection techn
+                   iques.
+category         : {category, category, category, category...}
+published        : 2011-04-24T22:13:34Z
+comment          : Invited talk presented at the Fifth Meeting on CPT and Lorentz Symmetry, Bloomington, Indiana, June 
+                   28-July 2, 2010
+primary_category : primary_category
+journal_ref      : Proceedings of the Fifth Meeting on CPT and Lorentz Symmetry, Ed. V.A. Kostelecky, pp. 50-54, World 
+                   Scientific (2011)
+author           : { ALPHA Collaboration, M. C. Fujiwara, G. B. Andresen, M. D. Ashkezari...}
+
+id               : http://arxiv.org/abs/nucl-ex/0611041v2
+title            : On the absence of appreciable half-life changes in alpha emitters cooled in metals to 1 Kelvin and b
+                   elow
+updated          : 2007-06-22T18:42:36Z
+link             : {link, link, link}
+summary          :   The recent suggestion that dramatic changes may occur in the lifetime of alpha and beta decay when
+                    the activity, in a pure metal host, is cooled to a few Kelvin, is examined in the light of publishe
+                   d low temperature nuclear orientation (LTNO) experiments, with emphasis here on alpha decay. In LTNO
+                    observations are made of the anisotropy of radioactive emissions with respect to an axis of orienta
+                   tion. Correction of data for decay of metallic samples held at temperatures at and below 1 Kelvin fo
+                   r periods of days and longer has been a routine element of LTNO experiments for many years. No evide
+                   nce for any change of half life on cooling, with an upper level of less than 1%, has been found, in 
+                   striking contrast to the predicted changes, for alpha decay, of several orders of magnitude. The pro
+                   posal that such dramatic changes might alleviate problems of disposal of long-lived radioactive wast
+                   e is shown to be unrealistic.
+category         : category
+published        : 2006-11-29T17:26:12Z
+comment          : 27 pages, 12 figures, accepted for publication in Nucl.Phys.A. Revised version, including quantitati
+                   ve analysis of the sensitivity of nuclear orientation experiments, discussed in this work, to change
+                   s of alpha-decay lifetimes in metals at low temperatures. Conclusions remain unchanged
+primary_category : primary_category
+author           : {N. J. Stone, J. R. Stone, M. Lindroos, P. Richards...}
+doi              : 10.1016/j.nuclphysa.2007.06.003
+
+id               : http://arxiv.org/abs/2502.04284v1
+title            : On the Effect of Alpha Decay and Transaction Costs on the Multi-period Optimal Trading Strategy
+updated          : 2025-02-06T18:31:50Z
+link             : {link, link}
+summary          : We consider the multi-period portfolio optimization problem with a single asset that can be held lon
+                   g or short. Due to the presence of transaction costs, maximizing the immediate reward at each period
+                    may prove detrimental, as frequent trading results in consistent negative cash outflows. To simulat
+                   e alpha decay, we consider a case where not only the present value of a signal, but also past values
+                   , have predictive power. We formulate the problem as an infinite horizon Markov Decision Process and
+                    seek to characterize the optimal policy that realizes the maximum average expected reward. We propo
+                   se a variant of the standard value iteration algorithm for computing the optimal policy. Establishin
+                   g convergence in our setting is nontrivial, and we provide a rigorous proof. Addtionally, we compute
+                    a first-order approximation and asymptotics of the optimal policy with small transaction costs.
+category         : {category, category}
+published        : 2025-02-06T18:31:50Z
+primary_category : primary_category
+author           : {Chutian Ma, Paul Smith}
+
+id               : http://arxiv.org/abs/1808.02149v4
+title            : Quantitative uniqueness properties for $L^2$ functions with fast decaying, or sparsely supported, Fo
+                   urier transform
+updated          : 2020-10-25T20:32:51Z
+link             : {link, link}
+summary          : This paper builds upon two key principles behind the Bourgain-Dyatlov quantitative uniqueness theore
+                   m for functions with Fourier transform supported in an Ahlfors regular set. We first provide a chara
+                   cterization of when a quantitative uniqueness theorem holds for functions with very quickly decaying
+                    Fourier transform, thereby providing an extension of the classical Paneah-Logvinenko-Sereda theorem
+                   . Secondly, we derive a transference result which converts a quantitative uniqueness theorem for fun
+                   ctions with fast decaying Fourier transform to one for functions with Fourier transform supported on
+                    a fractal set. As well as recovering the result of Bourgain-Dyatlov, we obtain analogous uniqueness
+                    results for denser fractals.
+category         : category
+published        : 2018-08-06T23:04:22Z
+comment          : 27 pages. Some further discussion around quantitative estimates has been added
+primary_category : primary_category
+author           : {Benjamin Jaye, Mishko Mitkovski}
+
+id               : http://arxiv.org/abs/1704.00847v3
+title            : Incorporating Signals into Optimal Trading
+updated          : 2018-06-04T11:13:16Z
+link             : {link, link}
+summary          : Optimal trading is a recent field of research which was initiated by Almgren, Chriss, Bertsimas and 
+                   Lo in the late 90's. Its main application is slicing large trading orders, in the interest of minimi
+                   zing trading costs and potential perturbations of price dynamics due to liquidity shocks. The initia
+                   l optimization frameworks were based on mean-variance minimization for the trading costs. In the pas
+                   t 15 years, finer modelling of price dynamics, more realistic control variables and different cost f
+                   unctionals were developed. The inclusion of signals (i.e. short term predictors of price dynamics) i
+                   n optimal trading is a recent development and it is also the subject of this work.
+                     We incorporate a Markovian signal in the optimal trading framework which was initially proposed by
+                    Gatheral, Schied, and Slynko [21] and provide results on the existence and uniqueness of an optimal
+                    trading strategy. Moreover, we derive an explicit singular optimal strategy for the special case of
+                    an Ornstein-Uhlenbeck signal and an exponentially decaying transient market impact. The combination
+                    of a mean-reverting signal along with a market impact decay is of special interest, since they affe
+                   ct the short term price variations in opposite directions.
+                     Later, we show that in the asymptotic limit were the transient market impact becomes instantaneous
+                   , the optimal strategy becomes continuous. This result is compatible with the optimal trading framew
+                   ork which was proposed by Cartea and Jaimungal [10].
+                     In order to support our models, we analyse nine months of tick by tick data on 13 European stocks 
+                   from the NASDAQ OMX exchange. We show that orderbook imbalance is a predictor of the future price mo
+                   ve and it has some mean-reverting properties. From this data we show that market participants, espec
+                   ially high frequency traders, use this signal in their trading strategies.
+category         : {category, category}
+published        : 2017-04-04T01:38:39Z
+comment          : 42 pages, 9 figures
+primary_category : primary_category
+author           : {Charles-Albert Lehalle, Eyal Neuman}
+
+id               : http://arxiv.org/abs/2502.16789v2
+title            : AlphaAgent: LLM-Driven Alpha Mining with Regularized Exploration to Counteract Alpha Decay
+updated          : 2025-06-09T01:44:51Z
+link             : {link, link}
+summary          : Alpha mining, a critical component in quantitative investment, focuses on discovering predictive sig
+                   nals for future asset returns in increasingly complex financial markets. However, the pervasive issu
+                   e of alpha decay, where factors lose their predictive power over time, poses a significant challenge
+                    for alpha mining. Traditional methods like genetic programming face rapid alpha decay from overfitt
+                   ing and complexity, while approaches driven by Large Language Models (LLMs), despite their promise, 
+                   often rely too heavily on existing knowledge, creating homogeneous factors that worsen crowding and 
+                   accelerate decay. To address this challenge, we propose AlphaAgent, an autonomous framework that eff
+                   ectively integrates LLM agents with ad hoc regularizations for mining decay-resistant alpha factors.
+                    AlphaAgent employs three key mechanisms: (i) originality enforcement through a similarity measure b
+                   ased on abstract syntax trees (ASTs) against existing alphas, (ii) hypothesis-factor alignment via L
+                   LM-evaluated semantic consistency between market hypotheses and generated factors, and (iii) complex
+                   ity control via AST-based structural constraints, preventing over-engineered constructions that are 
+                   prone to overfitting. These mechanisms collectively guide the alpha generation process to balance or
+                   iginality, financial rationale, and adaptability to evolving market conditions, mitigating the risk 
+                   of alpha decay. Extensive evaluations show that AlphaAgent outperforms traditional and LLM-based met
+                   hods in mitigating alpha decay across bull and bear markets, consistently delivering significant alp
+                   ha in Chinese CSI 500 and US S&P 500 markets over the past four years. Notably, AlphaAgent showcases
+                    remarkable resistance to alpha decay, elevating the potential for yielding powerful factors.
+category         : {category, category}
+published        : 2025-02-24T02:56:46Z
+comment          : 9 pages; Code is available at: https://github.com/RndmVariableQ/AlphaAgent
+primary_category : primary_category
+author           : {Ziyi Tang, Zechuan Chen, Jiarui Yang, Jiayao Mai...}
+
+id               : http://arxiv.org/abs/2404.02155v2
+title            : Alpha Invariance: On Inverse Scaling Between Distance and Volume Density in Neural Radiance Fields
+updated          : 2024-04-17T01:41:59Z
+link             : {link, link}
+summary          : Scale-ambiguity in 3D scene dimensions leads to magnitude-ambiguity of volumetric densities in neura
+                   l radiance fields, i.e., the densities double when scene size is halved, and vice versa. We call thi
+                   s property alpha invariance. For NeRFs to better maintain alpha invariance, we recommend 1) paramete
+                   rizing both distance and volume densities in log space, and 2) a discretization-agnostic initializat
+                   ion strategy to guarantee high ray transmittance. We revisit a few popular radiance field models and
+                    find that these systems use various heuristics to deal with issues arising from scene scaling. We t
+                   est their behaviors and show our recipe to be more robust.
+category         : category
+published        : 2024-04-02T17:58:57Z
+comment          : CVPR 2024. project page https://pals.ttic.edu/p/alpha-invariance
+primary_category : primary_category
+author           : {Joshua Ahn, Haochen Wang, Raymond A. Yeh, Greg Shakhnarovich}
+
+
+

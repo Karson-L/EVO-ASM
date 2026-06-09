@@ -1,0 +1,288 @@
+﻿
+
+id               : http://arxiv.org/abs/2111.09395v1
+title            : FinRL: Deep Reinforcement Learning Framework to Automate Trading in Quantitative Finance
+updated          : 2021-11-07T00:34:32Z
+link             : {link, link, link}
+summary          : Deep reinforcement learning (DRL) has been envisioned to have a competitive edge in quantitative fin
+                   ance. However, there is a steep development curve for quantitative traders to obtain an agent that a
+                   utomatically positions to win in the market, namely \textit{to decide where to trade, at what price}
+                    and \textit{what quantity}, due to the error-prone programming and arduous debugging. In this paper
+                   , we present the first open-source framework \textit{FinRL} as a full pipeline to help quantitative 
+                   traders overcome the steep learning curve. FinRL is featured with simplicity, applicability and exte
+                   nsibility under the key principles, \textit{full-stack framework, customization, reproducibility} an
+                   d \textit{hands-on tutoring}.
+                     Embodied as a three-layer architecture with modular structures, FinRL implements fine-tuned state-
+                   of-the-art DRL algorithms and common reward functions, while alleviating the debugging workloads. Th
+                   us, we help users pipeline the strategy design at a high turnover rate. At multiple levels of time g
+                   ranularity, FinRL simulates various markets as training environments using historical data and live 
+                   trading APIs. Being highly extensible, FinRL reserves a set of user-import interfaces and incorporat
+                   es trading constraints such as market friction, market liquidity and investor's risk-aversion. Moreo
+                   ver, serving as practitioners' stepping stones, typical trading tasks are provided as step-by-step t
+                   utorials, e.g., stock trading, portfolio allocation, cryptocurrency trading, etc.
+category         : {category, category}
+published        : 2021-11-07T00:34:32Z
+comment          : ACM International Conference on AI in Finance
+primary_category : primary_category
+journal_ref      : ACM International Conference on AI in Finance, 2021
+author           : {Xiao-Yang Liu, Hongyang Yang, Jiechao Gao, Christina Dan Wang}
+doi              : 10.1145/3490354.3494366
+
+id               : http://arxiv.org/abs/2208.02809v2
+title            : The Role of Morphological Variation in Evolutionary Robotics: Maximizing Performance and Robustness
+updated          : 2023-10-11T20:05:09Z
+link             : {link, link, link}
+summary          : Exposing an Evolutionary Algorithm that is used to evolve robot controllers to variable conditions i
+                   s necessary to obtain solutions which are robust and can cross the reality gap. However, we do not y
+                   et have methods for analyzing and understanding the impact of the varying morphological conditions w
+                   hich impact the evolutionary process, and therefore for choosing suitable variation ranges. By morph
+                   ological conditions, we refer to the starting state of the robot, and to variations in its sensor re
+                   adings during operation due to noise. In this article, we introduce a method that permits us to meas
+                   ure the impact of these morphological variations and we analyze the relation between the amplitude o
+                   f variations, the modality with which they are introduced, and the performance and robustness of evo
+                   lving agents. Our results demonstrate that (i) the evolutionary algorithm can tolerate morphological
+                    variations which have a very high impact, (ii) variations affecting the actions of the agent are to
+                   lerated much better than variations affecting the initial state of the agent or of the environment, 
+                   and (iii) improving the accuracy of the fitness measure through multiple evaluations is not always u
+                   seful. Moreover, our results show that morphological variations permit generating solutions which pe
+                   rform better both in varying and non-varying conditions.
+category         : {category, category, category}
+published        : 2022-08-04T17:58:15Z
+comment          : submitted to MIT Evolutionary Computation Journal
+primary_category : primary_category
+journal_ref      : Carvalho, J. T., & Nolfi, S. (2023). The role of morphological variation in evolutionary robotics: M
+                   aximizing performance and robustness. Evolutionary Computation, 1-18
+author           : {Jonata Tyska Carvalho, Stefano Nolfi}
+doi              : 10.1162/evco_a_00336
+
+id               : http://arxiv.org/abs/2209.13233v1
+title            : Genetic Programming-Based Evolutionary Deep Learning for Data-Efficient Image Classification
+updated          : 2022-09-27T08:10:16Z
+link             : {link, link, link}
+summary          : Data-efficient image classification is a challenging task that aims to solve image classification us
+                   ing small training data. Neural network-based deep learning methods are effective for image classifi
+                   cation, but they typically require large-scale training data and have major limitations such as requ
+                   iring expertise to design network architectures and having poor interpretability. Evolutionary deep 
+                   learning is a recent hot topic that combines evolutionary computation with deep learning. However, m
+                   ost evolutionary deep learning methods focus on evolving architectures of neural networks, which sti
+                   ll suffer from limitations such as poor interpretability. To address this, this paper proposes a new
+                    genetic programming-based evolutionary deep learning approach to data-efficient image classificatio
+                   n. The new approach can automatically evolve variable-length models using many important operators f
+                   rom both image and classification domains. It can learn different types of image features from colou
+                   r or gray-scale images, and construct effective and diverse ensembles for image classification. A fl
+                   exible multi-layer representation enables the new approach to automatically construct shallow or dee
+                   p models/trees for different tasks and perform effective transformations on the input data via multi
+                   ple internal nodes. The new approach is applied to solve five image classification tasks with differ
+                   ent training set sizes. The results show that it achieves better performance in most cases than deep
+                    learning methods for data-efficient image classification. A deep analysis shows that the new approa
+                   ch has good convergence and evolves models with high interpretability, different lengths/sizes/shape
+                   s, and good transferability.
+category         : {category, category, category, category}
+published        : 2022-09-27T08:10:16Z
+comment          : Accepted by IEEE Transactions on Evolutionary Computation
+primary_category : primary_category
+journal_ref      : IEEE Transactions on Evolutionary Computation, 2022, https://ieeexplore.ieee.org/document/9919314
+author           : {Ying Bi, Bing Xue, Mengjie Zhang}
+doi              : 10.1109/TEVC.2022.3214503
+
+id               : http://arxiv.org/abs/0909.1974v2
+title            : Econophysics: Empirical facts and agent-based models
+updated          : 2010-06-21T13:43:59Z
+link             : {link, link}
+summary          : This article aims at reviewing recent empirical and theoretical developments usually grouped under t
+                   he term Econophysics. Since its name was coined in 1995 by merging the words Economics and Physics, 
+                   this new interdisciplinary field has grown in various directions: theoretical macroeconomics (wealth
+                    distributions), microstructure of financial markets (order book modelling), econometrics of financi
+                   al bubbles and crashes, etc. In the first part of the review, we discuss on the emergence of Econoph
+                   ysics. Then we present empirical studies revealing statistical properties of financial time series. 
+                   We begin the presentation with the widely acknowledged stylized facts which describe the returns of 
+                   financial assets- fat tails, volatility clustering, autocorrelation, etc.- and recall that some of t
+                   hese properties are directly linked to the way time is taken into account. We continue with the stat
+                   istical properties observed on order books in financial markets. For the sake of illustrating this r
+                   eview, (nearly) all the stated facts are reproduced using our own high-frequency financial database.
+                    Finally, contributions to the study of correlations of assets such as random matrix theory and grap
+                   h theory are presented. In the second part of the review, we deal with models in Econophysics throug
+                   h the point of view of agent-based modelling. Amongst a large number of multi-agent-based models, we
+                    have identified three representative areas. First, using previous work originally presented in the 
+                   fields of behavioural finance and market microstructure theory, econophysicists have developed agent
+                   -based models of order-driven markets that are extensively presented here. Second, kinetic theory mo
+                   dels designed to explain some empirical facts on wealth distribution are reviewed. Third, we briefly
+                    summarize game theory models by reviewing the now classic minority game and related problems.
+category         : {category, category, category}
+published        : 2009-09-10T15:25:45Z
+comment          : 51 pages REVTeX format, review paper submitted to Quantitative Finance
+primary_category : primary_category
+journal_ref      : Quantitative Finance 11, 991-1012 (2011); Quantitative Finance 11, 1013-1041 (2011)
+author           : {Anirban Chakraborti, Ioane Muni Toke, Marco Patriarca, Frederic Abergel}
+
+id               : http://arxiv.org/abs/0910.3068v1
+title            : An Evolutionary Squeaky Wheel Optimisation Approach to Personnel Scheduling
+updated          : 2009-10-16T13:36:01Z
+link             : {link, link, link}
+summary          :   The quest for robust heuristics that are able to solve more than one problem is ongoing. In this p
+                   aper, we present, discuss and analyse a technique called Evolutionary Squeaky Wheel Optimisation and
+                    apply it to two different personnel scheduling problems. Evolutionary Squeaky Wheel Optimisation im
+                   proves the original Squeaky Wheel Optimisation's effectiveness and execution speed by incorporating 
+                   two extra steps (Selection and Mutation) for added evolution. In the Evolutionary Squeaky Wheel Opti
+                   misation, a cycle of Analysis-Selection-Mutation-Prioritization-Construction continues until stoppin
+                   g conditions are reached. The aim of the Analysis step is to identify below average solution compone
+                   nts by calculating a fitness value for all components. The Selection step then chooses amongst these
+                    underperformers and discards some probabilistically based on fitness. The Mutation step further dis
+                   cards a few components at random. Solutions can become incomplete and thus repairs may be required. 
+                   The repairs are carried out by using the Prioritization to first produce priorities that determine a
+                   n order by which the following Construction step then schedules the remaining components. Therefore,
+                    improvement in the Evolutionary Squeaky Wheel Optimisation is achieved by selective solution disrup
+                   tion mixed with interative improvement and constructive repair. Strong experimental results are repo
+                   rted on two different domains of personnel scheduling: bus and rail driver scheduling and hospital n
+                   urse scheduling.
+category         : {category, category, category}
+published        : 2009-10-16T13:36:01Z
+comment          : 21 pages, 5 tables, 1 figure, IEEE Transactions on Evolutionary Computation
+primary_category : primary_category
+journal_ref      : IEEE Transactions on Evolutionary Computation, 13 (2), 433-443, 2009
+author           : {Uwe Aickelin, Jingpeng Li, Edmund Burke}
+doi              : 10.2139/ssrn.2823393
+
+id               : http://arxiv.org/abs/2504.07152v1
+title            : Evolutionary Generation of Random Surreal Numbers for Benchmarking
+updated          : 2025-04-09T07:28:42Z
+link             : {link, link, link}
+summary          : There are many areas of scientific endeavour where large, complex datasets are needed for benchmarki
+                   ng. Evolutionary computing provides a means towards creating such sets. As a case study, we consider
+                    Conway's Surreal numbers. They have largely been treated as a theoretical construct, with little ef
+                   fort towards empirical study, at least in part because of the difficulty of working with all but the
+                    smallest numbers. To advance this status, we need efficient algorithms, and in order to develop suc
+                   h we need benchmark data sets of surreal numbers. In this paper, we present a method for generating 
+                   ensembles of random surreal numbers to benchmark algorithms. The approach uses an evolutionary algor
+                   ithm to create the benchmark datasets where we can analyse and control features of the resulting tes
+                   t sets. Ultimately, the process is designed to generate networks with defined properties, and we exp
+                   ect this to be useful for other types of network data.
+category         : {category, category}
+published        : 2025-04-09T07:28:42Z
+comment          : To appear in short form in Genetic and Evolutionary Computation Conference (GECCO '25), 2025
+primary_category : primary_category
+journal_ref      : Genetic and Evolutionary Computation Conference (GECCO '25), July 14--18, 2025, Malaga
+author           : author
+doi              : 10.1145/3712255.3726584
+
+id               : http://arxiv.org/abs/2209.06399v1
+title            : A Survey on Evolutionary Computation for Computer Vision and Image Analysis: Past, Present, and Futu
+                   re Trends
+updated          : 2022-09-14T03:35:25Z
+link             : {link, link, link}
+summary          : Computer vision (CV) is a big and important field in artificial intelligence covering a wide range o
+                   f applications. Image analysis is a major task in CV aiming to extract, analyse and understand the v
+                   isual content of images. However, image-related tasks are very challenging due to many factors, e.g.
+                   , high variations across images, high dimensionality, domain expertise requirement, and image distor
+                   tions. Evolutionary computation (EC) approaches have been widely used for image analysis with signif
+                   icant achievement. However, there is no comprehensive survey of existing EC approaches to image anal
+                   ysis. To fill this gap, this paper provides a comprehensive survey covering all essential EC approac
+                   hes to important image analysis tasks including edge detection, image segmentation, image feature an
+                   alysis, image classification, object detection, and others. This survey aims to provide a better und
+                   erstanding of evolutionary computer vision (ECV) by discussing the contributions of different approa
+                   ches and exploring how and why EC is used for CV and image analysis. The applications, challenges, i
+                   ssues, and trends associated to this research field are also discussed and summarised to provide fur
+                   ther guidelines and opportunities for future research.
+category         : {category, category, category, category}
+published        : 2022-09-14T03:35:25Z
+comment          : Conditionally accepted by IEEE Transactions on Evolutionary Computation
+primary_category : primary_category
+journal_ref      : IEEE Transactions on Evolutionary Computationm, 2022, https://ieeexplore.ieee.org/document/9943992/
+author           : {Ying Bi, Bing Xue, Pablo Mesejo, Stefano Cagnoni...}
+doi              : 10.1109/TEVC.2022.3220747
+
+id               : http://arxiv.org/abs/2312.03243v4
+title            : Evolutionary Optimization of Physics-Informed Neural Networks: Advancing Generalizability by the Bal
+                   dwin Effect
+updated          : 2026-01-01T17:04:14Z
+link             : {link, link, link}
+summary          : Physics-informed neural networks (PINNs) are at the forefront of scientific machine learning, making
+                    possible the creation of machine intelligence that is cognizant of physical laws and able to accura
+                   tely simulate them. However, today's PINNs are often trained for a single physics task and require c
+                   omputationally expensive re-training for each new task, even for tasks from similar physics domains.
+                    To address this limitation, this paper proposes a pioneering approach to advance the generalizabili
+                   ty of PINNs through the framework of Baldwinian evolution. Drawing inspiration from the neurodevelop
+                   ment of precocial species that have evolved to learn, predict and react quickly to their environment
+                   , we envision PINNs that are pre-wired with connection strengths inducing strong biases towards effi
+                   cient learning of physics. A novel two-stage stochastic programming formulation coupling evolutionar
+                   y selection pressure (based on proficiency over a distribution of physics tasks) with lifetime learn
+                   ing (to specialize on a sampled subset of those tasks) is proposed to instantiate the Baldwin effect
+                   . The evolved Baldwinian-PINNs demonstrate fast and physics-compliant prediction capabilities across
+                    a range of empirically challenging problem instances with more than an order of magnitude improveme
+                   nt in prediction accuracy at a fraction of the computation cost compared to state-of-the-art gradien
+                   t-based meta-learning methods. For example, when solving the diffusion-reaction equation, a 70x impr
+                   ovement in accuracy was obtained while taking 700x less computational time. This paper thus marks a 
+                   leap forward in the meta-learning of PINNs as generalizable physics solvers. Sample codes are availa
+                   ble at https://github.com/chiuph/Baldwinian-PINN.
+category         : {category, category, category}
+published        : 2023-12-06T02:31:12Z
+comment          : Accepted for publication in IEEE Transactions on Evolutionary Computation
+primary_category : primary_category
+journal_ref      : IEEE Transactions on Evolutionary Computation, 2026
+author           : {Jian Cheng Wong, Chin Chun Ooi, Abhishek Gupta, Pao-Hsiung Chiu...}
+doi              : 10.1109/TEVC.2026.3650792
+
+id               : http://arxiv.org/abs/1403.1574v2
+title            : Consentaneous agent-based and stochastic model of the financial markets
+updated          : 2014-07-17T06:56:37Z
+link             : {link, link, link}
+summary          : We are looking for the agent-based treatment of the financial markets considering necessity to build
+                    bridges between microscopic, agent based, and macroscopic, phenomenological modeling. The acknowled
+                   gment that agent-based modeling framework, which may provide qualitative and quantitative understand
+                   ing of the financial markets, is very ambiguous emphasizes the exceptional value of well defined ana
+                   lytically tractable agent systems. Herding as one of the behavior peculiarities considered in the be
+                   havioral finance is the main property of the agent interactions we deal with in this contribution. L
+                   ooking for the consentaneous agent-based and macroscopic approach we combine two origins of the nois
+                   e: exogenous one, related to the information flow, and endogenous one, arising form the complex stoc
+                   hastic dynamics of agents. As a result we propose a three state agent-based herding model of the fin
+                   ancial markets. From this agent-based model we derive a set of stochastic differential equations, wh
+                   ich describes underlying macroscopic dynamics of agent population and log price in the financial mar
+                   kets. The obtained solution is then subjected to the exogenous noise, which shapes instantaneous ret
+                   urn fluctuations. We test both Gaussian and q-Gaussian noise as a source of the short term fluctuati
+                   ons. The resulting model of the return in the financial markets with the same set of parameters repr
+                   oduces empirical probability and spectral densities of absolute return observed in New York, Warsaw 
+                   and NASDAQ OMX Vilnius Stock Exchanges. Our result confirms the prevalent idea in behavioral finance
+                    that herding interactions may be dominant over agent rationality and contribute towards bubble form
+                   ation.
+category         : {category, category}
+published        : 2014-03-06T20:58:07Z
+comment          : 17 pages, 6 figures, Gontis V, Kononovicius A (2014) Consentaneous Agent-Based and Stochastic Model 
+                   of the Financial Markets. PLoS ONE 9(7): e102201. doi: 10.1371/journal.pone.0102201
+primary_category : primary_category
+journal_ref      : PLoS ONE 9(7), e102201, 2014
+author           : {V. Gontis, A. Kononovicius}
+doi              : 10.1371/journal.pone.0102201
+
+id               : http://arxiv.org/abs/2402.18749v1
+title            : Weighted strategies to guide a multi-objective evolutionary algorithm for multi-UAV mission planning
+updated          : 2024-02-28T23:05:27Z
+link             : {link, link, link}
+summary          : Management and mission planning over a swarm of unmanned aerial vehicle (UAV) remains to date as a c
+                   hallenging research trend in what regards to this particular type of aircrafts. These vehicles are c
+                   ontrolled by a number of ground control station (GCS), from which they are commanded to cooperativel
+                   y perform different tasks in specific geographic areas of interest. Mathematically the problem of co
+                   ordinating and assigning tasks to a swarm of UAV can be modeled as a constraint satisfaction problem
+                   , whose complexity and multiple conflicting criteria has hitherto motivated the adoption of multi-ob
+                   jective solvers such as multi-objective evolutionary algorithm (MOEA). The encoding approach consist
+                   s of different alleles representing the decision variables, whereas the fitness function checks that
+                    all constraints are fulfilled, minimizing the optimization criteria of the problem. In problems of 
+                   high complexity involving several tasks, UAV and GCS, where the space of search is huge compared to 
+                   the space of valid solutions, the convergence rate of the algorithm increases significantly. To over
+                   come this issue, this work proposes a weighted random generator for the creation and mutation of new
+                    individuals. The main objective of this work is to reduce the convergence rate of the MOEA solver f
+                   or multi-UAV mission planning using weighted random strategies that focus the search on potentially 
+                   better regions of the solution space. Extensive experimental results over a diverse range of scenari
+                   os evince the benefits of the proposed approach, which notably improves this convergence rate with r
+                   espect to a naïve MOEA approach.
+category         : category
+published        : 2024-02-28T23:05:27Z
+comment          : Preprint submitted and accepted in Swarm and Evolutionary Computation
+primary_category : primary_category
+journal_ref      : Cristian Ramirez Atencia, Javier Del Ser, David Camacho: Weighted strategies to guide a multi-object
+                   ive evolutionary algorithm for multi-UAV mission planning. Swarm and Evolutionary Computation, Volum
+                   e 44, Pages 480-495, 2019
+author           : {Cristian Ramirez-Atencia, Javier Del Ser, David Camacho}
+doi              : 10.1016/j.swevo.2018.06.005
+
+
+
