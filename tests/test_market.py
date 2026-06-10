@@ -11,8 +11,6 @@ import unittest
 
 import numpy as np
 
-# 将项目根目录加入 sys.path
-sys.path.insert(0, r"C:\seelf\大三下\主修毕设")
 
 from evo_asm.config import EVOASMConfig
 from evo_asm.market.asset import Asset
