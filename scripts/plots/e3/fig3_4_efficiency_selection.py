@@ -1,0 +1,50 @@
+"""Fig 3.4: Efficiency under selection.
+Usage: python fig34.py --data-dir <path>
+"""
+import sys, argparse
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent))
+
+import matplotlib; matplotlib.use("Agg")
+matplotlib.rcParams["font.sans-serif"] = ["SimHei","Microsoft YaHei","DejaVu Sans"]
+matplotlib.rcParams["axes.unicode_minus"] = False
+matplotlib.rcParams.update({'figure.dpi':150,'savefig.dpi':300,'savefig.bbox':'tight',
+    'font.size':11,'axes.titlesize':13,'axes.labelsize':12,
+    'xtick.labelsize':10,'ytick.labelsize':10,'legend.fontsize':9,
+    'lines.linewidth':1.5,'axes.grid':True,'grid.alpha':0.3})
+
+import pandas as pd, matplotlib.pyplot as plt, numpy as np
+from scipy import stats
+
+def main(data_dir=None, output_dir=None):
+    root = Path(__file__).parent.parent.parent.parent
+    if data_dir is None:
+        data_dir = root / "results" / "e3_replication" / "baseline_seed42"
+    else:
+        data_dir = Path(data_dir)
+    if output_dir is None:
+        output_dir = data_dir / "plots"
+    output_dir = Path(output_dir); output_dir.mkdir(parents=True, exist_ok=True)
+    df = pd.read_csv(data_dir / "market.csv")
+    root = Path(__file__).parent.parent.parent.parent
+    e3r = root / "results" / "e3_replication"
+    subdirs = sorted([d for d in e3r.iterdir() if d.is_dir() and (d / "market.csv").exists()])
+    if not subdirs: print("No data"); return
+    fig, ax = plt.subplots(figsize=(10,5))
+    colors = ["#3182BD","#E6550D","#31A354"]
+    for i,sd in enumerate(subdirs[:3]):
+        df = pd.read_csv(sd/"market.csv")
+        ax.plot(df["step"],np.abs(df["acf1"]),color=colors[i%3],lw=1.2,alpha=0.8,label=sd.name[:40])
+    ax.axhline(y=0,color="grey",lw=0.5)
+    ax.set_xlabel("Step");ax.set_ylabel("|ACF(1)|")
+    ax.set_title("Figure 3.4: Market Efficiency Under Replication")
+    ax.legend(fontsize=8)
+    fig.savefig(output_dir/"fig3_4_efficiency_selection.png");plt.close(fig)
+    print("Saved Fig 3.4")
+
+if __name__ == "__main__":
+    p = argparse.ArgumentParser()
+    p.add_argument("--data-dir", type=str, default=None)
+    p.add_argument("--output-dir", type=str, default=None)
+    a = p.parse_args()
+    main(a.data_dir, a.output_dir)

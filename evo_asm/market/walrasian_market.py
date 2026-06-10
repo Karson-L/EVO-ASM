@@ -101,13 +101,15 @@ class WalrasianMarket(BaseMarket):
         noise = self.rng.normal(0, 1, size=self.config.N)
 
         for n in range(self.config.N):
-            # 对数价格更新
+            # 对数价格更新（限制 delta 防止 exp 溢出）
             if prev_P[n] > 0:
-                log_price = np.log(prev_P[n]) + kappa * ED[n] + sigma_noise * noise[n]
-                new_price = np.exp(log_price)
+                max_delta = np.log(1.0 + price_limit)
+                min_delta = np.log(1.0 - price_limit)
+                delta = kappa * ED[n] + sigma_noise * noise[n]
+                delta = np.clip(delta, min_delta, max_delta)
+                new_price = prev_P[n] * np.exp(delta)
             else:
                 new_price = prev_P[n]
-
             # 涨跌停板限制
             upper = prev_P[n] * (1.0 + price_limit)
             lower = prev_P[n] * (1.0 - price_limit)

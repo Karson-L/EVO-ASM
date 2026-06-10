@@ -210,6 +210,9 @@ class TradingAgent:
             price=price,
             volatility=volatility,
         )
+        # 财富约束：目标持仓不得超过可用现金可购买的最大数量
+        max_shares = (max(0.0, self.cash) * 2.0) / price if price > 0 else 0.0
+        target = min(target, max_shares) if max_shares > 0 else target
         target_qty = direction * target
         net_demand = target_qty - self.holdings[asset_idx]
         return (direction, float(net_demand))
@@ -241,7 +244,20 @@ class TradingAgent:
         float
             实际成交金额（扣除交易成本前）。
         """
+        # 财富约束：买入不能透支，卖出不能超持
+        if quantity > 0:
+            # 买入：最多用可用现金的 2 倍
+            max_buy_qty = (max(0.0, self.cash) * 2.0) / price if price > 0 else 0.0
+            quantity = min(quantity, max_buy_qty)
+        elif quantity < 0:
+            # 卖出：不能超过现有持仓
+            max_sell_qty = self.holdings[asset_idx]
+            quantity = max(quantity, -max_sell_qty)
         cost = quantity * price
+        # 再次检查：买入成本不得超过现金（不允许透支）
+        if cost > self.cash and quantity > 0:
+            quantity = self.cash / price if price > 0 else 0.0
+            cost = quantity * price
         tc = 0.0
         if config is not None:
             tc += config.c_comm * abs(quantity) * price

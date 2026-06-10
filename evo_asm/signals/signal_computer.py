@@ -89,6 +89,14 @@ class SignalComputer:
         s5 = self.fundamental_deviation(market.get_price(asset_idx), asset.F)
         s6 = self.short_reversal(prices)
 
+                # 各信号分量 clamp 到合理范围，防止成交量异常等信号爆炸
+        SIG_MAX = 5.0
+        s1 = float(np.clip(s1, -SIG_MAX, SIG_MAX))
+        s2 = float(np.clip(s2, -SIG_MAX, SIG_MAX))
+        s3 = float(np.clip(s3, -SIG_MAX, SIG_MAX))
+        s4 = float(np.clip(s4, -SIG_MAX, SIG_MAX))
+        s5 = float(np.clip(s5, -SIG_MAX, SIG_MAX))
+        s6 = float(np.clip(s6, -SIG_MAX, SIG_MAX))
         return np.array([s1, s2, s3, s4, s5, s6], dtype=np.float64)
 
     # ── 单项信号 ──
