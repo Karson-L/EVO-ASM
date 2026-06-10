@@ -57,10 +57,16 @@
 │   ├── e3_replication/
 │   └── e4_full_evolution/
 │
-├── paper/                        # 毕业论文
-│   ├── figures/                  #   最终版图表
-│   ├── drafts/                   #   论文草稿
-│   └── references.bib            #   参考文献
+├── paper/                        # 毕业论文（基于 JLUThesis LaTeX 模板）
+│   ├── thesis/                   #   LaTeX 论文工程（在这里写论文、编译）
+│   │   ├── main.tex              #     主文档
+│   │   ├── jluthesis.cls         #     JLU 论文文档类
+│   │   ├── jluthesis.cfg         #     论文格式配置
+│   │   ├── reference.bib         #     参考文献库
+│   │   ├── data/                 #     各章节 tex 文件
+│   │   └── figures/              #     论文插图（含校徽）
+│   ├── drafts/                   #   草稿 / 写作笔记
+│   └── figures/                  #   从 results/ 筛选的最终图表
 │
 └── data/                         # 外部数据
     └── literature/               #   文献检索结果

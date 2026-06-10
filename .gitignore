@@ -39,3 +39,18 @@ results/*/plots/       # 生成的图表（保留 CSV 数据）
 
 # Mesa
 mesa_cache/
+
+# LaTeX 编译产物
+*.aux
+*.fls
+*.fdb_latexmk
+*.out
+*.toc
+*.lof
+*.lot
+*.synctex.gz
+*.xdv
+*.bbl
+*.blg
+*.bcf
+*.run.xml
