@@ -35,6 +35,18 @@ Thumbs.db
 
 # Project specific
 *.log
+*.synctex*
+*.synctex(busy)
 
 # Mesa
 mesa_cache/
+
+# LaTeX
+paper/thesis/main.aux
+paper/thesis/main.out
+paper/thesis/main.toc
+paper/thesis/main.log
+
+# Temp scripts
+_write_*.py
+_gen_*.py
