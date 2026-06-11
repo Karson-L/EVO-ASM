@@ -1,228 +1,82 @@
-\chapter{引论}
+﻿\chapter{绪论}
 \label{chap:introduction}
 
-本章为吉林大学本科生毕业论文 \LaTeX 模板的示例文档\footnote{本模板适配了吉林大学计算机科学
-与技术学院的毕业论文格式，参考了《附件Z-3：学院本科毕业论文（设计）撰写参考模板》中的格式要求，
-适配作者为geekifan，参见 GitHub 主页\url{https://github.com/geekifan}。}，对写作过程
-中常见用法和问题进行介绍说明。第一章的内容参考了北京大学硕士学位论文模板\footnote{\url{https://github.com/iofu728/pkuthss}}
-的相关章节。
+\section{研究背景与意义}
 
-\section{封面及配置文件相关}
-\label{sec:cover-pkuthssinfo}
+金融市场作为现代经济体系的核心组成部分，其价格发现机制和效率特征一直是金融经济学研究的核心议题。Fama（1970）提出的有效市场假说（Efficient Market Hypothesis, EMH）认为，在理性投资者和充分竞争的条件下，资产价格能够充分反映所有可用信息，使得任何交易策略都无法持续获得超额收益（Alpha）。然而，过去数十年的实证研究不断挑战这一理论框架：动量效应（Jegadeesh \& Titman, 1993）、价值溢价（Fama \& French, 1992）、低波动率异象（Ang et al., 2006）等市场异象的广泛存在表明，市场并非始终处于有效状态。
 
-本模板使用 \verb|jluthesis.cfg| 配置文件对封面的相关信息进行设置。示例配置如下：
+行为金融学从投资者心理偏差的角度对这些异象提供了解释，但未能系统性地回答一个更深层次的问题：为什么某些交易策略的Alpha会随着时间推移而衰减乃至消失？McLean和Pontiff（2016）的实证研究发现，学术文献中报告的97个股市异象在公开发表后平均收益率下降约58\%，表明策略的盈利能力在市场竞争压力下会显著退化。然而，这一衰减过程的微观机制——即不同策略间的竞争、模仿和替代如何导致超额收益的动态演化——仍未得到充分的理论建模。
 
-\begin{Verbatim}
-    \ProvidesFile{jluthesis.cfg}
-    \def\cover@thesis{毕业设计（论文）}
-    \def\cover@ctitlef{第一行}
-    \def\cover@ctitles{第二行}
-    \def\cover@ctitle{中文完整题目}
-    \def\cover@etitlef{The first}
-    \def\cover@etitles{The second}
-    \def\cover@etitle{English Title}
-    \def\cover@school{某某学院}
-    \def\cover@major{某某专业}
-    \def\cover@author{张三}
-    \def\cover@eauthor{Zhang San}
-    \def\cover@studentid{11111111}
-    \def\cover@mentor{李四}
-    \def\cover@ementor{Li Si}
-    \def\cover@time{2023 年 6 月}
-    \def\abstract@cabstract{摘\hspace{1em}要}
-    \def\abstract@eabstract{Abstract}
-    \def\abstract@ckeywords{关键词：}
-    \def\abstract@ekeywords{Keywords:}
-    \def\commitment@title{吉林大学学士学位论文（设计）承诺书}
-    \def\commitment@content{本人郑重承诺：所呈交的学士学位毕业论文（设计），
-    是本人在指导教师的指导下，独立进行实验、设计、调研等工作基础上取得的成果。
-    除文中已经注明引用的内容外，本论文（设计）不包含任何其他个人或集体
-    已经发表或撰写的作品成果。对本人实验或设计中做出重要贡献的个人或集体，
-    均已在文中以明确的方式注明。本人完全意识到本承诺书的法律结果由本人承担。}
-    \def\commitment@sign{承诺人：}
-    \def\commitment@time{2023年5月29日}
-    \endinput
-\end{Verbatim}
+与此同时，量化交易在金融市场中的主导地位日益增强。据估计，美国股票市场超过60\%的交易量由算法交易系统执行。在中国A股市场，量化私募基金的管理规模在2021年突破1万亿元人民币，量化交易占比持续攀升。这一趋势意味着：交易策略不再是个体投资者的孤立决策，而是构成了一个复杂的、相互依赖的"策略生态系统"。在这个生态系统中，策略间的竞争关系——类似于生物物种间的资源竞争——可能从根本上决定了Alpha的诞生、扩散和消亡的动态过程。
 
+本研究正是在这一背景下，尝试将演化金融学（Evolutionary Finance）、适应性市场假说（Adaptive Markets Hypothesis, AMH）和基于Agent的计算经济学（Agent-Based Computational Economics, ACE）三个理论框架进行整合，构建一个演化人工股票市场模型（Evolutionary Artificial Stock Market, EVO-ASM），通过自底向上的微观建模方法，系统性地研究量化交易策略生态系统中的Alpha消失机制。
 
-\section{字体设定}
-\label{sec:fontset}
+\section{文献综述}
 
-本模板的默认中文字体为宋体，英文字体为 Times New Roman。本项目不包含任何所需的字体文件。如需使用 Overleaf，请自行在项目中上传 Overleaf 缺失的宋体文件，然后在 \verb|jluthesis.cls| 文件中将 
-\begin{Verbatim}
-\setCJKfamilyfont{cusong}[AutoFakeBold = {2.17}]{SimSun}
-\end{Verbatim}
-修改为
-\begin{Verbatim}
-\setCJKfamilyfont{cusong}[AutoFakeBold = {2.17}]{/path/to/simsun.ttf}
-\end{Verbatim}
+\subsection{演化金融学}
 
-\section{承诺书}
-\label{sec:commitment}
+演化金融学起源于Evstigneev、Hens和Schenk-Hoppé（2002, 2006, 2015）系统性的理论研究，其核心思想是将金融市场建模为一个演化系统：不同投资策略的财富份额动态变化类似于生物种群的自然选择过程——适应度高的策略（物种）会"繁殖"（吸引更多资本），而不适应的策略会"灭绝"。Evstigneev等人（2002）在《Mathematical Financial Economics》中提出的演化投资组合理论（Evolutionary Portfolio Theory）严格证明了在长期演化动态中，存活策略（survivor）必须是对数最优（log-optimal）的，从而在演化选择和理性预期之间建立了形式化的数学桥梁。
 
-本模板自带承诺书。请核对该模板使用的承诺书与学院使用的承诺书是否一致。如需去除承诺书一页。请将\verb|main.tex|中的\verb|\commitment|注释或删除。
+Hens和Schenk-Hoppé（2005）在《Handbook of Financial Markets》中对该框架进行了全面综述。近年来，Scholl、Farmer等人（2020）的工作进一步将生态学概念引入金融建模，在"市场生态学如何解释市场失灵"的研究中，基于Lotka-Volterra种群竞争思想解释了金融市场的非理性繁荣与崩溃，其核心发现是"策略生态位重叠（strategy niche overlap）"是导致市场不稳定的关键机制。此后，"面向生态学的市场生态ABM模型"（2022, 2023）被提出，用于建模美国公募基金风格投资的宏观环境-投资风格-策略盈利性的多层级生态动力链。最新工作中，FinEvo框架（2026）将策略评估从孤立回测推进到生态博弈框架，进一步丰富了策略竞争的理论工具。
 
-\section{摘要部分}
-\label{sec:abstract}
+\subsection{适应性市场假说}
 
-请在\verb|cabstract.tex|中书写中文摘要，在\verb|eabstract.tex|中书写英文摘要。
+Andrew Lo（2004, 2005, 2012, 2017）提出的适应性市场假说是连接有效市场假说与行为金融学的最重要理论桥梁。AMH的核心命题包括：（1）个体是有限理性的，通过试错学习适应环境；（2）市场效率是动态的——效率程度随时间和市场条件变化，而非二值状态；（3）套利机会的出现和消失是一个生态过程：当一种策略获利时，更多资本流入，机会被竞争消除，策略获利能力衰减，资本流出，机会重新出现；（4）创新是关键驱动力——新的信息源、分析技术和交易规则不断改变竞争格局。
 
+Lo在2017年出版的专著《Adaptive Markets: Financial Evolution at the Speed of Thought》中系统阐述了这一理论框架。Ito和Sugiyama（2012）使用时变AR模型对日本股市进行了AMH实证检验，发现市场效率程度具有显著的时变特征。AMH为本研究提供了核心的理论基础：Alpha的消失并非市场走向"完美有效"的证据，而是策略生态系统内部竞争动态的自然结果。
 
-\section{图表相关}
-\label{sec:table-figure}
+\subsection{基于Agent的计算经济学与人工股票市场}
 
-\subsection{表格样例}
-\label{sec:table-example}
+基于Agent的计算经济学提供了一种"自底向上"的研究范式，通过构建异质性Agent及其交互规则，观察宏观市场现象的涌现。这一方法论的开创性工作是圣塔菲研究所人工股票市场（SFI-ASM, Arthur et al., 1997），其中Agent使用分类器系统从经验中归纳学习，市场结构从微观交互中内生涌现。LeBaron（2002）对该模型进行了系统性的技术总结，Ehrentreich（2007）对SFI-ASM进行了系统回顾与批判性评估。
 
-一般学术论文使用三线表(如表~\ref{tab:example-table-basic})，需要依赖宏包\verb|booktabs|，使用\verb|\toprule|，\verb|\midrule|，\verb|\bottomrule|控制三线。
-此外表序和表名位于表格的上方。
-如果需要对表格内进行脚注，可通过\texttt{minipage}中嵌套\texttt{tabular}来实现，具体可参考Stack Overflow\footnote{\url{https://stackoverflow.com/questions/2888817/footnotes-for-tables-in-latex}}。
+近年来，Yang等人（2015）将异质性Agent建模方法应用于中美金融市场的比较研究。Trimborn和Frank（2018）开发的SABCEMM模拟器使得多种经典ABM模型可以被系统性地复现和检验。Trimborn等人（2018）进一步通过系统实验，检验了ABM模型对经验化事实（stylized facts）——如肥尾分布、波动率聚集、长记忆性等——的复现能力。
 
-{\begin{longtable}[c]{c*{7}{r}}
-\caption[续表]{续表样例表。}
-\label{tab:example-table-continue}\\
-\toprule[1.5pt]
- \multicolumn{1}{c}{年龄} & 性别 & \multicolumn{1}{c}{cp} & \multicolumn{1}{c}{静息血压} & \multicolumn{1}{c}{chol}
-& \multicolumn{1}{c}{空腹血糖>} & \multicolumn{1}{c}{restecg} & \multicolumn{1}{c}{thalachh} \\
-\multicolumn{1}{c}{(岁)} & & \multicolumn{1}{c}{胸痛型}&
-\multicolumn{1}{c}{毫米汞柱}& \multicolumn{1}{c}{胆固醇}& \multicolumn{1}{c}{
-   120 mg/dl}& 静息状态 & 最大心率 \\\midrule[1pt]
-\endfirsthead
-\multicolumn{8}{c}{续表~\thetable\hskip1em 续表样例表。}\\
-\toprule[1.5pt]
- \multicolumn{1}{c}{年龄} & 性别 & \multicolumn{1}{c}{cp} & \multicolumn{1}{c}{静息血压} & \multicolumn{1}{c}{chol}
-& \multicolumn{1}{c}{空腹血糖>} & \multicolumn{1}{c}{restecg} & \multicolumn{1}{c}{thalachh} \\
-\multicolumn{1}{c}{(岁)} & & \multicolumn{1}{c}{胸痛型}&
-\multicolumn{1}{c}{毫米汞柱}& \multicolumn{1}{c}{胆固醇}& \multicolumn{1}{c}{
-   120 mg/dl}& 静息状态 & 最大心率 \\\midrule[1pt]
-\endhead
-\hline
-\multicolumn{8}{r}{续下页}
-\endfoot
-\endlastfoot
-63 & 1 & 3 & 145 & 233 & 1 & 0 & 150 \\
-37 & 1 & 2 & 130 & 250 & 0 & 1 & 187 \\
-41 & 0 & 1 & 130 & 204 & 0 & 0 & 172 \\
-56 & 1 & 1 & 120 & 236 & 0 & 1 & 178 \\
-57 & 0 & 0 & 120 & 354 & 0 & 1 & 163 \\
-57 & 1 & 0 & 140 & 192 & 0 & 1 & 148 \\
-56 & 0 & 1 & 140 & 294 & 0 & 0 & 153 \\
-44 & 1 & 1 & 120 & 263 & 0 & 1 & 173 \\
-52 & 1 & 2 & 172 & 199 & 1 & 1 & 162 \\
-57 & 1 & 2 & 150 & 168 & 0 & 1 & 174 \\
-54 & 1 & 0 & 140 & 239 & 0 & 1 & 160 \\
-48 & 0 & 2 & 130 & 275 & 0 & 1 & 139 \\
-49 & 1 & 1 & 130 & 266 & 0 & 1 & 171 \\
-64 & 1 & 3 & 110 & 211 & 0 & 0 & 144 \\
-\bottomrule[1.5pt]
-\end{longtable}
-\footnotesize 注：数据来源于Kaggle Heart Attack Analysis \& Prediction Data Set。}
+在策略演化方面，现有的ABM研究虽然涉及了策略学习和适应，但大多集中于单个Agent的学习机制（如强化学习、遗传算法），较少将整个策略群体建模为一个相互竞争的生态系统。本研究的核心创新在于：将Agent的策略视为具有独立存在性和演化动力的"物种"，通过引入复制-突变-选择机制，实现对策略生态系统中Alpha生命周期动态的内生建模。
 
-如需要注明表格中数据来源，则可使用类似的方式，见表~\ref{tab:example-table-source-foot}。
+\subsection{中国A股市场的微观结构特征}
 
-\begin{table*}[htb]
-    \centering
-    \begin{minipage}[t]{0.55\linewidth} %
-        \caption[表格脚注样例表]{表格脚注样例表。表名可通过中括号添加缩略名。}
-        \label{tab:example-table-basic}
-        \begin{small}
-        \begin{tabular}{@{}lccccc@{}}
-         \toprule[1.5pt]
-         & \textbf{X} & \textbf{Y} & \textbf{Z} & \textbf{N} & \textbf{M} \\
-         \midrule[1pt]
-            默认        & 99.99 & 99.99 & 99.99 & 99.99\footnote{表格中的脚注1} & 99.99 \\
-          \quad w/o X   & 99.99 & 99.99 & 99.99 & 99.99 & 99.99 \\
-          \quad w/o Y   & 99.99 & 99.99 & 99.99 & 99.99 & 99.99 \\
-          \quad w/o Z   & 99.99\footnote{表格中的脚注2} & 99.99 & 99.99 & 99.99 & 99.99 \\
-          \quad w/o N   & 99.99 & 99.99 & 99.99 & 99.99 & 99.99 \\
-          \quad w/o M   & 99.99 & 99.99 & 99.99 & 99.99 & 99.99 \\
-          \bottomrule[1.5pt]
-        \end{tabular}
-        \end{small}
-    \end{minipage}
-\end{table*}
+中国A股市场具有一系列独特的制度特征和市场结构，使其成为研究策略生态系统演化的理想场景：（1）涨跌停板制度（±10\%）对极端价格变动构成硬约束；（2）T+1交易制度限制了日内高频交易策略；（3）散户投资者占比较高（约60\%交易量），噪音交易显著；（4）做空机制受限（融券标的有限）；（5）印花税和佣金费率对策略盈利能力有不可忽略的影响。本研究在模型参数校准中将纳入这些中国市场的特征化事实。
 
-\begin{table*}[htbp]
-   \centering
-   \caption[数据来源注释表]{表格数据来源注释样例表。}
-   \label{tab:example-table-source-foot}
-   \begin{minipage}[t]{0.9\textwidth}
-   \begin{small}
-   \begin{tabular}{@{}l|ccc|ccc@{}}
-   \toprule
-   \multirow{2}{*}{\textbf{Model}} & \multicolumn{3}{c|}{\textbf{数据集A}} & \multicolumn{3}{c}{\textbf{数据集B}} \\ \cmidrule(l){2-7} 
-    & \textbf{指标a}(\%) & \textbf{指标b}(\%) & \textbf{指标c} & \textbf{指标a} (\%) & \textbf{指标b}(\%) & \textbf{指标c} \\ \midrule
-    Devlin et al.\cite{devlin2018bert}      &99.99  & 99.99  & 99.99  &99.99  & 99.99  & 99.99  \\
-    Yang et al.\cite{yang2019xlnet}      &99.99  & 99.99  & 99.99  &99.99  & 99.99  & 99.99  \\
-    \bottomrule
-   \end{tabular}\\[6pt]
-   \footnotesize 注：数据来源XXXXXX。\\
-   \end{small}
-   \end{minipage}
-\end{table*}
+\section{研究问题}
 
-当表格较大，不能在一页内打印时，可以“续表”的形式另页打印，可使用宏包\verb|longtable|实现，如表~\ref{tab:example-table-continue}。
+基于以上文献综述，本研究聚焦以下核心研究问题：
 
+\textbf{Q1（核心问题）：}在策略生态系统的演化过程中，Alpha是否会因为策略竞争而系统性消失？如果是，Alpha消失的速率由什么因素决定？
 
-\subsection{图片样例}
-\label{sec:figure-example}
+\textbf{Q2（机制问题）：}财富集中（资本向盈利策略的流动）、策略模仿（复製机制）和策略创新（突变机制）分别对Alpha衰减贡献了多大的因果效应？这三个机制是否可以相互独立地识别？
 
-\begin{figure}[htb]
-  \centering
-  \subfloat[吉林大学校徽]{
-    \label{sfig:example-fig-logo-fig}
-    \includegraphics[height=2.5cm]{figures/jlu-fig-logo}}\hspace{4em}
-  \subfloat[吉林大学中文校名]{
-    \label{sfig:example-fig-logo-text}
-    \includegraphics[height=2.5cm]{figures/jlu-text-logo}}
-  \caption{包含子图形的大图形}
-  \label{fig:example-fig-subfloat}
-\end{figure}
+\textbf{Q3（条件问题）：}初始策略多样性、外部噪声冲击和演化选择强度如何调节Alpha衰减的动力学特征？是否存在"最优"的策略多样性水平，使得市场既保持效率又维持稳定？
 
-当需要插入多个子图的时候，可以选用宏包\verb|subfloat|，不推荐使用
-\verb|subfigure| 和 \verb|subtable|。
+\textbf{Q4（涌现问题）：}策略生态系统是否存在相变（phase transition）——从策略多样性高、市场接近弱有效状态突然切换到策略同质化、市场脆弱的临界状态？
 
-若使用继承于\verb|subfigure|的宏包，例如\verb|subfloat|、\verb|subfigure|等，则可直接使用引用\verb|\ref{sfig:xxxx}|引用子图label，如图~\ref{sfig:example-fig-logo-fig}。
-否则需要引用主图，再单独标注子图序号，以便符合学位论文要求。
+\section{研究假设}
 
-此外，与表格相反，图序和图名需要位于图片的下方。
-如果含有子图，每个子图需要具有相应的子图名。
+基于适应性市场假说和演化金融学的理论框架，本研究提出以下五组研究假设：
 
+\textbf{H1（弱有效市场涌现假说）：}当Agent策略充分多样化且持续进行适应性学习时，市场价格将涌现出弱有效性质（无显著可预测超额收益），但这种效率状态是亚稳态的（metastable）。
 
-如果需要并排使用两个独立的图形，分别编排图序，则可使用\verb|minipage|，如图~\ref{fig:example-fig-abreast-1}和图~\ref{fig:example-fig-abreast-2}。
+\textbf{H2（Alpha生命周期假说）：}策略Alpha遵循"发现→资本流入→拥挤度上升→超额收益递减→资本流出→Alpha部分恢复"的循环衰减模式，衰减速率受该策略生态位宽度和重叠度的调节。
 
-\begin{figure}[htb]
-\begin{minipage}{0.48\textwidth}
-  \centering
-  \includegraphics[height=2cm]{figures/jlu-fig-logo}
-  \caption{吉林大学校徽}
-  \label{fig:example-fig-abreast-1}
-\end{minipage}\hfill
-\begin{minipage}{0.48\textwidth}
-  \centering
-  \includegraphics[height=2cm]{figures/jlu-text-logo}
-  \caption{吉林大学中文校名}
-  \label{fig:example-fig-abreast-2}
-\end{minipage}
-\end{figure}
+\textbf{H3（策略多样性-市场稳定性假说）：}策略多样性（熵度量）与市场价格稳定性之间存在倒U型关系：过低导致剧烈波动，过高导致噪声交易占优，存在最优多样性区间。
 
-\section{公式}
-\label{sec:equation}
+\textbf{H4（适应性竞争假说）：}在演化选择压力下，Agent会从简单策略逐步进化到更复杂策略，但策略复杂性的增加不一定带来更好的生存表现——中等复杂度的策略在稳定环境中长期存活概率最高。
 
-公式使用通用\LaTeX{}规范即可。对于复杂公式需求，可使用\verb|amsmath|宏包结合Mathpix\footnote{\url{https://mathpix.com/}}等自动化识别工具。
+\textbf{H5（制度冲击假说）：}市场微观结构变化（交易成本、涨跌停板、做空限制）会系统性改变策略生态位的承载力（carrying capacity），进而改变可存活策略类型的组成。
 
-\begin{multline*}
-\int_a^b\biggl\{\int_a^b[f(x)^2g(y)^2+f(y)^2g(x)^2]
- -2f(x)g(x)f(y)g(y)\,dx\biggr\}\,dy \\
- =\int_a^b\biggl\{g(y)^2\int_a^bf^2+f(y)^2
-  \int_a^b g^2-2f(y)g(y)\int_a^b fg\biggr\}\,dy
-\end{multline*}
+\section{创新点}
 
-上述公式来源于刘宝碇的《不确定规划》\cite{liu2003uncertain}。
+本研究的主要创新点如下：
 
-\section{参考文献}
-\label{sec:bibtex}
+\textbf{创新1——Alpha衰亡机制的内生建模：}首次将Alpha衰减从残差（实证文献中作为因子收益回撤的统计量）重新概念化为策略生态系统演化过程的涌现属性，在ABM框架中内生化而非外生设定衰减函数。
 
-参考文献使用\verb|gb7714-2015|bibstyle进行管理，具体引用命令与日常使用类似，
-例如\verb|\cite{}|。使用本模板之前，请先按照该仓库\footnote{\url{https://github.com/Haixing-Hu/GBT7714-2005-BibTeX-Style}}，
-将相关bibstyle进行安装，或将其bst文件放入项目目录下直接使用。
+\textbf{创新2——策略"生态系统"的定量分析工具：}引入生态学定量指标分析策略生态，包括策略香农熵（Strategy Shannon Entropy）衡量市场策略多样性、生态位重叠度指数（Pianka Index）衡量策略信号使用重叠、以及策略交互网络的构建。
+
+\textbf{创新3——Alpha生命周期相位图：}提出"Alpha生命周期"的概念框架，将策略存在状态划分为探索期、爆发期、拥挤期、衰退期、恢复期/灭绝期，并通过模拟绘制相变条件。
+
+\textbf{创新4——中国A股市场的参数化校准：}使用中国A股市场的经验化事实作为ABM的参数校准目标，提升研究的中国场景适用性。
+
+\textbf{创新5——从计量检验到机理生成：}超越传统AMH检验文献中对"市场效率是否时变"的计量回答，转向回答"效率时变如何从微观Agent互动中生成"。
+
+\section{论文结构}
+
+本文共分为四章。第一章为绪论，阐述研究背景、文献综述、研究问题、研究假设和创新点。第二章为模型设计，详细介绍EVO-ASM模型的数学框架，包括Agent类型定义、状态变量、行为规则、市场出清机制、演化动力学和Alpha测度指标。第三章为实验设计与结果分析，设计四组递进实验（从无演化基线到完整演化动态），展示和分析实验结果。第四章为结论与展望，总结研究发现，讨论理论和实践意义，并指出未来研究方向。

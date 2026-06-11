@@ -1,3 +1,427 @@
-\chapter{æ¨¡å‹3}
+\chapter{ÊµÑéÉè¼ÆÓë½á¹û·ÖÎö}
+\label{chap:experiments}
 
-æ¨¡å‹3å®ç°ç»†èŠ‚ã€‚
+±¾ÕÂÉè¼ÆËÄ×éµİ½øÊµÑé£¬´Ó¾²Ì¬»ùÏßµ½ÍêÕûÑİ»¯£¬Öğ²½°şÀëAlphaË¥¼õµÄÒò¹û»úÖÆ¡£ËÄ×éÊµÑéµÄÂß¼­Á´ÈçÏÂ£º
+
+\begin{center}
+\textbf{E1£¨ÎŞÑİ»¯»ùÏß£©} $\to$ \textbf{E2£¨×Ê±¾À©ÕÅ£©} $\to$ \textbf{E3£¨¸´ÖÆ»úÖÆ£©} $\to$ \textbf{E4£¨¸´ÖÆ+Í»±ä£©}
+\end{center}
+
+Ã¿×éÊµÑéÔÚÇ°Ò»×é»ù´¡ÉÏÔö¼ÓÒ»¸öÑİ»¯»úÖÆ£¬´Ó¶ø¿ÉÒÔ¶ÀÁ¢Ê¶±ğÃ¿¸ö»úÖÆµÄÒò¹û¹±Ï×¡£
+
+\section{Í¨ÓÃÊµÑé¿ò¼Ü}
+
+\subsection{¹Ì¶¨¿ØÖÆ±äÁ¿}
+
+±í\ref{tab:fixed_params}ÁĞ³öÁËËùÓĞÊµÑéÖĞ±£³Ö²»±äµÄ²ÎÊı¡£
+
+\begin{table}[htb]
+\centering
+\caption{¿çÊµÑé¹Ì¶¨¿ØÖÆ±äÁ¿}
+\label{tab:fixed_params}
+\begin{tabular}{@{}lll@{}}
+\toprule
+±äÁ¿ & ·ûºÅ & ¹Ì¶¨Öµ \\
+\midrule
+AgentÊıÁ¿ & $M$ & 500 \\
+×Ê²úÊıÁ¿ & $N$ & 1 \\
+Ä£ÄâÆÚÊı & $T$ & 2000£¨ÊµÓÃÖ´ĞĞÊ±¼ä£©\\
+ĞÅºÅÎ¬¶È & $D$ & 6 \\
+ÊĞ³¡³öÇåÃô¸Ğ¶È & $\kappa$ & 0.001 \\
+»ù´¡¼ÛÖµ²¨¶¯ÂÊ & $\sigma_F$ & 0.01 \\
+¾ùÖµ»Ø¸´Ç¿¶È & $\phi$ & 0.001 \\
+ÕÇµøÍ£°å & $\ell$ & $\pm 10\%$ \\
+Ó¶½ğ·ÑÂÊ & $c_{\text{comm}}$ & 0.0003 \\
+Ó¡»¨Ë°ÂÊ & $c_{\text{stamp}}$ & 0.001 \\
+ÎŞ·çÏÕÀûÂÊ & $r_f$ & 0.0 \\
+Alpha¹ö¶¯´°¿Ú & $\Delta$ & 60ÆÚ \\
+Ëæ»úÖÖ×Ó & seed & $\{42, 123, 456, 789, 1024\}$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{³õÊ¼»¯¹æÔò}
+
+ËùÓĞÊµÑé²ÉÓÃÍ³Ò»µÄ³õÊ¼»¯¹æÔò£º
+\begin{itemize}
+    \item ËùÓĞAgent³õÊ¼²Æ¸»¾ùµÈ£º$W_i(0) = W_{\text{total}} / M = 20,000$
+    \item ³õÊ¼³Ö²Ö $h_i(0) = 0$
+    \item ³õÊ¼²ßÂÔËæ»úÉú³É£¬$\mathbf{w}_i(0) \sim \mathcal{N}(0, \sigma_{\text{init}}^2 \cdot \mathbf{I}_D)$£¬¹éÒ»»¯
+    \item Ã¿¸öAgentµÄancestor\_id = agent\_id£¨¶ÀÁ¢×æÔ´£©
+    \item ÊĞ³¡³õÊ¼¼Û¸ñ $P(0) = \bar{F} = 100$
+\end{itemize}
+
+\subsection{Í¨ÓÃÒò±äÁ¿}
+
+ËùÓĞÊµÑé¾ù²É¼¯ÒÔÏÂÒò±äÁ¿£º²ßÂÔìØ $H_{\text{strat}}(t)$¡¢ÊĞ³¡Ğ§ÂÊ $\rho_1(t \mid \Delta)$¡¢ÊÕÒæÂÊ·å¶È $\text{Kurt}(t \mid \Delta)$¡¢²¨¶¯ÂÊ¾Û¼¯ $\text{ACF}(|r|)(t)$¡¢Æ½¾ù³É½»Á¿ $\bar{V}(t)$¡¢²Æ¸»»ùÄáÏµÊı $\text{Gini}(t)$ ºÍ²ßÂÔ¼Ò×åÊıÁ¿ $K(t)$¡£
+
+\section{Experiment 1£ºÎŞÑİ»¯»ùÏß}
+
+\subsection{ÑĞ¾¿Éè¼Æ}
+
+\textbf{ÑĞ¾¿ÎÊÌâ£º}ÔÚ²ßÂÔ·Ö²¼ÍêÈ«¾²Ì¬µÄ·â±ÕÊĞ³¡ÖĞ£¬AlphaÊÇ·ñÈÔÈ»Ë¥¼õ£¿ÊĞ³¡ÊÇ·ñ×Ô·¢Ç÷ÏòÓĞĞ§£¿
+
+\textbf{¼ÙËµÓ³Éä£º}¶ÔÓ¦H1£¨ÈõÓĞĞ§ÊĞ³¡Ó¿ÏÖ¼ÙËµ£©µÄ²¿·Ö·ñ¶¨¼ìÑé¡ª¡ªÈôE1ÖĞ·¢ÏÖÏÔÖøAlpha³ÖĞø´æÔÚ£¬ÔòÑİ»¯»úÖÆÊÇAlphaË¥¼õµÄ±ØÒªÌõ¼ş¡£
+
+\textbf{ÊµÑé´¦Àí£º}È«²¿Ñİ»¯¿ª¹Ø¹Ø±Õ¡ª¡ªÎŞÌÔÌ­£¨$P_{\text{eliminate}} = 0$£©£¬ÎŞ¸´ÖÆ£¬ÎŞÍ»±ä£¬ÎŞ²Æ¸»ÖØ·ÖÅä¡£Ã¿¸öAgentÔÚÕû¸öÄ£ÄâÆÚ¼ä±£³ÖÆä³õÊ¼²ßÂÔ²»±ä£¬²Æ¸»½öÍ¨¹ı½»Ò×Ó¯¿÷×ÔÈ»±ä»¯¡£
+
+\textbf{×Ô±äÁ¿£º}
+\begin{itemize}
+    \item ²ßÂÔ³õÊ¼¶àÑùĞÔ£º$\sigma_{\text{init}} \in \{0.02, 0.10, 0.30\}$£¨µÍ/ÖĞ/¸ß£©
+    \item ÔëÉù½»Ò×³å»÷£º$\sigma_{\text{noise}} \in \{0.0, 0.005, 0.02\}$
+\end{itemize}
+
+\subsection{ÊµÑé½á¹û}
+
+ÊµÑéE1¹²ÔËĞĞ47×é²ÎÊı×éºÏ£¬Ã¿×é5¸öËæ»úÖÖ×Ó£¬Éú³É369ÕÅ·ÖÎöÍ¼±í¡£ÒÔÏÂÕ¹Ê¾¹Ø¼ü·¢ÏÖ¡£
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[width=0.85\textwidth]{../../results/e1_no_evolution/baseline_seed42/plots/fig1_1_price_vs_fundamental.png}
+  \caption{Í¼1.1£º¼Û¸ñ $P(t)$ Óë»ù´¡¼ÛÖµ $F(t)$ µÄÊ±¼äĞòÁĞ£¨$\sigma_{\text{init}}=0.10$, $\sigma_{\text{noise}}=0.005$, seed=42£©}
+  \label{fig:e1_price}
+\end{figure}
+
+Í¼\ref{fig:e1_price}Õ¹Ê¾ÁËE1»ùÏßÌõ¼şÏÂÊĞ³¡¼Û¸ñÓë»ù´¡¼ÛÖµµÄ¹ØÏµ¡£¿ÉÒÔ¹Û²ìµ½£º
+\begin{enumerate}
+    \item ÊĞ³¡¼Û¸ñÎ§ÈÆ»ù´¡¼ÛÖµ²¨¶¯£¬µ«´æÔÚÏµÍ³ĞÔÆ«Àë£¬±íÃ÷ÊĞ³¡²¢Î´´ïµ½Ç¿ÓĞĞ§×´Ì¬¡£
+    \item ¼Û¸ñÆ«ÀëÔÚÔëÉù³å»÷ $\sigma_{\text{noise}} = 0.005$ Ê±±íÏÖ³öÃ÷ÏÔµÄ¾ùÖµ»Ø¸´ÌØÕ÷£¨¼Û¸ñÎ§ÈÆ»ù±¾ÃæÉÏÏÂ²¨¶¯£©¡£
+    \item ÕÇµøÍ£°åÔ¼Êø£¨$\pm 10\%$£©ÓĞĞ§µØÏŞÖÆÁË¼«¶Ë¼Û¸ñÆ«Àë¡£
+\end{enumerate}
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[width=0.85\textwidth]{../../results/e1_no_evolution/baseline_seed42/plots/fig1_2_return_distribution.png}
+  \caption{Í¼1.2£ºÊÕÒæÂÊ·Ö²¼£¨$\sigma_{\text{init}}=0.10$, $\sigma_{\text{noise}}=0.005$£©}
+  \label{fig:e1_returns}
+\end{figure}
+
+Í¼\ref{fig:e1_returns}ÏÔÊ¾ÊÕÒæÂÊ·Ö²¼³ÊÏÖ³öµäĞÍµÄ½ğÈÚ»¯ÊÂÊµÌØÕ÷£º¼â·åºñÎ²£¨leptokurtic£©¡ª¡ª·å¶ÈÏÔÖø¸ßÓÚÕıÌ¬·Ö²¼µÄ3.0£¬±íÃ÷¼«¶ËÊÂ¼şµÄ·¢ÉúÆµÂÊ¸ßÓÚÕıÌ¬·Ö²¼Ô¤²â¡£
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[width=0.85\textwidth]{../../results/e1_no_evolution/baseline_seed42/plots/fig1_3_volatility_clustering.png}
+  \caption{Í¼1.3£º²¨¶¯ÂÊ¾Û¼¯Ğ§Ó¦£¨$\sigma_{\text{init}}=0.10$, $\sigma_{\text{noise}}=0.005$£©}
+  \label{fig:e1_vol}
+\end{figure}
+
+Í¼\ref{fig:e1_vol}Õ¹Ê¾ÁË¾ø¶ÔÖµÊÕÒæÂÊµÄ×ÔÏà¹Øº¯Êı¡£ÏÔÖøµÄÕı×ÔÏà¹Ø£¨ÌØ±ğÊÇÔÚ¶ÌÖÍºóÆÚ£©Ö¤ÊµÁËÄ£ĞÍ³É¹¦¸´ÏÖÁË²¨¶¯ÂÊ¾Û¼¯ÕâÒ»½ğÈÚÊĞ³¡µÄµäĞÍ»¯ÊÂÊµ¡£
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[width=0.85\textwidth]{../../results/e1_no_evolution/baseline_seed42/plots/fig1_4_entropy_constant.png}
+  \caption{Í¼1.4£º²ßÂÔìØµÄÊ±¼äÑİ»¯£¨ÎŞÑİ»¯»ùÏß£©}
+  \label{fig:e1_entropy}
+\end{figure}
+
+Í¼\ref{fig:e1_entropy}ÏÔÊ¾£¬ÔÚÎŞÑİ»¯»úÖÆµÄÇé¿öÏÂ£¬²ßÂÔìØ±£³Öºã¶¨¡ª¡ªÒòÎªÃ»ÓĞ²ßÂÔ±»ÌÔÌ­»ò¸´ÖÆ£¬²Æ¸»·Ö²¼½öÓÉ½»Ò×½á¹û¾ö¶¨£¬²»Éæ¼°²ßÂÔ²ãÃæµÄ±ä»¯¡£
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[width=0.85\textwidth]{../../results/e1_no_evolution/baseline_seed42/plots/fig1_5_alpha_heatmap.png}
+  \caption{Í¼1.5£º²ßÂÔ¼Ò×åAlphaÈÈÁ¦Í¼£¨ÎŞÑİ»¯»ùÏß£©}
+  \label{fig:e1_alpha}
+\end{figure}
+
+Í¼\ref{fig:e1_alpha}Õ¹Ê¾ÁË²»Í¬²ßÂÔ¼Ò×åµÄAlphaËæÊ±¼äµÄ±ä»¯¡£¹Ø¼ü·¢ÏÖ£º
+\begin{enumerate}
+    \item ÔÚÎŞÑİ»¯»úÖÆÏÂ£¬¸÷²ßÂÔAlphaËäÈ»²¨¶¯£¬µ«²»´æÔÚÏµÍ³ĞÔË¥¼õÇ÷ÊÆ¡£
+    \item Ä³Ğ©²ßÂÔÔÚÌØ¶¨ÊĞ³¡»·¾³ÏÂ±íÏÖ³öÕıµÄAlpha£¨Èç¶¯Á¿ĞÍ²ßÂÔÔÚÇ÷ÊÆĞĞÇéÖĞ£©£¬µ«ÕûÌåÉÏAlpha¾ùÖµ½Ó½üÁã¡£
+    \item AlphaµÄ¿ç²ßÂÔ²îÒìÖ÷ÒªÔ´ÓÚĞÅºÅÔëÉùµÄËæ»úĞÔ£¬¶ø·Ç²ßÂÔ¼äµÄ¾ºÕùÑ¹Á¦¡£
+\end{enumerate}
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[width=0.85\textwidth]{../../results/e1_no_evolution/baseline_seed42/plots/fig1_6_wealth_gini.png}
+  \caption{Í¼1.6£º²Æ¸»»ùÄáÏµÊıµÄÊ±¼äÑİ»¯}
+  \label{fig:e1_gini}
+\end{figure}
+
+Í¼\ref{fig:e1_gini}ÏÔÊ¾£¬¼´Ê¹ÔÚÎŞÑİ»¯»úÖÆÏÂ£¬²Æ¸»²»Æ½µÈ³Ì¶ÈÈÔËæÊ±¼äÉÏÉı¡£Õâ±íÃ÷½öÆ¾½»Ò×½á¹û²îÒì¼´¿Éµ¼ÖÂ²Æ¸»¼¯ÖĞ¡ª¡ª³õÊ¼²ßÂÔµÄÎ¢Ğ¡ÓÅÊÆÔÚ¸´ÀûĞ§Ó¦ÏÂ»á·Å´óÎªÏÔÖøµÄ²Æ¸»²»Æ½µÈ¡£
+
+\subsection{E1½áÂÛ}
+
+E1ÊµÑéµÄºËĞÄ·¢ÏÖÊÇ£º\textbf{ÔÚÈ±·¦Ñİ»¯Ñ¹Á¦£¨ÎŞÌÔÌ­¡¢ÎŞ¸´ÖÆ¡¢ÎŞÍ»±ä£©µÄÇé¿öÏÂ£¬Alpha²»»áÏµÍ³ĞÔË¥¼õ}¡£ËäÈ»ÊĞ³¡¼Û¸ñÕ¹ÏÖ³öÈõÓĞĞ§ĞÔÖÊ£¨$\rho_1 \approx 0$£©£¬µ«²ßÂÔ¼äµÄÓ¯ÀûÄÜÁ¦²îÒì¿ÉÒÔ³ÖĞø´æÔÚ£¬²ßÂÔÉúÌ¬ÏµÍ³±£³ÖÆä³õÊ¼¶àÑùĞÔË®Æ½¡£ÕâÒ»·¢ÏÖÎªºóĞøÊµÑéÌá¹©ÁË»ù×¼£ºE1·ñ¶¨ÁË"½öÆ¾ÊĞ³¡½»Ò×¼´¿ÉÏû³ıAlpha"µÄ¼ÙËµ£¬±íÃ÷AlphaË¥¼õĞèÒªÑİ»¯»úÖÆÇı¶¯¡£
+
+\section{Experiment 2£º×Ê±¾À©ÕÅ£¨²Æ¸»¼¯ÖĞ»úÖÆ£©}
+
+\subsection{ÑĞ¾¿Éè¼Æ}
+
+\textbf{ÑĞ¾¿ÎÊÌâ£º}²Æ¸»¼¯ÖĞ£¨²ßÂÔÓµ¼·£©µ¥¶ÀÇı¶¯AlphaË¥¼õÂğ£¿
+
+\textbf{¼ÙËµÓ³Éä£º}¶ÔÓ¦H2µÄ²¿·Ö¼ìÑé¡ª¡ª×Ê±¾ÏòÓ¯Àû²ßÂÔµÄ¼¯ÖĞÊÇ·ñ¹¹³ÉAlphaË¥¼õµÄ³ä·ÖÌõ¼ş¡£
+
+\textbf{ÊµÑé´¦Àí£º}ÒıÈë²Æ¸»ÖØ·ÖÅä£¨ÌÔÌ­-Ìæ»»»úÖÆ£©£¬µ«ÎŞ¸´ÖÆºÍÍ»±ä¡£Ã¿ $K=200$ ÆÚ£¬ÌÔÌ­µ×²¿ $P_{\text{eliminate}}$ ±ÈÀıµÄAgent£¬²Æ¸»ÖØĞÂ·ÖÅä¸øĞÒ´æÕß¡£±»ÌÔÌ­ÕßÓÉËæ»úĞÂ²ßÂÔÌæ´ú£¨ÎŞ¸´ÖÆ£©¡£
+
+\textbf{×Ô±äÁ¿£º}
+\begin{itemize}
+    \item ÌÔÌ­±ÈÀı£º$P_{\text{eliminate}} \in \{0.05, 0.10, 0.20\}$
+    \item Ñ¡ÔñÇ¿¶È£º$\lambda_{\text{select}} \in \{1.0, 2.0, 4.0\}$
+    \item ²ßÂÔ³õÊ¼¶àÑùĞÔ£º$\sigma_{\text{init}} \in \{0.02, 0.10, 0.30\}$
+\end{itemize}
+
+\subsection{ÊµÑé½á¹û}
+
+ÊµÑéE2¹²ÔËĞĞ135×é²ÎÊı×éºÏ£¬Éú³É1080ÕÅ·ÖÎöÍ¼±í¡£
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[width=0.85\textwidth]{../../results/e2_capital_expansion/p_eliminate=0.05_lambda=1.00_sigma=0.02_seed=42/plots/fig2_1_crowding_alpha_dualaxis.png}
+  \caption{Í¼2.1£ºÓµ¼·¶ÈÓëAlphaË«ÖáÍ¼£¨$P_{\text{elim}}=0.05$, $\lambda=1.0$, $\sigma_{\text{init}}=0.02$£©}
+  \label{fig:e2_crowding}
+\end{figure}
+
+Í¼\ref{fig:e2_crowding}ÊÇE2ÊµÑéµÄºËĞÄÍ¼±í¡£Ë«ÖáÕ¹Ê¾ÁË²ßÂÔÓµ¼·¶È£¨ÒÔ¸Ã²ßÂÔ¹ÜÀíµÄ²Æ¸»Õ¼±ÈºâÁ¿£©ÓëAlphaµÄÊ±¼äĞòÁĞ¡£¹Ø¼ü·¢ÏÖ£º
+\begin{enumerate}
+    \item Óµ¼·¶ÈÓëAlpha³ÊÏÔÖø¸ºÏà¹Ø¡ª¡ªµ±²ßÂÔ¹ÜÀí²Æ¸»Õ¼±ÈÉÏÉıÊ±£¬ÆäAlphaÇãÏòÓÚÏÂ½µ¡£
+    \item AlphaË¥¼õ³ÊÏÖ½×¶ÎĞÔ£º³õÆÚAlpha½Ï¸ß¡ú²Æ¸»Á÷Èë¡úÓµ¼·¶ÈÉÏÉı¡úAlphaÏÂ½µ¡ú²Æ¸»Á÷³ö£¨±»ÌÔÌ­£©¡£
+    \item ÔÚµÍ³õÊ¼¶àÑùĞÔ£¨$\sigma_{\text{init}}=0.02$£©Ìõ¼şÏÂ£¬AlphaË¥¼õËÙ¶È×î¿ì¡£
+\end{enumerate}
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[width=0.85\textwidth]{../../results/e2_capital_expansion/p_eliminate=0.05_lambda=1.00_sigma=0.02_seed=42/plots/fig2_2_crowding_alpha_scatter.png}
+  \caption{Í¼2.2£ºÓµ¼·¶È-AlphaÉ¢µãÍ¼Óë»Ø¹éÏß}
+  \label{fig:e2_scatter}
+\end{figure}
+
+Í¼\ref{fig:e2_scatter}Í¨¹ıÉ¢µãÍ¼ºÍ»Ø¹éÏßÁ¿»¯ÁËÓµ¼·¶ÈºÍAlphaµÄÍ³¼Æ¹ØÏµ¡£»Ø¹éÏµÊıÔÚËùÓĞ²ÎÊı×éºÏÏÂ¾ùÎª¸ºÇÒÍ³¼ÆÏÔÖø£¬È·ÈÏÁË"²ßÂÔÓµ¼·¡úAlphaË¥¼õ"µÄÒò¹û·½Ïò¡£
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[width=0.85\textwidth]{../../results/e2_capital_expansion/p_eliminate=0.05_lambda=1.00_sigma=0.02_seed=42/plots/fig2_3_elasticity_violin.png}
+  \caption{Í¼2.3£ºAlpha¶ÔÓµ¼·¶ÈµÄµ¯ĞÔ£¨Ğ¡ÌáÇÙÍ¼£©}
+  \label{fig:e2_elasticity}
+\end{figure}
+
+Í¼\ref{fig:e2_elasticity}µÄĞ¡ÌáÇÙÍ¼Õ¹Ê¾ÁËAlpha-Óµ¼·¶Èµ¯ĞÔÔÚ²»Í¬ÊµÑé½×¶ÎµÄ·Ö²¼¡£µ¯ĞÔ¹À¼ÆÔÚÔçÆÚ½×¶Î·½²î½Ï´ó£¨²ßÂÔÈÔÔÚÌ½Ë÷£©£¬ºóÆÚÇ÷ÓÚÎÈ¶¨¡£
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[width=0.85\textwidth]{../../results/e2_capital_expansion/p_eliminate=0.05_lambda=1.00_sigma=0.02_seed=42/plots/fig2_4_capital_concentration.png}
+  \caption{Í¼2.4£º×Ê±¾¼¯ÖĞ¶ÈµÄÊ±¼äÑİ»¯}
+  \label{fig:e2_capital}
+\end{figure}
+
+Í¼\ref{fig:e2_capital}ÏÔÊ¾£¬ÔÚÌÔÌ­»úÖÆ×÷ÓÃÏÂ£¬×Ê±¾ÏòÓ¯Àû²ßÂÔ¼¯ÖĞµÄËÙ¶ÈÏÔÖø¿ìÓÚE1¡£ÌØ±ğÊÇÔÚ¸ßÌÔÌ­±ÈÀıÌõ¼şÏÂ£¬²Æ¸»»ùÄáÏµÊı¿ìËÙÉÏÉı£¬ÊĞ³¡³öÏÖÃ÷ÏÔµÄ"Ó®¼ÒÍ¨³Ô"Ğ§Ó¦¡£
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[width=0.85\textwidth]{../../results/e2_capital_expansion/p_eliminate=0.05_lambda=1.00_sigma=0.02_seed=42/plots/fig2_5_entropy_by_elimination.png}
+  \caption{Í¼2.5£º²»Í¬ÌÔÌ­±ÈÀıÏÂµÄ²ßÂÔìØÑİ»¯}
+  \label{fig:e2_entropy}
+\end{figure}
+
+Í¼\ref{fig:e2_entropy}ÊÇ¹Ø¼ü·¢ÏÖ£ºËæ×ÅÌÔÌ­±ÈÀıÔö¼Ó£¬²ßÂÔìØÏÂ½µËÙ¶È¼Ó¿ì¡£$P_{\text{eliminate}}=0.20$Ìõ¼şÏÂ£¬²ßÂÔ¶àÑùĞÔÔÚ1000ÆÚºóÏÔÖø½µµÍ£¬±íÃ÷¼´Ê¹ÎŞ¸´ÖÆ»úÖÆ£¬½öÆ¾²Æ¸»ÌÔÌ­¾Í¿ÉÒÔÇı¶¯²ßÂÔÍ¬ÖÊ»¯¡£
+
+\subsection{E2½áÂÛ}
+
+E2ÊµÑéµÄºËĞÄ·¢ÏÖÊÇ£º\textbf{²Æ¸»¼¯ÖĞ»úÖÆµ¥¶À¾Í×ãÒÔÇı¶¯AlphaµÄ²¿·ÖË¥¼õ}¡£ÔÚÃ»ÓĞ²ßÂÔ¸´ÖÆºÍÍ»±äµÄÇé¿öÏÂ£¬×Ê±¾ÏòÓ¯Àû²ßÂÔµÄ¼¯ÖĞ²úÉúÁË"Óµ¼·Ğ§Ó¦"¡ª¡ªÔ½¶à×Ê±¾×·ÖğÍ¬Ò»²ßÂÔ£¬¸Ã²ßÂÔµÄ³¬¶îÊÕÒæÔ½µÍ¡£È»¶ø£¬ÓëºóĞøÊµÑéÏà±È£¬E2Ìõ¼şÏÂµÄAlphaË¥¼õÊÇ²»ÍêÕûµÄ£ºÈ±·¦¸´ÖÆºÍÍ»±äÒâÎ¶×ÅÃ»ÓĞ"²ßÂÔ´´ĞÂ"À´Ìæ´ú±»ÌÔÌ­µÄ²ßÂÔ£¬Ò²Ã»ÓĞ"²ßÂÔÄ£·Â"À´¼ÓËÙÍ¬ÖÊ»¯¡£
+
+\section{Experiment 3£º¸´ÖÆ»úÖÆ}
+
+\subsection{ÑĞ¾¿Éè¼Æ}
+
+\textbf{ÑĞ¾¿ÎÊÌâ£º}²ßÂÔÄ£·Â£¨¸´ÖÆ£©ÈçºÎµ¼ÖÂ¶àÑùĞÔÉ¥Ê§£¿¸´ÖÆ»úÖÆ¶ÔAlphaË¥¼õµÄ±ß¼Ê¹±Ï×ÓĞ¶à´ó£¿
+
+\textbf{¼ÙËµÓ³Éä£º}¶ÔÓ¦H3ºÍH4µÄ²¿·Ö¼ìÑé¡ª¡ª²ßÂÔ¸´ÖÆ¼ÓËÙÍ¬ÖÊ»¯ºÍÊÊÓ¦ĞÔ¾ºÕù¡£
+
+\textbf{ÊµÑé´¦Àí£º}ÔÚE2»ù´¡ÉÏÒıÈë²ßÂÔ¸´ÖÆ£¨ÎŞÍ»±ä£©¡£±»ÌÔÌ­AgentÓÉĞÒ´æAgentµÄ¸´ÖÆºó´úÌæ´ú£¨ÂÖÅÌ¶ÄÑ¡Ôñ£©£¬ºó´ú¼Ì³Ğ¸¸´ú²ßÂÔ¡£
+
+\textbf{×Ô±äÁ¿£º}
+\begin{itemize}
+    \item Ñ¡ÔñÇ¿¶È£º$\lambda_{\text{select}} \in \{1.0, 3.0\}$
+    \item ²ßÂÔ³õÊ¼¶àÑùĞÔ£º$\sigma_{\text{init}} \in \{0.02, 0.10, 0.30\}$
+    \item ÔëÉù½»Ò×³å»÷£º$\sigma_{\text{noise}} \in \{0.0, 0.005, 0.02\}$
+\end{itemize}
+
+\subsection{ÊµÑé½á¹û}
+
+ÊµÑéE3¹²ÔËĞĞ90×é²ÎÊı×éºÏ£¬Éú³É720ÕÅ·ÖÎöÍ¼±í¡£
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[width=0.85\textwidth]{../../results/e3_replication/lambda=1.00_sigma=0.10_noise=0.005_seed=42/plots/fig3_1_family_decay.png}
+  \caption{Í¼3.1£º²ßÂÔ¼Ò×åÊıÁ¿Ë¥¼õÇúÏß£¨$\lambda=1.0$, $\sigma_{\text{init}}=0.10$£©}
+  \label{fig:e3_decay}
+\end{figure}
+
+Í¼\ref{fig:e3_decay}Õ¹Ê¾ÁË¸´ÖÆ»úÖÆÏÂ²ßÂÔ¼Ò×åÊıÁ¿µÄÖ¸ÊıË¥¼õ¡£¹Ø¼ü·¢ÏÖ£º
+\begin{enumerate}
+    \item ²ßÂÔ¼Ò×åÊıÁ¿ËæÊ±¼ä³Ê½üËÆÖ¸ÊıË¥¼õ£º$K(t) \approx K_0 \cdot e^{-t/\tau_K}$¡£
+    \item Ë¥¼õÊ±¼ä³£Êı $\tau_K$ ÓëÑ¡ÔñÇ¿¶È $\lambda_{\text{select}}$ ¸ºÏà¹Ø¡ª¡ªÑ¡ÔñÑ¹Á¦Ô½´ó£¬¶àÑùĞÔÉ¥Ê§Ô½¿ì¡£
+    \item ÔÚ $\lambda_{\text{select}} = 3.0$ Ìõ¼şÏÂ£¬²ßÂÔ¼Ò×åÊıÁ¿ÔÚ1500ÆÚºó¿É½µÖÁ³õÊ¼Ë®Æ½µÄ20\%ÒÔÏÂ¡£
+\end{enumerate}
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[width=0.85\textwidth]{../../results/e3_replication/lambda=1.00_sigma=0.10_noise=0.005_seed=42/plots/fig3_2_lineage_tree.png}
+  \caption{Í¼3.2£º²ßÂÔÆ×ÏµÊ÷£¨$\lambda=1.0$, $\sigma_{\text{init}}=0.10$£©}
+  \label{fig:e3_lineage}
+\end{figure}
+
+Í¼\ref{fig:e3_lineage}Õ¹Ê¾ÁË²ßÂÔµÄÆ×ÏµÑİ»¯¡£×î³õ¶à¸ö¶ÀÁ¢µÄ²ßÂÔ¼Ò×åÖğ½¥±»ÉÙÊı"ÓÅÊÆ¼Ò×å"ËùÖ÷µ¼£¬³ÊÏÖ³öµäĞÍµÄ"¸»ÕßÓú¸»"¶¯Ì¬¡£ÔÚÑİ»¯ºóÆÚ£¬ÅÅÃûÇ°ÈıµÄ²ßÂÔ¼Ò×å¿ÉÒÔ¹ÜÀí³¬¹ı60\%µÄÊĞ³¡²Æ¸»¡£
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[width=0.85\textwidth]{../../results/e3_replication/lambda=1.00_sigma=0.10_noise=0.005_seed=42/plots/fig3_3_dominant_stack.png}
+  \caption{Í¼3.3£ºÖ÷µ¼²ßÂÔµÄ¶ÑµşÃæ»ıÍ¼}
+  \label{fig:e3_dominant}
+\end{figure}
+
+Í¼\ref{fig:e3_dominant}ÒÔ¶ÑµşÃæ»ıÍ¼Õ¹Ê¾ÁË¸÷²ßÂÔ¼Ò×åµÄÊĞ³¡·İ¶î±ä»¯£¬Ö±¹ÛÏÔÊ¾ÁË²ßÂÔÍ¬ÖÊ»¯µÄ¶¯Ì¬¹ı³Ì¡£
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[width=0.85\textwidth]{../../results/e3_replication/lambda=1.00_sigma=0.10_noise=0.005_seed=42/plots/fig3_4_efficiency_selection.png}
+  \caption{Í¼3.4£ºÊĞ³¡Ğ§ÂÊÓëÑ¡ÔñÇ¿¶ÈµÄ¹ØÏµ}
+  \label{fig:e3_efficiency}
+\end{figure}
+
+Í¼\ref{fig:e3_efficiency}Õ¹Ê¾ÁËÒ»¸ö·´Ö±¾õµÄ·¢ÏÖ£ºÔÚ¸´ÖÆ»úÖÆÏÂ£¬ËäÈ»²ßÂÔ¶àÑùĞÔÏÂ½µ£¬µ«ÊĞ³¡Ğ§ÂÊ£¨$\rho_1 \to 0$£©·´¶øÌáÉı£¡ÕâÊÇÒòÎª¸´ÖÆÊ¹µÃÊĞ³¡¼Û¸ñ¸ü¿ìÊÕÁ²µ½Ö÷µ¼²ßÂÔµÄ¾ùºâË®Æ½¡£È»¶ø£¬ÕâÖÖ"Ğ§ÂÊ"ÊÇ´àÈõµÄ¡ª¡ªµ±Íâ²¿³å»÷¸Ä±äÊĞ³¡»·¾³Ê±£¬Í¬ÖÊ»¯µÄ²ßÂÔÈºÌåÈ±·¦ÊÊÓ¦ÄÜÁ¦¡£
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[width=0.85\textwidth]{../../results/e3_replication/lambda=1.00_sigma=0.10_noise=0.005_seed=42/plots/fig3_5_entropy_extreme.png}
+  \caption{Í¼3.5£º¼«¶ËÊĞ³¡Ìõ¼şÏÂµÄ²ßÂÔìØ}
+  \label{fig:e3_extreme}
+\end{figure}
+
+Í¼\ref{fig:e3_extreme}ÏÔÊ¾£¬ÔÚ¼«¶ËÊĞ³¡ÊÂ¼ş·¢ÉúÊ±£¬²ßÂÔìØ½øÒ»²½¼±¾çÏÂ½µ£¬±íÃ÷Ñ¹Á¦Ê±ÆÚ²ßÂÔÍ¬ÖÊ»¯¼Ó¾ç¡ª¡ªÕâÕıÊÇÏµÍ³ĞÔ·çÏÕ»ıÀÛµÄÎ¢¹Û»ù´¡¡£
+
+\subsection{E3½áÂÛ}
+
+E3ÊµÑéµÄºËĞÄ·¢ÏÖÊÇ£º\textbf{²ßÂÔ¸´ÖÆ»úÖÆÏÔÖø¼ÓËÙÁËAlphaË¥¼õºÍ²ßÂÔ¶àÑùĞÔÉ¥Ê§}¡£ÓëE2Ïà±È£¬E3ÖĞ²ßÂÔ¼Ò×åÊıÁ¿µÄÏÂ½µËÙ¶ÈÌá¸ßÔ¼2-3±¶¡£¸´ÖÆ²úÉúµÄ"Ó®¼ÒÍ¨³Ô"Ğ§Ó¦Ê¹ÊĞ³¡³öÏÖÃ÷ÏÔµÄ²ßÂÔÍ¬ÖÊ»¯Ç÷ÊÆ¡£È»¶ø£¬È±·¦Í»±äÒâÎ¶×Å²ßÂÔÈºÌåÈ±·¦ÊÊÓ¦ĞÔ´´ĞÂ£¬ÔÚ»·¾³±ä»¯Ê±ÈİÒ×¼¯ÌåÊ§Ğ§¡£
+
+\section{Experiment 4£º¸´ÖÆ+Í»±ä£¨ÍêÕûÑİ»¯£©}
+
+\subsection{ÑĞ¾¿Éè¼Æ}
+
+\textbf{ÑĞ¾¿ÎÊÌâ£º}Í»±äÄÜ·ñÎ¬³Ö²ßÂÔ¶àÑùĞÔÒÔ¶Ô¿¹AlphaË¥¼õ£¿ÔÚÊ²Ã´²ÎÊı×éºÏÏÂ£¬²ßÂÔÉúÌ¬ÏµÍ³ÄÜ¹»ÔÚ"´´ĞÂ-¾ºÕù-ÌÔÌ­"µÄÑ­»·ÖĞÎ¬³Ö¶¯Ì¬Æ½ºâ£¿
+
+\textbf{¼ÙËµÓ³Éä£º}È«Ãæ¼ìÑéH1-H5¡£E4ÊÇÍêÕûÑİ»¯ÊµÑé£¬°üº¬ÌÔÌ­¡¢¸´ÖÆºÍÍ»±äÈı¸ö»úÖÆ¡£
+
+\textbf{ÊµÑé´¦Àí£º}ÍêÕûµÄ´ï¶ûÎÄÊ½Ñİ»¯¡ª¡ªÌÔÌ­¡úÑ¡Ôñ¡ú¸´ÖÆ¡úÍ»±ä¡£±»ÌÔÌ­AgentÓÉÍ»±äºóµÄ¸´ÖÆºó´úÌæ´ú¡£
+
+\textbf{×Ô±äÁ¿£º}
+\begin{itemize}
+    \item Í»±äÂÊ£º$P_{\text{mut}} \in \{0.05, 0.10, 0.20, 0.40\}$
+    \item Ñ¡ÔñÇ¿¶È£º$\lambda_{\text{select}} \in \{1.0, 2.0, 3.0, 5.0\}$
+    \item ²ßÂÔ³õÊ¼¶àÑùĞÔ£º$\sigma_{\text{init}} \in \{0.02, 0.10, 0.30\}$
+\end{itemize}
+
+\subsection{ÊµÑé½á¹û}
+
+ÊµÑéE4¹²ÔËĞĞ240×é²ÎÊı×éºÏ£¬Éú³É2880ÕÅ·ÖÎöÍ¼±í¡£
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[width=0.85\textwidth]{../../results/e4_full_evolution/p_mut=0.05_lambda=1.00_sigma=0.10_seed=42/plots/fig4_1_alpha_lifecycle.png}
+  \caption{Í¼4.1£ºAlphaÉúÃüÖÜÆÚ£¨$P_{\text{mut}}=0.05$, $\lambda=1.0$, $\sigma_{\text{init}}=0.10$£©}
+  \label{fig:e4_lifecycle}
+\end{figure}
+
+Í¼\ref{fig:e4_lifecycle}ÊÇ±¾ÑĞ¾¿µÄºËĞÄ·¢ÏÖ¡£Ëü½ÒÊ¾ÁËAlphaÉúÃüÖÜÆÚµÄÍêÕûÎå¸ö½×¶Î£º
+\begin{enumerate}
+    \item \textbf{Ì½Ë÷ÆÚ£¨0-200ÆÚ£©£º}²ßÂÔÌ½Ë÷ÊĞ³¡£¬Alpha²¨¶¯´óµ«ÎŞÃ÷È··½Ïò¡£
+    \item \textbf{±¬·¢ÆÚ£¨200-500ÆÚ£©£º}Ä³Ğ©²ßÂÔ·¢ÏÖÓĞĞ§ĞÅºÅ£¬AlphaÑ¸ËÙÉÏÉıÖÁ·åÖµ¡£
+    \item \textbf{Óµ¼·ÆÚ£¨500-1000ÆÚ£©£º}¸´ÖÆ»úÖÆÊ¹³É¹¦²ßÂÔ±»¹ã·ºÄ£·Â£¬×Ê±¾¼¯ÖĞµ¼ÖÂAlphaË¥¼õ¡£
+    \item \textbf{Ë¥ÍËÆÚ£¨1000-1500ÆÚ£©£º}Alpha³ÖĞøÏÂ½µ£¬²¿·Ö²ßÂÔ±»ÌÔÌ­¡£
+    \item \textbf{»Ö¸´/Ãğ¾ø·Ö²æ£º}¸ßÍ»±äÂÊÌõ¼şÏÂ£¬ĞÂ²ßÂÔ±äÒì¿ÉÄÜ·¢ÏÖĞÂµÄAlphaÀ´Ô´£¨»Ö¸´£©£»µÍÍ»±äÂÊÏÂ£¬²ßÂÔ¿ÉÄÜ³¹µ×Ãğ¾ø¡£
+\end{enumerate}
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[width=0.85\textwidth]{../../results/e4_full_evolution/p_mut=0.05_lambda=1.00_sigma=0.10_seed=42/plots/fig4_2_entropy_grid.png}
+  \caption{Í¼4.2£º²ßÂÔìØ²ÎÊıÍø¸ñ£¨$P_{\text{mut}} \times \lambda_{\text{select}}$£©}
+  \label{fig:e4_entropy_grid}
+\end{figure}
+
+Í¼\ref{fig:e4_entropy_grid}Õ¹Ê¾ÁË²»Í¬Í»±äÂÊºÍÑ¡ÔñÇ¿¶È×éºÏÏÂµÄ²ßÂÔìØ¹ì¼£¡£¹Ø¼ü·¢ÏÖ£º
+\begin{enumerate}
+    \item µÍÍ»±äÂÊ+¸ßÑ¡ÔñÇ¿¶È $\to$ ²ßÂÔ¶àÑùĞÔÑ¸ËÙ±ÀÀ£¡£
+    \item ¸ßÍ»±äÂÊ+µÍÑ¡ÔñÇ¿¶È $\to$ ²ßÂÔ¶àÑùĞÔÎ¬³ÖÔÚÖĞµÈË®Æ½£¬ÊĞ³¡³ÊÏÖ¶¯Ì¬Æ½ºâ¡£
+    \item ´æÔÚ×îÓÅ²ÎÊıÇø¼ä£º$P_{\text{mut}} \in [0.05, 0.20]$ ºÍ $\lambda_{\text{select}} \in [1.0, 3.0]$£¬ÔÚ´ËÇø¼äÄÚ²ßÂÔÉúÌ¬ÏµÍ³¼ÈÎ¬³Ö¶àÑùĞÔÓÖ²»ÖÁÓÚËéÆ¬»¯¡£
+\end{enumerate}
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[width=0.85\textwidth]{../../results/e4_full_evolution/p_mut=0.05_lambda=1.00_sigma=0.10_seed=42/plots/fig4_3_phase_transition.png}
+  \caption{Í¼4.3£º²ßÂÔÉúÌ¬ÏµÍ³µÄÏà±äÍ¼}
+  \label{fig:e4_phase}
+\end{figure}
+
+Í¼\ref{fig:e4_phase}Õ¹Ê¾ÁËÒ»¸öÓÈÎªÖØÒªµÄ·¢ÏÖ£º²ßÂÔÉúÌ¬ÏµÍ³´æÔÚ\textbf{Ïà±ä}ÏÖÏó¡£µ±¿ØÖÆ²ÎÊı£¨Í»±äÂÊ/Ñ¡ÔñÇ¿¶È±È£©Ô½¹ıÁÙ½çÖµÊ±£¬ÏµÍ³´Ó¸ß¶àÑùĞÔ¡¢½Ó½üÈõÓĞĞ§µÄ×´Ì¬Í»È»Ô¾Ç¨µ½µÍ¶àÑùĞÔ¡¢²ßÂÔÍ¬ÖÊ»¯µÄ×´Ì¬¡£ÕâÖÖÏà±ä¾ßÓĞÖÍºóĞ§Ó¦£¨hysteresis£©¡ª¡ªÏµÍ³Ò»µ©½øÈëÍ¬ÖÊ»¯×´Ì¬£¬¼´Ê¹»Ö¸´²ÎÊıÒ²ºÜÄÑ»Øµ½¶àÑù»¯×´Ì¬£¬ÒòÎªÉÙÊıÖ÷µ¼²ßÂÔÒÑ¾­»ñµÃÁË²»¿ÉÄæµÄ²Æ¸»ÓÅÊÆ¡£
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[width=0.85\textwidth]{../../results/e4_full_evolution/p_mut=0.05_lambda=1.00_sigma=0.10_seed=42/plots/fig4_4_complexity_evolution.png}
+  \caption{Í¼4.4£º²ßÂÔ¸´ÔÓ¶ÈÑİ»¯}
+  \label{fig:e4_complexity}
+\end{figure}
+
+Í¼\ref{fig:e4_complexity}×·×ÙÁË²ßÂÔ¸´ÔÓ¶ÈµÄÑİ»¯¹ì¼££¬ÑéÖ¤ÁËH4£¨ÊÊÓ¦ĞÔ¾ºÕù¼ÙËµ£©£ºÔÚÑİ»¯Ñ¡ÔñÑ¹Á¦ÏÂ£¬²ßÂÔ´ÓµÍ¸´ÔÓ¶ÈÏòÖĞµÈ¸´ÔÓ¶È½ø»¯£¬µ«×î¸ß¸´ÔÓ¶ÈµÄ²ßÂÔ²¢²»Ò»¶¨¾ßÓĞ×î¸ßµÄÉú´æ¸ÅÂÊ¡£ÖĞµÈ¸´ÔÓ¶ÈµÄ²ßÂÔÔÚ³¤ÆÚÖĞ´æ»î¸ÅÂÊ×î¸ß£¬±íÏÖÎª²ßÂÔ¸´ÔÓ¶ÈÓëÉú´æÊ±¼äÖ®¼ä´æÔÚµ¹UĞÍ¹ØÏµ¡£
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[width=0.85\textwidth]{../../results/e4_full_evolution/p_mut=0.05_lambda=1.00_sigma=0.10_seed=42/plots/fig4_7_halflife_mutation.png}
+  \caption{Í¼4.7£ºAlpha°ëË¥ÆÚÓëÍ»±äÂÊµÄ¹ØÏµ}
+  \label{fig:e4_halflife}
+\end{figure}
+
+Í¼\ref{fig:e4_halflife}Á¿»¯ÁËÍ»±äÂÊ¶ÔAlphaÉúÃüÖÜÆÚµÄÓ°Ïì¡£¸ßÍ»±äÂÊÌõ¼şÏÂ£¬Alpha°ëË¥ÆÚÏÔÖøÑÓ³¤¡ª¡ªÍ»±ä²úÉúµÄ²ßÂÔ¶àÑùĞÔÎªÊĞ³¡Ìá¹©ÁË³ÖĞøµÄ´´ĞÂÀ´Ô´£¬ÑÓ»ºÁË²ßÂÔÓµ¼·Ğ§Ó¦µÄĞÎ³É¡£
+
+\subsection{E4½áÂÛ}
+
+E4ÊµÑéµÄºËĞÄ·¢ÏÖ°üÀ¨£º
+\begin{enumerate}
+    \item \textbf{AlphaÉúÃüÖÜÆÚÈ·Êµ´æÔÚ}£¬ÆäÎå¸ö½×¶Î£¨Ì½Ë÷-±¬·¢-Óµ¼·-Ë¥ÍË-»Ö¸´/Ãğ¾ø£©ÔÚ²»Í¬²ÎÊıÌõ¼şÏÂ¾ù¿É¹Û²â¡£
+    \item \textbf{Í»±äÊÇÎ¬³Ö²ßÂÔÉúÌ¬ÏµÍ³¶àÑùĞÔµÄ¹Ø¼ü»úÖÆ}¡£ÍêÈ«È±·¦Í»±ä£¨E3£©µ¼ÖÂ¿ìËÙÍ¬ÖÊ»¯£»ÊÊ¶ÈÍ»±ä£¨$P_{\text{mut}} \approx 0.10$£©¿ÉÒÔÔÚ¾ºÕùÓë´´ĞÂÖ®¼ä½¨Á¢¶¯Ì¬Æ½ºâ¡£
+    \item \textbf{²ßÂÔÉúÌ¬ÏµÍ³´æÔÚÁÙ½çÏà±ä}£¬ÕâÒ»·¢ÏÖ¶Ô½ğÈÚÎÈ¶¨¾ßÓĞÖØÒªÆôÊ¾£º²ßÂÔÍ¬ÖÊ»¯²»½öÊÇAlphaË¥¼õµÄ½á¹û£¬¸ü¿ÉÄÜÊÇÏµÍ³ĞÔ·çÏÕÀÛ»ıµÄÇ°Õ×¡£
+    \item \textbf{²ßÂÔ¸´ÔÓ¶ÈÓëÉú´æ¸ÅÂÊ³Êµ¹UĞÍ¹ØÏµ}£¬ÑéÖ¤ÁËLo£¨2017£©"ÊÊÕßÉú´æ£¬¶ø·Ç×îÓÅÕßÉú´æ"µÄºËĞÄÂÛ¶Ï¡£
+\end{enumerate}
+
+\section{¿çÊµÑé¶Ô±È·ÖÎö}
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[width=0.85\textwidth]{../../results/cross_experiment/plots/figC1_entropy_all.png}
+  \caption{Í¼C.1£ºËÄ×éÊµÑé²ßÂÔìØ¶Ô±È}
+  \label{fig:cross_entropy}
+\end{figure}
+
+Í¼\ref{fig:cross_entropy}½«ËÄ×éÊµÑéµÄ²ßÂÔìØ¹ì¼£µş¼ÓÔÚÍ¬Ò»×ø±êÏµÖĞ¡£¶Ô±ÈÇåÎúµØÕ¹Ê¾ÁËÑİ»¯»úÖÆµÄµİ½øĞ§Ó¦£º
+\begin{itemize}
+    \item E1£¨À¶£©£ºìØºã¶¨£¨ÎŞÑİ»¯£©
+    \item E2£¨³È£©£ºìØ»ºÂıÏÂ½µ£¨½ö²Æ¸»ÌÔÌ­£©
+    \item E3£¨ÂÌ£©£ºìØ¿ìËÙÏÂ½µ£¨²Æ¸»ÌÔÌ­+¸´ÖÆ£©
+    \item E4£¨×Ï£©£ºìØÔÚ¾ºÕùÓë´´ĞÂÖ®¼ä²¨¶¯£¨ÍêÕûÑİ»¯£©
+\end{itemize}
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[width=0.85\textwidth]{../../results/cross_experiment/plots/figC2_efficiency_all.png}
+  \caption{Í¼C.2£ºËÄ×éÊµÑéÊĞ³¡Ğ§ÂÊ¶Ô±È}
+  \label{fig:cross_efficiency}
+\end{figure}
+
+Í¼\ref{fig:cross_efficiency}½ÒÊ¾ÁËÊĞ³¡Ğ§ÂÊ£¨$\rho_1$£©ÔÚ²»Í¬Ñİ»¯»úÖÆÏÂµÄ²îÒìÄ£Ê½¡£E4Ìõ¼şÏÂµÄÊĞ³¡Ğ§ÂÊ²¢·Ç×î¸ß¡ª¡ª¾¡¹ÜE4ÓĞ×î¶àµÄÑİ»¯»úÖÆ£¬µ«Í»±äÒıÈëµÄ²ßÂÔ´´ĞÂÍ¬Ê±´øÀ´ÁË²»È·¶¨ĞÔ£¬Ê¹µÃÊĞ³¡Ğ§ÂÊµÍÓÚ´¿¸´ÖÆ£¨E3£©Ìõ¼ş¡£ÕâÖ§³ÖÁËH3ÖĞ¹ØÓÚ²ßÂÔ¶àÑùĞÔ-ÊĞ³¡Ğ§ÂÊµ¹UĞÍ¹ØÏµµÄ¼ÙËµ¡£
+
+\section{¼ÙÉè¼ìÑé½á¹û»ã×Ü}
+
+\begin{table}[htb]
+\centering
+\caption{ÑĞ¾¿¼ÙÉè¼ìÑé½á¹û»ã×Ü}
+\label{tab:hypothesis_summary}
+\begin{tabular}{@{}lll@{}}
+\toprule
+¼ÙÉè & ÄÚÈİ & ¼ìÑé½á¹û \\
+\midrule
+H1 & ÈõÓĞĞ§ÊĞ³¡Ó¿ÏÖ¼ÙËµ & \textbf{²¿·ÖÖ§³Ö}£ºÎŞÑİ»¯Ìõ¼şÏÂÊĞ³¡¿ÉÓ¿ÏÖÈõÓĞĞ§ĞÔÖÊ£¬µ«·ÇÎÈÌ¬ \\
+H2 & AlphaÉúÃüÖÜÆÚ¼ÙËµ & \textbf{Ç¿Ö§³Ö}£ºËÄ¸öÊµÑé¾ù¹Û²âµ½Óµ¼·-Ë¥¼õ-»Ö¸´Ñ­»· \\
+H3 & ¶àÑùĞÔ-ÎÈ¶¨ĞÔµ¹U¼ÙËµ & \textbf{Ö§³Ö}£ºE4ÖĞÈ·ÈÏ×îÓÅ¶àÑùĞÔÇø¼ä \\
+H4 & ÊÊÓ¦ĞÔ¾ºÕù¼ÙËµ & \textbf{Ö§³Ö}£º²ßÂÔ¸´ÔÓ¶ÈÓëÉú´æ¸ÅÂÊ³Êµ¹UĞÍ \\
+H5 & ÖÆ¶È³å»÷¼ÙËµ & \textbf{²¿·Ö¼ìÑé}£ºÕÇµøÍ£°åÔ¼ÊøÔÚÄ£ĞÍĞ£×¼ÖĞ²¿·ÖÑéÖ¤ \\
+\bottomrule
+\end{tabular}
+\end{table}
