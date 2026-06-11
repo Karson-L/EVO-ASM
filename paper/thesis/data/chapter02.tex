@@ -1,0 +1,371 @@
+﻿\chapter{EVO-ASM模型设计}
+\label{chap:model}
+
+本章详细介绍演化人工股票市场（Evolutionary Artificial Stock Market, EVO-ASM）的数学模型设计。模型由三个核心模块构成：资产市场模块（Market）、Agent种群模块（Agent Population）和演化动力与生态模块（Evolution \& Ecology Module）。本章严格使用数学符号对模型各组成部分进行形式化定义。
+
+\section{符号约定}
+
+\begin{table}[htb]
+\centering
+\caption{通用符号约定}
+\label{tab:notation}
+\begin{tabular}{@{}ll@{}}
+\toprule
+符号惯例 & 含义 \\
+\midrule
+下标 $i, j$ & Agent索引，$i, j \in \{1, 2, \ldots, M\}$ \\
+下标 $n$ & 资产索引，$n \in \{1, 2, \ldots, N\}$ \\
+下标 $t$ & 离散时间步（交易日），$t \in \{0, 1, \ldots, T\}$ \\
+下标 $k$ & 策略类型/家族索引 \\
+粗体 $\mathbf{x}$ & 向量 \\
+上标 $(n)$ & 资产索引 \\
+$\mathbb{E}[\cdot]$ & 期望算子 \\
+$\mathbb{I}\{\cdot\}$ & 示性函数 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Agent类型与策略编码}
+
+\subsection{Agent的统一表示}
+
+系统中所有Agent共享同一形式化结构。Agent $i$ 在时刻 $t$ 的完整状态由一个六元组定义：
+
+\begin{equation}
+\boxed{\mathcal{A}_i(t) = \bigl(\; \boldsymbol{\pi}_i(t),\; W_i(t),\; h_i^{(n)}(t),\; S_i(t),\; \mathcal{H}_i(t),\; \mathcal{R}_i(t) \;\bigr)}
+\label{eq:agent_state}
+\end{equation}
+
+其中各分量含义如下：
+\begin{itemize}
+    \item $\boldsymbol{\pi}_i(t)$：策略编码（定义见\S\ref{sec:strategy_encoding}）
+    \item $W_i(t)$：总财富（现金 + 持仓市值）
+    \item $h_i^{(n)}(t)$：资产 $n$ 的持仓数量
+    \item $S_i(t)$：已实现累计收益（用于适应度评估）
+    \item $\mathcal{H}_i(t)$：历史记忆（用于学习）
+    \item $\mathcal{R}_i(t)$：所属策略家族标签（聚类产生，非预设）
+\end{itemize}
+
+\subsection{策略编码}
+\label{sec:strategy_encoding}
+
+每个Agent的策略由信号权重向量、阈值、持仓周期、风险偏好组成：
+
+\begin{equation}
+\boxed{\boldsymbol{\pi}_i(t) = \bigl(\; \mathbf{w}_i(t),\; \theta_i(t),\; \tau_i(t),\; \alpha_i(t) \;\bigr)}
+\label{eq:strategy}
+\end{equation}
+
+\textbf{(a) 信号权重向量 $\mathbf{w}_i(t)$：}
+
+\begin{equation}
+\mathbf{w}_i(t) \in \mathbb{R}^D, \quad D = |\mathcal{S}|
+\end{equation}
+
+其中 $\mathcal{S} = \{S_1, S_2, \ldots, S_D\}$ 为信号空间（见\S\ref{sec:signal_space}），$D = 6$ 维信号。
+
+\textbf{(b) 进入阈值 $\theta_i(t)$：}
+
+\begin{equation}
+\theta_i(t) \in [\theta_{\min}, \theta_{\max}] \subset \mathbb{R}^+
+\end{equation}
+
+信号强度必须超过此阈值才触发交易。
+
+\textbf{(c) 典型持仓周期 $\tau_i(t)$：}
+
+\begin{equation}
+\tau_i(t) \in \{1, 3, 5, 10, 20, 60\}
+\end{equation}
+
+控制Agent持有头寸的预期时间尺度，单位为交易日。
+
+\textbf{(d) 风险偏好 $\alpha_i(t)$：}
+
+\begin{equation}
+\alpha_i(t) \in [0, 1]
+\end{equation}
+
+$\alpha_i \to 1$：激进（满仓倾向）；$\alpha_i \to 0$：保守（轻仓/空仓）。
+
+\subsection{策略类型的涌现分类}
+
+以下分类仅作为分析工具而非模型预设。通过聚类 $\mathbf{w}_i(t)$ 向量自然产生：
+
+\begin{table}[htb]
+\centering
+\caption{策略类型的涌现分类}
+\label{tab:strategy_types}
+\begin{tabular}{@{}lll@{}}
+\toprule
+涌现类型 & 信号空间特征 & 数学判别式 \\
+\midrule
+趋势跟踪 (TF) & $w_{\text{MOM}} \gg 0$, $w_{\text{REV}} \approx 0$ & $w_{\text{MOM}} / \|\mathbf{w}\| > \kappa_{\text{TF}}$ \\
+均值回复 (MR) & $w_{\text{REV}} \gg 0$, $w_{\text{MOM}} \approx 0$ & $w_{\text{REV}} / \|\mathbf{w}\| > \kappa_{\text{MR}}$ \\
+价值型 (VL) & $w_{\text{FUND}} \gg 0$ & $w_{\text{FUND}} / \|\mathbf{w}\| > \kappa_{\text{VL}}$ \\
+波动率型 (VT) & $w_{\text{VOL}} \gg 0$ & $w_{\text{VOL}} / \|\mathbf{w}\| > \kappa_{\text{VT}}$ \\
+混合型 (HY) & 多信号均衡 & 不满足以上单一判别式 \\
+噪声交易 (NS) & $\|\mathbf{w}\| \approx 0$ & $\|\mathbf{w}\| < \varepsilon_{\text{noise}}$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+其中 $\kappa_{\text{TF}}, \kappa_{\text{MR}}, \kappa_{\text{VL}}, \kappa_{\text{VT}} \in (0, 1)$ 为阈值常数。
+
+\section{状态变量}
+
+\subsection{市场级全局状态}
+
+符号 $\Omega(t)$ 表示 $t$ 时刻的市场全局状态：
+
+\begin{equation}
+\boxed{\Omega(t) = \bigl( \; P^{(n)}(t),\; r^{(n)}(t),\; V(t),\; F^{(n)}(t),\; \mathcal{O}(t) \;\bigr)_{n=1}^{N}}
+\label{eq:market_state}
+\end{equation}
+
+其中：
+\begin{itemize}
+    \item $P^{(n)}(t)$：资产 $n$ 在 $t$ 时刻的清算价格
+    \item $r^{(n)}(t) = \ln(P^{(n)}(t)/P^{(n)}(t-1))$：对数收益率
+    \item $V(t)$：市场总成交量
+    \item $F^{(n)}(t)$：资产 $n$ 的基础价值（外生随机过程）
+    \item $\mathcal{O}(t)$：限价订单簿快照（若使用订单簿撮合）
+\end{itemize}
+
+\subsection{基础价值过程}
+
+资产的基础价值遵循带均值回复的几何布朗运动：
+
+\begin{equation}
+F^{(n)}(t+1) = F^{(n)}(t) \cdot \exp\bigl( \phi(\bar{F} - F^{(n)}(t)) + \sigma_F \cdot \varepsilon_t \bigr)
+\label{eq:fundamental}
+\end{equation}
+
+其中 $\varepsilon_t \sim \mathcal{N}(0, 1)$，$\phi$ 为均值回复强度，$\sigma_F$ 为基础价值波动率，$\bar{F}$ 为长期均衡价值。
+
+\subsection{信号空间}
+\label{sec:signal_space}
+
+Agent $i$ 在 $t$ 时刻可观测的信号向量 $\mathbf{s}_i(t) \in \mathbb{R}^6$ 定义如表\ref{tab:signals}所示。
+
+\begin{table}[htb]
+\centering
+\caption{信号空间定义}
+\label{tab:signals}
+\begin{tabular}{@{}lll@{}}
+\toprule
+信号 & 公式 & 参数 \\
+\midrule
+$S_1$ 价格动量 & $r_{t-L_1:t}$ 的指数加权均值 & $L_1 = \tau_i(t)$ \\
+$S_2$ 移动平均交叉 & $(\text{MA}_{\text{short}}(t) - \text{MA}_{\text{long}}(t)) / \text{MA}_{\text{long}}(t)$ & short=5, long=20 \\
+$S_3$ 已实现波动率 & $\sigma_i(t) = \sqrt{\frac{1}{L_3-1}\sum_{k=1}^{L_3}(r_{t-k} - \bar{r})^2}$ & $L_3 = \tau_i(t)$ \\
+$S_4$ 成交量异常 & $(V(t) - \bar{V}_{L_4}) / \sigma_V$ & $L_4 = 20$ \\
+$S_5$ 基本面偏离 & $(F(t) - P(t)) / P(t)$ & — \\
+$S_6$ 短期反转 & $-\sum_{k=1}^{L_6} r_{t-k}$ & $L_6 = 3$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Agent级私有状态与演化全局状态}
+
+Agent级私有状态包括财富 $W_i(t)$、现金余额 $C_i(t) = W_i(t) - \sum_n h_i^{(n)}(t) \cdot P^{(n)}(t)$、持仓数量 $h_i^{(n)}(t)$、策略编码 $\boldsymbol{\pi}_i(t)$、适应度值 $\text{fitness}_i(t)$ 和存在期数 $\text{age}_i(t)$。
+
+演化全局状态由以下参数刻画：淘汰比例 $P_{\text{eliminate}}$、策略变异幅度 $\sigma_{\text{mut}}$、选择压力参数 $\lambda_{\text{select}}$、演化代数间隔 $K$ 和演化代数计数器 $G = \lfloor t/K \rfloor$。
+
+\section{行为规则}
+
+\subsection{整体决策流程}
+
+Agent $i$ 在每期 $t$ 执行以下决策循环：
+
+\begin{equation}
+\text{感知市场状态} \to \text{计算综合信号} \to \text{阈值判断} \to \text{生成目标持仓} \to \text{提交订单} \to \text{撮合成交}
+\label{eq:decision_loop}
+\end{equation}
+
+\subsection{综合信号计算}
+
+Agent $i$ 对资产 $n$ 的综合信号为：
+
+\begin{equation}
+z_i^{(n)}(t) = \sum_{d=1}^{6} w_{i,d}(t) \cdot s_d^{(n)}(t) + \eta_i^{(n)}(t)
+\label{eq:composite_signal}
+\end{equation}
+
+其中 $\eta_i^{(n)}(t) \sim \mathcal{N}(0, \sigma_{\text{noise}}^2)$ 为Agent特有的感知噪声，刻画有限注意力和信息处理误差。
+
+\subsection{需求函数}
+
+Agent $i$ 对资产 $n$ 的目标需求量为：
+
+\begin{equation}
+D_i^{(n)}(t) = \alpha_i(t) \cdot \frac{W_i(t)}{P^{(n)}(t)} \cdot \tanh\left(\frac{z_i^{(n)}(t) - \theta_i(t)}{\sigma_z}\right) \cdot \mathbb{I}\{|z_i^{(n)}(t)| > \theta_i(t)\}
+\label{eq:demand}
+\end{equation}
+
+其中 $\tanh(\cdot)$ 为平滑压缩函数，$\sigma_z$ 为信号标准化参数，示性函数确保仅信号强度超过阈值时才触发交易。
+
+\section{市场出清机制}
+
+\subsection{Walrasian拍卖（方案A）}
+
+在Walrasian均衡框架下，市场清算价格通过迭代调整机制确定。设总需求为 $\sum_i D_i^{(n)}(t)$，价格调整规则为：
+
+\begin{equation}
+P^{(n)}_{\text{new}} = P^{(n)}(t-1) \cdot \left(1 + \kappa \cdot \sum_{i=1}^{M} D_i^{(n)}(t)\right)
+\label{eq:walrasian}
+\end{equation}
+
+其中 $\kappa$ 为市场出清敏感度参数。价格受涨跌停板约束：
+
+\begin{equation}
+P^{(n)}(t) = \text{clamp}\bigl(P^{(n)}_{\text{new}},\; P^{(n)}(t-1) \cdot (1-\ell),\; P^{(n)}(t-1) \cdot (1+\ell)\bigr)
+\label{eq:price_limit}
+\end{equation}
+
+其中 $\ell = 0.10$ 为中国A股涨跌停板幅度。
+
+\subsection{限价订单簿（方案B）}
+
+方案B采用连续双向拍卖机制，所有Agent提交限价订单至中央订单簿，按价格优先-时间优先原则撮合成交。本文实验主要采用方案A以降低计算复杂度，方案B留作稳健性检验。
+
+\section{财富更新规则}
+
+每期成交后，Agent $i$ 的财富按以下规则更新：
+
+\begin{equation}
+W_i(t+1) = C_i(t) + \sum_{n=1}^{N} h_i^{(n)}(t+1) \cdot P^{(n)}(t)
+\label{eq:wealth_update}
+\end{equation}
+
+交易成本（佣金和印花税）从现金余额中扣除：
+
+\begin{equation}
+C_i(t+1) = C_i(t) - \Delta C_i^{\text{trade}}(t) - \Delta C_i^{\text{comm}}(t) - \Delta C_i^{\text{stamp}}(t)
+\label{eq:cash_update}
+\end{equation}
+
+其中：
+\begin{itemize}
+    \item $\Delta C_i^{\text{trade}}(t) = \sum_n (h_i^{(n)}(t+1) - h_i^{(n)}(t)) \cdot P^{(n)}(t)$：交易资金变动
+    \item $\Delta C_i^{\text{comm}}(t) = c_{\text{comm}} \cdot \sum_n |h_i^{(n)}(t+1) - h_i^{(n)}(t)| \cdot P^{(n)}(t)$：佣金
+    \item $\Delta C_i^{\text{stamp}}(t) = c_{\text{stamp}} \cdot \sum_n \max(0, h_i^{(n)}(t) - h_i^{(n)}(t+1)) \cdot P^{(n)}(t)$：印花税（仅卖方）
+\end{itemize}
+
+\section{演化动力学}
+
+\subsection{适应度函数}
+
+Agent $i$ 在第 $G$ 演化代的适应度基于滚动窗口的夏普比率：
+
+\begin{equation}
+\text{fitness}_i(G) = \frac{\bar{r}_i^{(\Delta)} - r_f}{\sigma_i^{(\Delta)}}
+\label{eq:fitness}
+\end{equation}
+
+其中 $\bar{r}_i^{(\Delta)}$ 和 $\sigma_i^{(\Delta)}$ 分别为 Agent $i$ 在过去 $\Delta = 60$ 个交易日的平均收益率和收益波动率，$r_f = 0$ 为无风险利率。
+
+\subsection{淘汰机制}
+
+每 $K$ 期（一个演化代），所有Agent按适应度排序，淘汰表现最差的 $P_{\text{eliminate}} \cdot M$ 个Agent。被淘汰Agent的财富按比例重新分配给幸存者：
+
+\begin{equation}
+W_j(t+1) = W_j(t) + W_j(t) \cdot \frac{\sum_{i \in \mathcal{D}} W_i(t)}{\sum_{j' \notin \mathcal{D}} W_{j'}(t)}, \quad \forall j \notin \mathcal{D}
+\label{eq:redistribution}
+\end{equation}
+
+其中 $\mathcal{D}$ 为被淘汰Agent集合。
+
+\subsection{复制机制}
+
+被淘汰的Agent由幸存Agent的复制后代替代。复制采用适应度比例选择（轮盘赌）：
+
+\begin{equation}
+P(\text{parent} = j) = \frac{\exp(\lambda_{\text{select}} \cdot \text{fitness}_j)}{\sum_{j' \notin \mathcal{D}} \exp(\lambda_{\text{select}} \cdot \text{fitness}_{j'})}
+\label{eq:roulette}
+\end{equation}
+
+其中 $\lambda_{\text{select}}$ 为选择压力参数。$\lambda_{\text{select}}$ 越大，高适应度Agent被选为父代的概率越高。
+
+\subsection{突变机制}
+
+复制产生的后代Agent的策略以概率 $P_{\text{mut}}$ 发生突变：
+
+\begin{equation}
+\mathbf{w}_i^{\text{new}} = \text{normalize}\bigl(\mathbf{w}_i^{\text{parent}} + \boldsymbol{\delta}\bigr), \quad \boldsymbol{\delta} \sim \mathcal{N}(0, \sigma_{\text{mut}}^2 \cdot \mathbf{I}_D)
+\label{eq:mutation}
+\end{equation}
+
+\begin{equation}
+\theta_i^{\text{new}} = \theta_i^{\text{parent}} + \delta_\theta, \quad \delta_\theta \sim \mathcal{N}(0, \sigma_{\text{mut}}^2)
+\end{equation}
+
+突变后的权重向量经过归一化处理以确保 $\|\mathbf{w}_i\|_2 = 1$。策略家族标签在复制时不改变——后代继承父代的 $\mathcal{R}_i$ 标签，而在突变时可能产生新的家族标签。
+
+\section{Alpha测度指标}
+
+\subsection{滚动Alpha}
+
+策略家族 $k$ 在时刻 $t$ 的Alpha定义为经过市场风险调整后的超额收益：
+
+\begin{equation}
+\alpha_k(t \mid \Delta) = \frac{1}{\Delta} \sum_{s=t-\Delta+1}^{t} \bigl(r_k(s) - \beta_k \cdot r_M(s)\bigr)
+\label{eq:alpha}
+\end{equation}
+
+其中 $r_k(s)$ 为策略 $k$ 在 $s$ 期的平均收益，$r_M(s)$ 为市场组合收益，$\beta_k$ 为通过滚动窗口估计的市场贝塔。$\Delta = 60$ 为滚动窗口长度。
+
+\subsection{Alpha半衰期}
+
+Alpha半衰期 $T_{1/2}$ 定义为策略Alpha从其峰值衰减到一半所需的时间（以交易日计）：
+
+\begin{equation}
+T_{1/2}^{(k)} = \arg\min_t \left\{ \alpha_k(t) \leq \frac{1}{2} \max_{s \leq t} \alpha_k(s) \right\}
+\label{eq:halflife}
+\end{equation}
+
+\subsection{策略熵}
+
+策略香农熵衡量市场中策略类型的多样性：
+
+\begin{equation}
+H_{\text{strat}}(t) = -\sum_{k=1}^{K(t)} p_k(t) \cdot \ln p_k(t)
+\label{eq:entropy}
+\end{equation}
+
+其中 $p_k(t)$ 为策略家族 $k$ 在 $t$ 时刻管理的财富占总市场财富的比例，$K(t)$ 为活跃策略家族数量。
+
+\subsection{市场效率指标}
+
+市场效率通过收益率一阶自相关衡量：
+
+\begin{equation}
+\rho_1(t \mid \Delta) = \text{Corr}\bigl(r_M(s), r_M(s-1)\bigr)_{s=t-\Delta+1}^{t}
+\label{eq:efficiency}
+\end{equation}
+
+$\rho_1 \to 0$ 表示市场趋向弱有效；$|\rho_1| \gg 0$ 表示存在可预测性。
+
+\subsection{财富基尼系数}
+
+\begin{equation}
+\text{Gini}(t) = \frac{\sum_{i=1}^{M} \sum_{j=1}^{M} |W_i(t) - W_j(t)|}{2M \sum_{i=1}^{M} W_i(t)}
+\label{eq:gini}
+\end{equation}
+
+\section{模型实现架构}
+
+EVO-ASM模型基于Mesa Agent-Based Modeling框架实现。核心类包括：
+
+\begin{itemize}
+    \item \texttt{EVOASMModel}：模型主控类，管理仿真循环和调度
+    \item \texttt{Market}：市场模块，执行价格发现和撮合
+    \item \texttt{OrderBook}：限价订单簿（方案B）
+    \item \texttt{TradingAgent}：Agent基类，封装感知-决策-执行循环
+    \item \texttt{Strategy}：策略编码类，维护信号权重和参数
+    \item \texttt{EvolutionEngine}：演化引擎，管理淘汰-选择-复制-突变周期
+    \item \texttt{MetricsCollector}：度量采集器，记录和计算各类市场指标
+    \item \texttt{AlphaTracker}：Alpha追踪器，追踪各策略家族的超额收益动态
+\end{itemize}
+
+仿真采用Mesa的StagedActivation调度器，每期分为三个阶段：感知阶段（perceive）→ 决策阶段（decide）→ 执行阶段（act）。演化引擎在每 $K$ 期后触发演化操作。完整代码开源在GitHub仓库\url{https://github.com/Karson-L/ASM}。
