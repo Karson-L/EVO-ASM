@@ -1,427 +1,427 @@
-\chapter{ʵ�������������}
+\chapter{实验设计与结果分析}
 \label{chap:experiments}
 
-�����������ݽ�ʵ�飬�Ӿ�̬���ߵ������ݻ����𲽰���Alpha˥����������ơ�����ʵ����߼������£�
+本章设计四组递进实验，从静态基线到完整演化，逐步剥离Alpha衰减的因果机制。四组实验的逻辑链如下：
 
 \begin{center}
-\textbf{E1�����ݻ����ߣ�} $\to$ \textbf{E2���ʱ����ţ�} $\to$ \textbf{E3�����ƻ��ƣ�} $\to$ \textbf{E4������+ͻ�䣩}
+\textbf{E1（无演化基线）} $\to$ \textbf{E2（资本扩张）} $\to$ \textbf{E3（复制机制）} $\to$ \textbf{E4（复制+突变）}
 \end{center}
 
-ÿ��ʵ����ǰһ�����������һ���ݻ����ƣ��Ӷ����Զ���ʶ��ÿ�����Ƶ�������ס�
+每组实验在前一组基础上增加一个演化机制，从而可以独立识别每个机制的因果贡献。
 
-\section{ͨ��ʵ����}
+\section{通用实验框架}
 
-\subsection{�̶����Ʊ���}
+\subsection{固定控制变量}
 
-��\ref{tab:fixed_params}�г�������ʵ���б��ֲ���Ĳ�����
+表\ref{tab:fixed_params}列出了所有实验中保持不变的参数。
 
 \begin{table}[htb]
 \centering
-\caption{��ʵ��̶����Ʊ���}
+\caption{跨实验固定控制变量}
 \label{tab:fixed_params}
 \begin{tabular}{@{}lll@{}}
 \toprule
-���� & ���� & �̶�ֵ \\
+变量 & 符号 & 固定值 \\
 \midrule
-Agent���� & $M$ & 500 \\
-�ʲ����� & $N$ & 1 \\
-ģ������ & $T$ & 2000��ʵ��ִ��ʱ�䣩\\
-�ź�ά�� & $D$ & 6 \\
-�г��������ж� & $\kappa$ & 0.001 \\
-������ֵ������ & $\sigma_F$ & 0.01 \\
-��ֵ�ظ�ǿ�� & $\phi$ & 0.001 \\
-�ǵ�ͣ�� & $\ell$ & $\pm 10\%$ \\
-Ӷ����� & $c_{\text{comm}}$ & 0.0003 \\
-ӡ��˰�� & $c_{\text{stamp}}$ & 0.001 \\
-�޷������� & $r_f$ & 0.0 \\
-Alpha�������� & $\Delta$ & 60�� \\
-������� & seed & $\{42, 123, 456, 789, 1024\}$ \\
+Agent数量 & $M$ & 500 \\
+资产数量 & $N$ & 1 \\
+模拟期数 & $T$ & 2000（实用执行时间）\\
+信号维度 & $D$ & 6 \\
+市场出清敏感度 & $\kappa$ & 0.001 \\
+基础价值波动率 & $\sigma_F$ & 0.01 \\
+均值回复强度 & $\phi$ & 0.001 \\
+涨跌停板 & $\ell$ & $\pm 10\%$ \\
+佣金费率 & $c_{\text{comm}}$ & 0.0003 \\
+印花税率 & $c_{\text{stamp}}$ & 0.001 \\
+无风险利率 & $r_f$ & 0.0 \\
+Alpha滚动窗口 & $\Delta$ & 60期 \\
+随机种子 & seed & $\{42, 123, 456, 789, 1024\}$ \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\subsection{��ʼ������}
+\subsection{初始化规则}
 
-����ʵ�����ͳһ�ĳ�ʼ������
+所有实验采用统一的初始化规则：
 \begin{itemize}
-    \item ����Agent��ʼ�Ƹ����ȣ�$W_i(0) = W_{\text{total}} / M = 20,000$
-    \item ��ʼ�ֲ� $h_i(0) = 0$
-    \item ��ʼ����������ɣ�$\mathbf{w}_i(0) \sim \mathcal{N}(0, \sigma_{\text{init}}^2 \cdot \mathbf{I}_D)$����һ��
-    \item ÿ��Agent��ancestor\_id = agent\_id��������Դ��
-    \item �г���ʼ�۸� $P(0) = \bar{F} = 100$
+    \item 所有Agent初始财富均等：$W_i(0) = W_{\text{total}} / M = 20,000$
+    \item 初始持仓 $h_i(0) = 0$
+    \item 初始策略随机生成，$\mathbf{w}_i(0) \sim \mathcal{N}(0, \sigma_{\text{init}}^2 \cdot \mathbf{I}_D)$，归一化
+    \item 每个Agent的ancestor\_id = agent\_id（独立祖源）
+    \item 市场初始价格 $P(0) = \bar{F} = 100$
 \end{itemize}
 
-\subsection{ͨ�������}
+\subsection{通用因变量}
 
-����ʵ����ɼ������������������ $H_{\text{strat}}(t)$���г�Ч�� $\rho_1(t \mid \Delta)$�������ʷ�� $\text{Kurt}(t \mid \Delta)$�������ʾۼ� $\text{ACF}(|r|)(t)$��ƽ���ɽ��� $\bar{V}(t)$���Ƹ�����ϵ�� $\text{Gini}(t)$ �Ͳ��Լ������� $K(t)$��
+所有实验均采集以下因变量：策略熵 $H_{\text{strat}}(t)$、市场效率 $\rho_1(t \mid \Delta)$、收益率峰度 $\text{Kurt}(t \mid \Delta)$、波动率聚集 $\text{ACF}(|r|)(t)$、平均成交量 $\bar{V}(t)$、财富基尼系数 $\text{Gini}(t)$ 和策略家族数量 $K(t)$。
 
-\section{Experiment 1�����ݻ�����}
+\section{Experiment 1：无演化基线}
 
-\subsection{�о����}
+\subsection{研究设计}
 
-\textbf{�о����⣺}�ڲ��Էֲ���ȫ��̬�ķ���г��У�Alpha�Ƿ���Ȼ˥�����г��Ƿ��Է�������Ч��
+\textbf{研究问题：}在策略分布完全静态的封闭市场中，Alpha是否仍然衰减？市场是否自发趋向有效？
 
-\textbf{��˵ӳ�䣺}��ӦH1������Ч�г�ӿ�ּ�˵���Ĳ��ַ񶨼��顪����E1�з�������Alpha�������ڣ����ݻ�������Alpha˥���ı�Ҫ������
+\textbf{假说映射：}对应H1（弱有效市场涌现假说）的部分否定检验——若E1中发现显著Alpha持续存在，则演化机制是Alpha衰减的必要条件。
 
-\textbf{ʵ�鴦����}ȫ���ݻ����عرա�������̭��$P_{\text{eliminate}} = 0$�����޸��ƣ���ͻ�䣬�޲Ƹ��ط��䡣ÿ��Agent������ģ���ڼ䱣�����ʼ���Բ��䣬�Ƹ���ͨ������ӯ����Ȼ�仯��
+\textbf{实验处理：}全部演化开关关闭——无淘汰（$P_{\text{eliminate}} = 0$），无复制，无突变，无财富重分配。每个Agent在整个模拟期间保持其初始策略不变，财富仅通过交易盈亏自然变化。
 
-\textbf{�Ա�����}
+\textbf{自变量：}
 \begin{itemize}
-    \item ���Գ�ʼ�����ԣ�$\sigma_{\text{init}} \in \{0.02, 0.10, 0.30\}$����/��/�ߣ�
-    \item �������׳����$\sigma_{\text{noise}} \in \{0.0, 0.005, 0.02\}$
+    \item 策略初始多样性：$\sigma_{\text{init}} \in \{0.02, 0.10, 0.30\}$（低/中/高）
+    \item 噪声交易冲击：$\sigma_{\text{noise}} \in \{0.0, 0.005, 0.02\}$
 \end{itemize}
 
-\subsection{ʵ����}
+\subsection{实验结果}
 
-ʵ��E1������47�������ϣ�ÿ��5��������ӣ�����369�ŷ���ͼ��������չʾ�ؼ����֡�
+实验E1共运行47组参数组合，每组5个随机种子，生成369张分析图表。以下展示关键发现。
 
 \begin{figure}[htb]
   \centering
   \includegraphics[width=0.85\textwidth]{../../results/e1_no_evolution/baseline_seed42/plots/fig1_1_price_vs_fundamental.png}
-  \caption{ͼ1.1���۸� $P(t)$ �������ֵ $F(t)$ ��ʱ�����У�$\sigma_{\text{init}}=0.10$, $\sigma_{\text{noise}}=0.005$, seed=42��}
+  \caption{图1.1：价格 $P(t)$ 与基础价值 $F(t)$ 的时间序列（$\sigma_{\text{init}}=0.10$, $\sigma_{\text{noise}}=0.005$, seed=42）}
   \label{fig:e1_price}
 \end{figure}
 
-ͼ\ref{fig:e1_price}չʾ��E1�����������г��۸��������ֵ�Ĺ�ϵ�����Թ۲쵽��
+图\ref{fig:e1_price}展示了E1基线条件下市场价格与基础价值的关系。可以观察到：
 \begin{enumerate}
-    \item �г��۸�Χ�ƻ�����ֵ������������ϵͳ��ƫ�룬�����г���δ�ﵽǿ��Ч״̬��
-    \item �۸�ƫ����������� $\sigma_{\text{noise}} = 0.005$ ʱ���ֳ����Եľ�ֵ�ظ��������۸�Χ�ƻ��������²�������
-    \item �ǵ�ͣ��Լ����$\pm 10\%$����Ч�������˼��˼۸�ƫ�롣
+    \item 市场价格围绕基础价值波动，但存在系统性偏离，表明市场并未达到强有效状态。
+    \item 价格偏离在噪声冲击 $\sigma_{\text{noise}} = 0.005$ 时表现出明显的均值回复特征（价格围绕基本面上下波动）。
+    \item 涨跌停板约束（$\pm 10\%$）有效地限制了极端价格偏离。
 \end{enumerate}
 
 \begin{figure}[htb]
   \centering
   \includegraphics[width=0.85\textwidth]{../../results/e1_no_evolution/baseline_seed42/plots/fig1_2_return_distribution.png}
-  \caption{ͼ1.2�������ʷֲ���$\sigma_{\text{init}}=0.10$, $\sigma_{\text{noise}}=0.005$��}
+  \caption{图1.2：收益率分布（$\sigma_{\text{init}}=0.10$, $\sigma_{\text{noise}}=0.005$）}
   \label{fig:e1_returns}
 \end{figure}
 
-ͼ\ref{fig:e1_returns}��ʾ�����ʷֲ����ֳ����͵Ľ��ڻ���ʵ����������β��leptokurtic�������������������̬�ֲ���3.0�����������¼��ķ���Ƶ�ʸ�����̬�ֲ�Ԥ�⡣
+图\ref{fig:e1_returns}显示收益率分布呈现出典型的金融化事实特征：尖峰厚尾（leptokurtic）——峰度显著高于正态分布的3.0，表明极端事件的发生频率高于正态分布预测。
 
 \begin{figure}[htb]
   \centering
   \includegraphics[width=0.85\textwidth]{../../results/e1_no_evolution/baseline_seed42/plots/fig1_3_volatility_clustering.png}
-  \caption{ͼ1.3�������ʾۼ�ЧӦ��$\sigma_{\text{init}}=0.10$, $\sigma_{\text{noise}}=0.005$��}
+  \caption{图1.3：波动率聚集效应（$\sigma_{\text{init}}=0.10$, $\sigma_{\text{noise}}=0.005$）}
   \label{fig:e1_vol}
 \end{figure}
 
-ͼ\ref{fig:e1_vol}չʾ�˾���ֵ�����ʵ�����غ�����������������أ��ر����ڶ��ͺ��ڣ�֤ʵ��ģ�ͳɹ������˲����ʾۼ���һ�����г��ĵ��ͻ���ʵ��
+图\ref{fig:e1_vol}展示了绝对值收益率的自相关函数。显著的正自相关（特别是在短滞后期）证实了模型成功复现了波动率聚集这一金融市场的典型化事实。
 
 \begin{figure}[htb]
   \centering
   \includegraphics[width=0.85\textwidth]{../../results/e1_no_evolution/baseline_seed42/plots/fig1_4_entropy_constant.png}
-  \caption{ͼ1.4�������ص�ʱ���ݻ������ݻ����ߣ�}
+  \caption{图1.4：策略熵的时间演化（无演化基线）}
   \label{fig:e1_entropy}
 \end{figure}
 
-ͼ\ref{fig:e1_entropy}��ʾ�������ݻ����Ƶ�����£������ر��ֺ㶨������Ϊû�в��Ա���̭���ƣ��Ƹ��ֲ����ɽ��׽�����������漰���Բ���ı仯��
+图\ref{fig:e1_entropy}显示，在无演化机制的情况下，策略熵保持恒定——因为没有策略被淘汰或复制，财富分布仅由交易结果决定，不涉及策略层面的变化。
 
 \begin{figure}[htb]
   \centering
   \includegraphics[width=0.85\textwidth]{../../results/e1_no_evolution/baseline_seed42/plots/fig1_5_alpha_heatmap.png}
-  \caption{ͼ1.5�����Լ���Alpha����ͼ�����ݻ����ߣ�}
+  \caption{图1.5：策略家族Alpha热力图（无演化基线）}
   \label{fig:e1_alpha}
 \end{figure}
 
-ͼ\ref{fig:e1_alpha}չʾ�˲�ͬ���Լ����Alpha��ʱ��ı仯���ؼ����֣�
+图\ref{fig:e1_alpha}展示了不同策略家族的Alpha随时间的变化。关键发现：
 \begin{enumerate}
-    \item �����ݻ������£�������Alpha��Ȼ��������������ϵͳ��˥�����ơ�
-    \item ĳЩ�������ض��г������±��ֳ�����Alpha���綯���Ͳ��������������У�����������Alpha��ֵ�ӽ��㡣
-    \item Alpha�Ŀ���Բ�����ҪԴ���ź�����������ԣ����ǲ��Լ�ľ���ѹ����
+    \item 在无演化机制下，各策略Alpha虽然波动，但不存在系统性衰减趋势。
+    \item 某些策略在特定市场环境下表现出正的Alpha（如动量型策略在趋势行情中），但整体上Alpha均值接近零。
+    \item Alpha的跨策略差异主要源于信号噪声的随机性，而非策略间的竞争压力。
 \end{enumerate}
 
 \begin{figure}[htb]
   \centering
   \includegraphics[width=0.85\textwidth]{../../results/e1_no_evolution/baseline_seed42/plots/fig1_6_wealth_gini.png}
-  \caption{ͼ1.6���Ƹ�����ϵ����ʱ���ݻ�}
+  \caption{图1.6：财富基尼系数的时间演化}
   \label{fig:e1_gini}
 \end{figure}
 
-ͼ\ref{fig:e1_gini}��ʾ����ʹ�����ݻ������£��Ƹ���ƽ�ȳ̶�����ʱ���������������ƾ���׽�����켴�ɵ��²Ƹ����С�����ʼ���Ե�΢С�����ڸ���ЧӦ�»�Ŵ�Ϊ�����ĲƸ���ƽ�ȡ�
+图\ref{fig:e1_gini}显示，即使在无演化机制下，财富不平等程度仍随时间上升。这表明仅凭交易结果差异即可导致财富集中——初始策略的微小优势在复利效应下会放大为显著的财富不平等。
 
-\subsection{E1����}
+\subsection{E1结论}
 
-E1ʵ��ĺ��ķ����ǣ�\textbf{��ȱ���ݻ�ѹ��������̭���޸��ơ���ͻ�䣩������£�Alpha����ϵͳ��˥��}����Ȼ�г��۸�չ�ֳ�����Ч���ʣ�$\rho_1 \approx 0$���������Լ��ӯ������������Գ������ڣ�������̬ϵͳ�������ʼ������ˮƽ����һ����Ϊ����ʵ���ṩ�˻�׼��E1����"��ƾ�г����׼�������Alpha"�ļ�˵������Alpha˥����Ҫ�ݻ�����������
+E1实验的核心发现是：\textbf{在缺乏演化压力（无淘汰、无复制、无突变）的情况下，Alpha不会系统性衰减}。虽然市场价格展现出弱有效性质（$\rho_1 \approx 0$），但策略间的盈利能力差异可以持续存在，策略生态系统保持其初始多样性水平。这一发现为后续实验提供了基准：E1否定了"仅凭市场交易即可消除Alpha"的假说，表明Alpha衰减需要演化机制驱动。
 
-\section{Experiment 2���ʱ����ţ��Ƹ����л��ƣ�}
+\section{Experiment 2：资本扩张（财富集中机制）}
 
-\subsection{�о����}
+\subsection{研究设计}
 
-\textbf{�о����⣺}�Ƹ����У�����ӵ������������Alpha˥����
+\textbf{研究问题：}财富集中（策略拥挤）单独驱动Alpha衰减吗？
 
-\textbf{��˵ӳ�䣺}��ӦH2�Ĳ��ּ��顪���ʱ���ӯ�����Եļ����Ƿ񹹳�Alpha˥���ĳ��������
+\textbf{假说映射：}对应H2的部分检验——资本向盈利策略的集中是否构成Alpha衰减的充分条件。
 
-\textbf{ʵ�鴦����}����Ƹ��ط��䣨��̭-�滻���ƣ������޸��ƺ�ͻ�䡣ÿ $K=200$ �ڣ���̭�ײ� $P_{\text{eliminate}}$ ������Agent���Ƹ����·�����Ҵ��ߡ�����̭��������²���������޸��ƣ���
+\textbf{实验处理：}引入财富重分配（淘汰-替换机制），但无复制和突变。每 $K=200$ 期，淘汰底部 $P_{\text{eliminate}}$ 比例的Agent，财富重新分配给幸存者。被淘汰者由随机新策略替代（无复制）。
 
-\textbf{�Ա�����}
+\textbf{自变量：}
 \begin{itemize}
-    \item ��̭������$P_{\text{eliminate}} \in \{0.05, 0.10, 0.20\}$
-    \item ѡ��ǿ�ȣ�$\lambda_{\text{select}} \in \{1.0, 2.0, 4.0\}$
-    \item ���Գ�ʼ�����ԣ�$\sigma_{\text{init}} \in \{0.02, 0.10, 0.30\}$
+    \item 淘汰比例：$P_{\text{eliminate}} \in \{0.05, 0.10, 0.20\}$
+    \item 选择强度：$\lambda_{\text{select}} \in \{1.0, 2.0, 4.0\}$
+    \item 策略初始多样性：$\sigma_{\text{init}} \in \{0.02, 0.10, 0.30\}$
 \end{itemize}
 
-\subsection{ʵ����}
+\subsection{实验结果}
 
-ʵ��E2������135�������ϣ�����1080�ŷ���ͼ����
+实验E2共运行135组参数组合，生成1080张分析图表。
 
 \begin{figure}[htb]
   \centering
   \includegraphics[width=0.85\textwidth]{../../results/e2_capital_expansion/p_eliminate=0.05_lambda=1.00_sigma=0.02_seed=42/plots/fig2_1_crowding_alpha_dualaxis.png}
-  \caption{ͼ2.1��ӵ������Alpha˫��ͼ��$P_{\text{elim}}=0.05$, $\lambda=1.0$, $\sigma_{\text{init}}=0.02$��}
+  \caption{图2.1：拥挤度与Alpha双轴图（$P_{\text{elim}}=0.05$, $\lambda=1.0$, $\sigma_{\text{init}}=0.02$）}
   \label{fig:e2_crowding}
 \end{figure}
 
-ͼ\ref{fig:e2_crowding}��E2ʵ��ĺ���ͼ����˫��չʾ�˲���ӵ���ȣ��Ըò��Թ����ĲƸ�ռ�Ⱥ�������Alpha��ʱ�����С��ؼ����֣�
+图\ref{fig:e2_crowding}是E2实验的核心图表。双轴展示了策略拥挤度（以该策略管理的财富占比衡量）与Alpha的时间序列。关键发现：
 \begin{enumerate}
-    \item ӵ������Alpha����������ء��������Թ����Ƹ�ռ������ʱ����Alpha�������½���
-    \item Alpha˥�����ֽ׶��ԣ�����Alpha�ϸߡ��Ƹ������ӵ����������Alpha�½����Ƹ�����������̭����
-    \item �ڵͳ�ʼ�����ԣ�$\sigma_{\text{init}}=0.02$�������£�Alpha˥���ٶ���졣
+    \item 拥挤度与Alpha呈显著负相关——当策略管理财富占比上升时，其Alpha倾向于下降。
+    \item Alpha衰减呈现阶段性：初期Alpha较高→财富流入→拥挤度上升→Alpha下降→财富流出（被淘汰）。
+    \item 在低初始多样性（$\sigma_{\text{init}}=0.02$）条件下，Alpha衰减速度最快。
 \end{enumerate}
 
 \begin{figure}[htb]
   \centering
   \includegraphics[width=0.85\textwidth]{../../results/e2_capital_expansion/p_eliminate=0.05_lambda=1.00_sigma=0.02_seed=42/plots/fig2_2_crowding_alpha_scatter.png}
-  \caption{ͼ2.2��ӵ����-Alphaɢ��ͼ��ع���}
+  \caption{图2.2：拥挤度-Alpha散点图与回归线}
   \label{fig:e2_scatter}
 \end{figure}
 
-ͼ\ref{fig:e2_scatter}ͨ��ɢ��ͼ�ͻع���������ӵ���Ⱥ�Alpha��ͳ�ƹ�ϵ���ع�ϵ�������в�������¾�Ϊ����ͳ��������ȷ����"����ӵ����Alpha˥��"���������
+图\ref{fig:e2_scatter}通过散点图和回归线量化了拥挤度和Alpha的统计关系。回归系数在所有参数组合下均为负且统计显著，确认了"策略拥挤→Alpha衰减"的因果方向。
 
 \begin{figure}[htb]
   \centering
   \includegraphics[width=0.85\textwidth]{../../results/e2_capital_expansion/p_eliminate=0.05_lambda=1.00_sigma=0.02_seed=42/plots/fig2_3_elasticity_violin.png}
-  \caption{ͼ2.3��Alpha��ӵ���ȵĵ��ԣ�С����ͼ��}
+  \caption{图2.3：Alpha对拥挤度的弹性（小提琴图）}
   \label{fig:e2_elasticity}
 \end{figure}
 
-ͼ\ref{fig:e2_elasticity}��С����ͼչʾ��Alpha-ӵ���ȵ����ڲ�ͬʵ��׶εķֲ������Թ��������ڽ׶η���ϴ󣨲�������̽���������������ȶ���
+图\ref{fig:e2_elasticity}的小提琴图展示了Alpha-拥挤度弹性在不同实验阶段的分布。弹性估计在早期阶段方差较大（策略仍在探索），后期趋于稳定。
 
 \begin{figure}[htb]
   \centering
   \includegraphics[width=0.85\textwidth]{../../results/e2_capital_expansion/p_eliminate=0.05_lambda=1.00_sigma=0.02_seed=42/plots/fig2_4_capital_concentration.png}
-  \caption{ͼ2.4���ʱ����жȵ�ʱ���ݻ�}
+  \caption{图2.4：资本集中度的时间演化}
   \label{fig:e2_capital}
 \end{figure}
 
-ͼ\ref{fig:e2_capital}��ʾ������̭���������£��ʱ���ӯ�����Լ��е��ٶ���������E1���ر����ڸ���̭���������£��Ƹ�����ϵ�������������г��������Ե�"Ӯ��ͨ��"ЧӦ��
+图\ref{fig:e2_capital}显示，在淘汰机制作用下，资本向盈利策略集中的速度显著快于E1。特别是在高淘汰比例条件下，财富基尼系数快速上升，市场出现明显的"赢家通吃"效应。
 
 \begin{figure}[htb]
   \centering
   \includegraphics[width=0.85\textwidth]{../../results/e2_capital_expansion/p_eliminate=0.05_lambda=1.00_sigma=0.02_seed=42/plots/fig2_5_entropy_by_elimination.png}
-  \caption{ͼ2.5����ͬ��̭�����µĲ������ݻ�}
+  \caption{图2.5：不同淘汰比例下的策略熵演化}
   \label{fig:e2_entropy}
 \end{figure}
 
-ͼ\ref{fig:e2_entropy}�ǹؼ����֣�������̭�������ӣ��������½��ٶȼӿ졣$P_{\text{eliminate}}=0.20$�����£����Զ�������1000�ں��������ͣ�������ʹ�޸��ƻ��ƣ���ƾ�Ƹ���̭�Ϳ�����������ͬ�ʻ���
+图\ref{fig:e2_entropy}是关键发现：随着淘汰比例增加，策略熵下降速度加快。$P_{\text{eliminate}}=0.20$条件下，策略多样性在1000期后显著降低，表明即使无复制机制，仅凭财富淘汰就可以驱动策略同质化。
 
-\subsection{E2����}
+\subsection{E2结论}
 
-E2ʵ��ĺ��ķ����ǣ�\textbf{�Ƹ����л��Ƶ�������������Alpha�Ĳ���˥��}����û�в��Ը��ƺ�ͻ�������£��ʱ���ӯ�����Եļ��в�����"ӵ��ЧӦ"����Խ���ʱ�׷��ͬһ���ԣ��ò��Եĳ�������Խ�͡�Ȼ���������ʵ����ȣ�E2�����µ�Alpha˥���ǲ������ģ�ȱ�����ƺ�ͻ����ζ��û��"���Դ���"���������̭�Ĳ��ԣ�Ҳû��"����ģ��"������ͬ�ʻ���
+E2实验的核心发现是：\textbf{财富集中机制单独就足以驱动Alpha的部分衰减}。在没有策略复制和突变的情况下，资本向盈利策略的集中产生了"拥挤效应"——越多资本追逐同一策略，该策略的超额收益越低。然而，与后续实验相比，E2条件下的Alpha衰减是不完整的：缺乏复制和突变意味着没有"策略创新"来替代被淘汰的策略，也没有"策略模仿"来加速同质化。
 
-\section{Experiment 3�����ƻ���}
+\section{Experiment 3：复制机制}
 
-\subsection{�о����}
+\subsection{研究设计}
 
-\textbf{�о����⣺}����ģ�£����ƣ���ε��¶�����ɥʧ�����ƻ��ƶ�Alpha˥���ı߼ʹ����ж��
+\textbf{研究问题：}策略模仿（复制）如何导致多样性丧失？复制机制对Alpha衰减的边际贡献有多大？
 
-\textbf{��˵ӳ�䣺}��ӦH3��H4�Ĳ��ּ��顪�����Ը��Ƽ���ͬ�ʻ�����Ӧ�Ծ�����
+\textbf{假说映射：}对应H3和H4的部分检验——策略复制加速同质化和适应性竞争。
 
-\textbf{ʵ�鴦����}��E2������������Ը��ƣ���ͻ�䣩������̭Agent���Ҵ�Agent�ĸ��ƺ����������̶�ѡ�񣩣�����̳и������ԡ�
+\textbf{实验处理：}在E2基础上引入策略复制（无突变）。被淘汰Agent由幸存Agent的复制后代替代（轮盘赌选择），后代继承父代策略。
 
-\textbf{�Ա�����}
+\textbf{自变量：}
 \begin{itemize}
-    \item ѡ��ǿ�ȣ�$\lambda_{\text{select}} \in \{1.0, 3.0\}$
-    \item ���Գ�ʼ�����ԣ�$\sigma_{\text{init}} \in \{0.02, 0.10, 0.30\}$
-    \item �������׳����$\sigma_{\text{noise}} \in \{0.0, 0.005, 0.02\}$
+    \item 选择强度：$\lambda_{\text{select}} \in \{1.0, 3.0\}$
+    \item 策略初始多样性：$\sigma_{\text{init}} \in \{0.02, 0.10, 0.30\}$
+    \item 噪声交易冲击：$\sigma_{\text{noise}} \in \{0.0, 0.005, 0.02\}$
 \end{itemize}
 
-\subsection{ʵ����}
+\subsection{实验结果}
 
-ʵ��E3������90�������ϣ�����720�ŷ���ͼ����
+实验E3共运行90组参数组合，生成720张分析图表。
 
 \begin{figure}[htb]
   \centering
   \includegraphics[width=0.85\textwidth]{../../results/e3_replication/lambda=1.00_sigma=0.10_noise=0.005_seed=42/plots/fig3_1_family_decay.png}
-  \caption{ͼ3.1�����Լ�������˥�����ߣ�$\lambda=1.0$, $\sigma_{\text{init}}=0.10$��}
+  \caption{图3.1：策略家族数量衰减曲线（$\lambda=1.0$, $\sigma_{\text{init}}=0.10$）}
   \label{fig:e3_decay}
 \end{figure}
 
-ͼ\ref{fig:e3_decay}չʾ�˸��ƻ����²��Լ���������ָ��˥�����ؼ����֣�
+图\ref{fig:e3_decay}展示了复制机制下策略家族数量的指数衰减。关键发现：
 \begin{enumerate}
-    \item ���Լ���������ʱ��ʽ���ָ��˥����$K(t) \approx K_0 \cdot e^{-t/\tau_K}$��
-    \item ˥��ʱ�䳣�� $\tau_K$ ��ѡ��ǿ�� $\lambda_{\text{select}}$ ����ء���ѡ��ѹ��Խ�󣬶�����ɥʧԽ�졣
-    \item �� $\lambda_{\text{select}} = 3.0$ �����£����Լ���������1500�ں�ɽ�����ʼˮƽ��20\%���¡�
+    \item 策略家族数量随时间呈近似指数衰减：$K(t) \approx K_0 \cdot e^{-t/\tau_K}$。
+    \item 衰减时间常数 $\tau_K$ 与选择强度 $\lambda_{\text{select}}$ 负相关——选择压力越大，多样性丧失越快。
+    \item 在 $\lambda_{\text{select}} = 3.0$ 条件下，策略家族数量在1500期后可降至初始水平的20\%以下。
 \end{enumerate}
 
 \begin{figure}[htb]
   \centering
   \includegraphics[width=0.85\textwidth]{../../results/e3_replication/lambda=1.00_sigma=0.10_noise=0.005_seed=42/plots/fig3_2_lineage_tree.png}
-  \caption{ͼ3.2��������ϵ����$\lambda=1.0$, $\sigma_{\text{init}}=0.10$��}
+  \caption{图3.2：策略谱系树（$\lambda=1.0$, $\sigma_{\text{init}}=0.10$）}
   \label{fig:e3_lineage}
 \end{figure}
 
-ͼ\ref{fig:e3_lineage}չʾ�˲��Ե���ϵ�ݻ��������������Ĳ��Լ����𽥱�����"���Ƽ���"�����������ֳ����͵�"��������"��̬�����ݻ����ڣ�����ǰ���Ĳ��Լ�����Թ�������60\%���г��Ƹ���
+图\ref{fig:e3_lineage}展示了策略的谱系演化。最初多个独立的策略家族逐渐被少数"优势家族"所主导，呈现出典型的"富者愈富"动态。在演化后期，排名前三的策略家族可以管理超过60\%的市场财富。
 
 \begin{figure}[htb]
   \centering
   \includegraphics[width=0.85\textwidth]{../../results/e3_replication/lambda=1.00_sigma=0.10_noise=0.005_seed=42/plots/fig3_3_dominant_stack.png}
-  \caption{ͼ3.3���������ԵĶѵ����ͼ}
+  \caption{图3.3：主导策略的堆叠面积图}
   \label{fig:e3_dominant}
 \end{figure}
 
-ͼ\ref{fig:e3_dominant}�Զѵ����ͼչʾ�˸����Լ�����г��ݶ�仯��ֱ����ʾ�˲���ͬ�ʻ��Ķ�̬���̡�
+图\ref{fig:e3_dominant}以堆叠面积图展示了各策略家族的市场份额变化，直观显示了策略同质化的动态过程。
 
 \begin{figure}[htb]
   \centering
   \includegraphics[width=0.85\textwidth]{../../results/e3_replication/lambda=1.00_sigma=0.10_noise=0.005_seed=42/plots/fig3_4_efficiency_selection.png}
-  \caption{ͼ3.4���г�Ч����ѡ��ǿ�ȵĹ�ϵ}
+  \caption{图3.4：市场效率与选择强度的关系}
   \label{fig:e3_efficiency}
 \end{figure}
 
-ͼ\ref{fig:e3_efficiency}չʾ��һ����ֱ���ķ��֣��ڸ��ƻ����£���Ȼ���Զ������½������г�Ч�ʣ�$\rho_1 \to 0$������������������Ϊ����ʹ���г��۸�����������������Եľ���ˮƽ��Ȼ��������"Ч��"�Ǵ����ġ������ⲿ����ı��г�����ʱ��ͬ�ʻ��Ĳ���Ⱥ��ȱ����Ӧ������
+图\ref{fig:e3_efficiency}展示了一个反直觉的发现：在复制机制下，虽然策略多样性下降，但市场效率（$\rho_1 \to 0$）反而提升！这是因为复制使得市场价格更快收敛到主导策略的均衡水平。然而，这种"效率"是脆弱的——当外部冲击改变市场环境时，同质化的策略群体缺乏适应能力。
 
 \begin{figure}[htb]
   \centering
   \includegraphics[width=0.85\textwidth]{../../results/e3_replication/lambda=1.00_sigma=0.10_noise=0.005_seed=42/plots/fig3_5_entropy_extreme.png}
-  \caption{ͼ3.5�������г������µĲ�����}
+  \caption{图3.5：极端市场条件下的策略熵}
   \label{fig:e3_extreme}
 \end{figure}
 
-ͼ\ref{fig:e3_extreme}��ʾ���ڼ����г��¼�����ʱ�������ؽ�һ�������½�������ѹ��ʱ�ڲ���ͬ�ʻ��Ӿ硪��������ϵͳ�Է��ջ��۵�΢�ۻ�����
+图\ref{fig:e3_extreme}显示，在极端市场事件发生时，策略熵进一步急剧下降，表明压力时期策略同质化加剧——这正是系统性风险积累的微观基础。
 
-\subsection{E3����}
+\subsection{E3结论}
 
-E3ʵ��ĺ��ķ����ǣ�\textbf{���Ը��ƻ�������������Alpha˥���Ͳ��Զ�����ɥʧ}����E2��ȣ�E3�в��Լ����������½��ٶ����Լ2-3�������Ʋ�����"Ӯ��ͨ��"ЧӦʹ�г��������ԵĲ���ͬ�ʻ����ơ�Ȼ����ȱ��ͻ����ζ�Ų���Ⱥ��ȱ����Ӧ�Դ��£��ڻ����仯ʱ���׼���ʧЧ��
+E3实验的核心发现是：\textbf{策略复制机制显著加速了Alpha衰减和策略多样性丧失}。与E2相比，E3中策略家族数量的下降速度提高约2-3倍。复制产生的"赢家通吃"效应使市场出现明显的策略同质化趋势。然而，缺乏突变意味着策略群体缺乏适应性创新，在环境变化时容易集体失效。
 
-\section{Experiment 4������+ͻ�䣨�����ݻ���}
+\section{Experiment 4：复制+突变（完整演化）}
 
-\subsection{�о����}
+\subsection{研究设计}
 
-\textbf{�о����⣺}ͻ���ܷ�ά�ֲ��Զ������ԶԿ�Alpha˥������ʲô��������£�������̬ϵͳ�ܹ���"����-����-��̭"��ѭ����ά�ֶ�̬ƽ�⣿
+\textbf{研究问题：}突变能否维持策略多样性以对抗Alpha衰减？在什么参数组合下，策略生态系统能够在"创新-竞争-淘汰"的循环中维持动态平衡？
 
-\textbf{��˵ӳ�䣺}ȫ�����H1-H5��E4�������ݻ�ʵ�飬������̭�����ƺ�ͻ���������ơ�
+\textbf{假说映射：}全面检验H1-H5。E4是完整演化实验，包含淘汰、复制和突变三个机制。
 
-\textbf{ʵ�鴦����}�����Ĵ����ʽ�ݻ�������̭��ѡ������ơ�ͻ�䡣����̭Agent��ͻ���ĸ��ƺ�������
+\textbf{实验处理：}完整的达尔文式演化——淘汰→选择→复制→突变。被淘汰Agent由突变后的复制后代替代。
 
-\textbf{�Ա�����}
+\textbf{自变量：}
 \begin{itemize}
-    \item ͻ���ʣ�$P_{\text{mut}} \in \{0.05, 0.10, 0.20, 0.40\}$
-    \item ѡ��ǿ�ȣ�$\lambda_{\text{select}} \in \{1.0, 2.0, 3.0, 5.0\}$
-    \item ���Գ�ʼ�����ԣ�$\sigma_{\text{init}} \in \{0.02, 0.10, 0.30\}$
+    \item 突变率：$P_{\text{mut}} \in \{0.05, 0.10, 0.20, 0.40\}$
+    \item 选择强度：$\lambda_{\text{select}} \in \{1.0, 2.0, 3.0, 5.0\}$
+    \item 策略初始多样性：$\sigma_{\text{init}} \in \{0.02, 0.10, 0.30\}$
 \end{itemize}
 
-\subsection{ʵ����}
+\subsection{实验结果}
 
-ʵ��E4������240�������ϣ�����2880�ŷ���ͼ����
+实验E4共运行240组参数组合，生成2880张分析图表。
 
 \begin{figure}[htb]
   \centering
   \includegraphics[width=0.85\textwidth]{../../results/e4_full_evolution/p_mut=0.05_lambda=1.00_sigma=0.10_seed=42/plots/fig4_1_alpha_lifecycle.png}
-  \caption{ͼ4.1��Alpha�������ڣ�$P_{\text{mut}}=0.05$, $\lambda=1.0$, $\sigma_{\text{init}}=0.10$��}
+  \caption{图4.1：Alpha生命周期（$P_{\text{mut}}=0.05$, $\lambda=1.0$, $\sigma_{\text{init}}=0.10$）}
   \label{fig:e4_lifecycle}
 \end{figure}
 
-ͼ\ref{fig:e4_lifecycle}�Ǳ��о��ĺ��ķ��֡�����ʾ��Alpha�������ڵ���������׶Σ�
+图\ref{fig:e4_lifecycle}是本研究的核心发现。它揭示了Alpha生命周期的完整五个阶段：
 \begin{enumerate}
-    \item \textbf{̽���ڣ�0-200�ڣ���}����̽���г���Alpha����������ȷ����
-    \item \textbf{�����ڣ�200-500�ڣ���}ĳЩ���Է�����Ч�źţ�AlphaѸ����������ֵ��
-    \item \textbf{ӵ���ڣ�500-1000�ڣ���}���ƻ���ʹ�ɹ����Ա��㷺ģ�£��ʱ����е���Alpha˥����
-    \item \textbf{˥���ڣ�1000-1500�ڣ���}Alpha�����½������ֲ��Ա���̭��
-    \item \textbf{�ָ�/����ֲ棺}��ͻ���������£��²��Ա�����ܷ����µ�Alpha��Դ���ָ�������ͻ�����£����Կ��ܳ��������
+    \item \textbf{探索期（0-200期）：}策略探索市场，Alpha波动大但无明确方向。
+    \item \textbf{爆发期（200-500期）：}某些策略发现有效信号，Alpha迅速上升至峰值。
+    \item \textbf{拥挤期（500-1000期）：}复制机制使成功策略被广泛模仿，资本集中导致Alpha衰减。
+    \item \textbf{衰退期（1000-1500期）：}Alpha持续下降，部分策略被淘汰。
+    \item \textbf{恢复/灭绝分叉：}高突变率条件下，新策略变异可能发现新的Alpha来源（恢复）；低突变率下，策略可能彻底灭绝。
 \end{enumerate}
 
 \begin{figure}[htb]
   \centering
   \includegraphics[width=0.85\textwidth]{../../results/e4_full_evolution/p_mut=0.05_lambda=1.00_sigma=0.10_seed=42/plots/fig4_2_entropy_grid.png}
-  \caption{ͼ4.2�������ز�������$P_{\text{mut}} \times \lambda_{\text{select}}$��}
+  \caption{图4.2：策略熵参数网格（$P_{\text{mut}} \times \lambda_{\text{select}}$）}
   \label{fig:e4_entropy_grid}
 \end{figure}
 
-ͼ\ref{fig:e4_entropy_grid}չʾ�˲�ͬͻ���ʺ�ѡ��ǿ������µĲ����ع켣���ؼ����֣�
+图\ref{fig:e4_entropy_grid}展示了不同突变率和选择强度组合下的策略熵轨迹。关键发现：
 \begin{enumerate}
-    \item ��ͻ����+��ѡ��ǿ�� $\to$ ���Զ�����Ѹ�ٱ�����
-    \item ��ͻ����+��ѡ��ǿ�� $\to$ ���Զ�����ά�����е�ˮƽ���г����ֶ�̬ƽ�⡣
-    \item �������Ų������䣺$P_{\text{mut}} \in [0.05, 0.20]$ �� $\lambda_{\text{select}} \in [1.0, 3.0]$���ڴ������ڲ�����̬ϵͳ��ά�ֶ������ֲ�������Ƭ����
+    \item 低突变率+高选择强度 $\to$ 策略多样性迅速崩溃。
+    \item 高突变率+低选择强度 $\to$ 策略多样性维持在中等水平，市场呈现动态平衡。
+    \item 存在最优参数区间：$P_{\text{mut}} \in [0.05, 0.20]$ 和 $\lambda_{\text{select}} \in [1.0, 3.0]$，在此区间内策略生态系统既维持多样性又不至于碎片化。
 \end{enumerate}
 
 \begin{figure}[htb]
   \centering
   \includegraphics[width=0.85\textwidth]{../../results/e4_full_evolution/p_mut=0.05_lambda=1.00_sigma=0.10_seed=42/plots/fig4_3_phase_transition.png}
-  \caption{ͼ4.3��������̬ϵͳ�����ͼ}
+  \caption{图4.3：策略生态系统的相变图}
   \label{fig:e4_phase}
 \end{figure}
 
-ͼ\ref{fig:e4_phase}չʾ��һ����Ϊ��Ҫ�ķ��֣�������̬ϵͳ����\textbf{���}���󡣵����Ʋ�����ͻ����/ѡ��ǿ�ȱȣ�Խ���ٽ�ֵʱ��ϵͳ�Ӹ߶����ԡ��ӽ�����Ч��״̬ͻȻԾǨ���Ͷ����ԡ�����ͬ�ʻ���״̬�������������ͺ�ЧӦ��hysteresis������ϵͳһ������ͬ�ʻ�״̬����ʹ�ָ�����Ҳ���ѻص�������״̬����Ϊ�������������Ѿ�����˲�����ĲƸ����ơ�
+图\ref{fig:e4_phase}展示了一个尤为重要的发现：策略生态系统存在\textbf{相变}现象。当控制参数（突变率/选择强度比）越过临界值时，系统从高多样性、接近弱有效的状态突然跃迁到低多样性、策略同质化的状态。这种相变具有滞后效应（hysteresis）——系统一旦进入同质化状态，即使恢复参数也很难回到多样化状态，因为少数主导策略已经获得了不可逆的财富优势。
 
 \begin{figure}[htb]
   \centering
   \includegraphics[width=0.85\textwidth]{../../results/e4_full_evolution/p_mut=0.05_lambda=1.00_sigma=0.10_seed=42/plots/fig4_4_complexity_evolution.png}
-  \caption{ͼ4.4�����Ը��Ӷ��ݻ�}
+  \caption{图4.4：策略复杂度演化}
   \label{fig:e4_complexity}
 \end{figure}
 
-ͼ\ref{fig:e4_complexity}׷���˲��Ը��Ӷȵ��ݻ��켣����֤��H4����Ӧ�Ծ�����˵�������ݻ�ѡ��ѹ���£����Դӵ͸��Ӷ����еȸ��ӶȽ���������߸��ӶȵĲ��Բ���һ��������ߵ�������ʡ��еȸ��ӶȵĲ����ڳ����д�������ߣ�����Ϊ���Ը��Ӷ�������ʱ��֮����ڵ�U�͹�ϵ��
+图\ref{fig:e4_complexity}追踪了策略复杂度的演化轨迹，验证了H4（适应性竞争假说）：在演化选择压力下，策略从低复杂度向中等复杂度进化，但最高复杂度的策略并不一定具有最高的生存概率。中等复杂度的策略在长期中存活概率最高，表现为策略复杂度与生存时间之间存在倒U型关系。
 
 \begin{figure}[htb]
   \centering
   \includegraphics[width=0.85\textwidth]{../../results/e4_full_evolution/p_mut=0.05_lambda=1.00_sigma=0.10_seed=42/plots/fig4_7_halflife_mutation.png}
-  \caption{ͼ4.7��Alpha��˥����ͻ���ʵĹ�ϵ}
+  \caption{图4.7：Alpha半衰期与突变率的关系}
   \label{fig:e4_halflife}
 \end{figure}
 
-ͼ\ref{fig:e4_halflife}������ͻ���ʶ�Alpha�������ڵ�Ӱ�졣��ͻ���������£�Alpha��˥�������ӳ�����ͻ������Ĳ��Զ�����Ϊ�г��ṩ�˳����Ĵ�����Դ���ӻ��˲���ӵ��ЧӦ���γɡ�
+图\ref{fig:e4_halflife}量化了突变率对Alpha生命周期的影响。高突变率条件下，Alpha半衰期显著延长——突变产生的策略多样性为市场提供了持续的创新来源，延缓了策略拥挤效应的形成。
 
-\subsection{E4����}
+\subsection{E4结论}
 
-E4ʵ��ĺ��ķ��ְ�����
+E4实验的核心发现包括：
 \begin{enumerate}
-    \item \textbf{Alpha��������ȷʵ����}��������׶Σ�̽��-����-ӵ��-˥��-�ָ�/������ڲ�ͬ���������¾��ɹ۲⡣
-    \item \textbf{ͻ����ά�ֲ�����̬ϵͳ�����ԵĹؼ�����}����ȫȱ��ͻ�䣨E3�����¿���ͬ�ʻ����ʶ�ͻ�䣨$P_{\text{mut}} \approx 0.10$�������ھ����봴��֮�佨����̬ƽ�⡣
-    \item \textbf{������̬ϵͳ�����ٽ����}����һ���ֶԽ����ȶ�������Ҫ��ʾ������ͬ�ʻ�������Alpha˥���Ľ������������ϵͳ�Է����ۻ���ǰ�ס�
-    \item \textbf{���Ը��Ӷ���������ʳʵ�U�͹�ϵ}����֤��Lo��2017��"�������棬��������������"�ĺ����۶ϡ�
+    \item \textbf{Alpha生命周期确实存在}，其五个阶段（探索-爆发-拥挤-衰退-恢复/灭绝）在不同参数条件下均可观测。
+    \item \textbf{突变是维持策略生态系统多样性的关键机制}。完全缺乏突变（E3）导致快速同质化；适度突变（$P_{\text{mut}} \approx 0.10$）可以在竞争与创新之间建立动态平衡。
+    \item \textbf{策略生态系统存在临界相变}，这一发现对金融稳定具有重要启示：策略同质化不仅是Alpha衰减的结果，更可能是系统性风险累积的前兆。
+    \item \textbf{策略复杂度与生存概率呈倒U型关系}，验证了Lo（2017）"适者生存，而非最优者生存"的核心论断。
 \end{enumerate}
 
-\section{��ʵ��Աȷ���}
+\section{跨实验对比分析}
 
 \begin{figure}[htb]
   \centering
   \includegraphics[width=0.85\textwidth]{../../results/cross_experiment/plots/figC1_entropy_all.png}
-  \caption{ͼC.1������ʵ������ضԱ�}
+  \caption{图C.1：四组实验策略熵对比}
   \label{fig:cross_entropy}
 \end{figure}
 
-ͼ\ref{fig:cross_entropy}������ʵ��Ĳ����ع켣������ͬһ����ϵ�С��Ա�������չʾ���ݻ����Ƶĵݽ�ЧӦ��
+图\ref{fig:cross_entropy}将四组实验的策略熵轨迹叠加在同一坐标系中。对比清晰地展示了演化机制的递进效应：
 \begin{itemize}
-    \item E1���������غ㶨�����ݻ���
-    \item E2���ȣ����ػ����½������Ƹ���̭��
-    \item E3���̣����ؿ����½����Ƹ���̭+���ƣ�
-    \item E4���ϣ������ھ����봴��֮�䲨���������ݻ���
+    \item E1（蓝）：熵恒定（无演化）
+    \item E2（橙）：熵缓慢下降（仅财富淘汰）
+    \item E3（绿）：熵快速下降（财富淘汰+复制）
+    \item E4（紫）：熵在竞争与创新之间波动（完整演化）
 \end{itemize}
 
 \begin{figure}[htb]
   \centering
   \includegraphics[width=0.85\textwidth]{../../results/cross_experiment/plots/figC2_efficiency_all.png}
-  \caption{ͼC.2������ʵ���г�Ч�ʶԱ�}
+  \caption{图C.2：四组实验市场效率对比}
   \label{fig:cross_efficiency}
 \end{figure}
 
-ͼ\ref{fig:cross_efficiency}��ʾ���г�Ч�ʣ�$\rho_1$���ڲ�ͬ�ݻ������µĲ���ģʽ��E4�����µ��г�Ч�ʲ�����ߡ�������E4�������ݻ����ƣ���ͻ������Ĳ��Դ���ͬʱ�����˲�ȷ���ԣ�ʹ���г�Ч�ʵ��ڴ����ƣ�E3����������֧����H3�й��ڲ��Զ�����-�г�Ч�ʵ�U�͹�ϵ�ļ�˵��
+图\ref{fig:cross_efficiency}揭示了市场效率（$\rho_1$）在不同演化机制下的差异模式。E4条件下的市场效率并非最高——尽管E4有最多的演化机制，但突变引入的策略创新同时带来了不确定性，使得市场效率低于纯复制（E3）条件。这支持了H3中关于策略多样性-市场效率倒U型关系的假说。
 
-\section{�������������}
+\section{假设检验结果汇总}
 
 \begin{table}[htb]
 \centering
-\caption{�о��������������}
+\caption{研究假设检验结果汇总}
 \label{tab:hypothesis_summary}
 \begin{tabular}{@{}lll@{}}
 \toprule
-���� & ���� & ������ \\
+假设 & 内容 & 检验结果 \\
 \midrule
-H1 & ����Ч�г�ӿ�ּ�˵ & \textbf{����֧��}�����ݻ��������г���ӿ������Ч���ʣ�������̬ \\
-H2 & Alpha�������ڼ�˵ & \textbf{ǿ֧��}���ĸ�ʵ����۲⵽ӵ��-˥��-�ָ�ѭ�� \\
-H3 & ������-�ȶ��Ե�U��˵ & \textbf{֧��}��E4��ȷ�����Ŷ��������� \\
-H4 & ��Ӧ�Ծ�����˵ & \textbf{֧��}�����Ը��Ӷ���������ʳʵ�U�� \\
-H5 & �ƶȳ����˵ & \textbf{���ּ���}���ǵ�ͣ��Լ����ģ��У׼�в�����֤ \\
+H1 & 弱有效市场涌现假说 & \textbf{部分支持}：无演化条件下市场可涌现弱有效性质，但非稳态 \\
+H2 & Alpha生命周期假说 & \textbf{强支持}：四个实验均观测到拥挤-衰减-恢复循环 \\
+H3 & 多样性-稳定性倒U假说 & \textbf{支持}：E4中确认最优多样性区间 \\
+H4 & 适应性竞争假说 & \textbf{支持}：策略复杂度与生存概率呈倒U型 \\
+H5 & 制度冲击假说 & \textbf{部分检验}：涨跌停板约束在模型校准中部分验证 \\
 \bottomrule
 \end{tabular}
 \end{table}
