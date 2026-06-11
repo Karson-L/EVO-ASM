@@ -1,5 +1,6 @@
-"""Fig C.4: Alpha half-life cross-experiment - Cross-experiment."""
+"""Fig C.4: Alpha half-life cross-experiment - Cross-experiment.
 Usage: python figC4_halflife_all.py --data-dir <path>
+
 """
 import sys, argparse
 from pathlib import Path

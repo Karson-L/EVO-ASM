@@ -1,5 +1,6 @@
-"""Fig C.2: Market efficiency across all experiments - Cross-experiment."""
+"""Fig C.2: Market efficiency across all experiments - Cross-experiment.
 Usage: python figC2_efficiency_all.py --data-dir <path>
+
 """
 import sys, argparse
 from pathlib import Path

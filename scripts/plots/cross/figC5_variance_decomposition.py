@@ -1,5 +1,6 @@
-"""Fig C.5: Mechanism contribution variance decomposition - Cross-experiment."""
+"""Fig C.5: Mechanism contribution variance decomposition - Cross-experiment.
 Usage: python figC5_variance_decomposition.py --data-dir <path>
+
 """
 import sys, argparse
 from pathlib import Path

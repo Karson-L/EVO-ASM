@@ -1,4 +1,4 @@
-﻿# Python
+# Python
 __pycache__/
 *.py[cod]
 *.pyo
@@ -34,7 +34,6 @@ htmlcov/
 Thumbs.db
 
 # Project specific
-results/*/plots/       # 生成的图表（保留 CSV 数据）
 *.log
 
 # Mesa
