@@ -1,5 +1,6 @@
-"""Fig C.3: Extreme event frequency comparison - Cross-experiment."""
+"""Fig C.3: Extreme event frequency comparison - Cross-experiment.
 Usage: python figC3_extreme_events.py --data-dir <path>
+
 """
 import sys, argparse
 from pathlib import Path

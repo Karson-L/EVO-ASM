@@ -1,5 +1,6 @@
-"""Fig C.1: Strategy entropy across all experiments - Cross-experiment."""
+"""Fig C.1: Strategy entropy across all experiments - Cross-experiment.
 Usage: python figC1_entropy_all.py --data-dir <path>
+
 """
 import sys, argparse
 from pathlib import Path

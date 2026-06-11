@@ -21,7 +21,7 @@ from evo_asm.model import EVOASMModel
 # E4 参数规格（EXPERIMENTS.md）
 M = 500
 N = 1
-T = 10000
+T = 2000     # 从10000调整为2000（与E2/E3一致）
 K = 200
 
 # 自变量
