@@ -90,10 +90,8 @@
         \songti \zihao{3} \bfseries 中文题目 \hspace{-0.4cm} \underline{\makebox[11cm]{\songti \zihao{3} \bfseries \cover@ctitlef}}  \\[3pt]
                                     \hspace{2cm}    \underline{\makebox[11cm]{\songti \zihao{3} \bfseries \cover@ctitles}}  \\
         \songti \zihao{3} \bfseries 英文题目 \hspace{-0.4cm} \underline{\makebox[11cm]{\songti \zihao{3} \bfseries \cover@etitlef}}  \\[3pt]
-                                    \hspace{2cm}    \underline{\makebox[11cm]{\songti \zihao{3} \bfseries \cover@etitles}}  
-                                    % \\[3pt]
-                                    % 注释掉以下这行, 因为 \cover@etitlet 未定义. 如果要使用第三行英文标题, 建议在 jluthesis.cfg 中定义 \cover@etitlet.
-                                    % \hspace{2cm}    \underline{\makebox[11cm]{\songti \zihao{3} \bfseries \cover@etitlet}}  
+                                    \hspace{2cm}    \underline{\makebox[11cm]{\songti \zihao{3} \bfseries \cover@etitles}}  \\[3pt]
+                                    \hspace{2cm}    \underline{\makebox[11cm]{\songti \zihao{3} \bfseries \cover@etitlet}}  
                                     \\[2.3cm]
 
 
