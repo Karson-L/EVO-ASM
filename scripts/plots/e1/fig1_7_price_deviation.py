@@ -1,4 +1,4 @@
-"""Fig 1.7: Price deviation from fundamental.
+﻿"""Fig 1.7: Price deviation from fundamental.
 Usage: python fig1_7_price_deviation.py --data-dir <path>
 """
 import sys, argparse
@@ -6,7 +6,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent))
 
 import matplotlib; matplotlib.use("Agg")
-matplotlib.rcParams["font.sans-serif"] = ["SimHei","Microsoft YaHei","DejaVu Sans"]
+matplotlib.rcParams["font.sans-serif"] = ["Noto Sans SC","DejaVu Sans"]
 matplotlib.rcParams["axes.unicode_minus"] = False
 matplotlib.rcParams.update({'figure.dpi':150,'savefig.dpi':300,'savefig.bbox':'tight',
     'font.size':11,'axes.titlesize':13,'axes.labelsize':12,

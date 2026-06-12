@@ -1,4 +1,4 @@
-\documentclass{jluthesis}
+﻿\documentclass{jluthesis}
 \usepackage{fancyvrb}
 \usepackage{booktabs, multirow, longtable, makecell, subfig}
 \RecustomVerbatimEnvironment{Verbatim}{Verbatim}{frame = single, tabsize = 4, fontsize=\footnotesize}
@@ -7,22 +7,22 @@
 
 \let\cleardoublepage\clearpage
 
-% 封面
+% 灏侀潰
 \makecover
 
 
-% 承诺书
+% 鎵胯涔?
 \commitment
 \thispagestyle{style@empty}
-% 中文摘要
+% 涓枃鎽樿
 \input{data/cabstract}
 \thispagestyle{style@empty}
 
-% 英文摘要
+% 鑻辨枃鎽樿
 \input{data/eabstract}
 \thispagestyle{style@empty}
 
-% 目录
+% 鐩綍
 \newpage
 \pagenumbering{gobble} 
 {
@@ -31,7 +31,7 @@
     \clearpage
 }
 
-% 正文
+% 姝ｆ枃
 \pagenumbering{arabic} 
 \setcounter{page}{1}
 \pagestyle{style@normal}
@@ -45,9 +45,9 @@
 
 \input{data/chapter04.tex}
 
-% 参考文献
+% 鍙傝€冩枃鐚?
 \input{data/reference.tex}
-% 致谢
+% 鑷磋阿
 \input{data/acknowledgement.tex}
 
 \end{document}

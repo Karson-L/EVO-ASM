@@ -158,28 +158,12 @@ class AlphaTracker:
     def _update_phase(
         self, lc: AlphaLifecycle, step: int, alpha: float
     ) -> None:
-        """根据 Alpha 大小判定当前生命阶段。
-
-        六阶段判定：exploration→burst→crowding→decay→extinct，decay 回升时进入 recovery。
-        """
-        prev_phase = lc.current_phase
-
-        # ── 灭绝判定 ──
-        if alpha < self.eps_extinct and len(lc.alpha_series) > self.window:
+        """???? Alpha ???????????"""
+        if lc.is_alive and alpha < self.eps_extinct and len(lc.alpha_series) > self.window:
             lc.current_phase = "extinct"
             lc.is_alive = False
             lc.t_extinct = step
-            return
-
-        # ── 复苏判定：曾进入 decay/extinct 后 alpha 回升 ──
-        if prev_phase in ("decay", "extinct") and lc.t_peak is not None:
-            if alpha > self.eps_extinct:
-                lc.current_phase = "recovery"
-                lc.is_alive = True
-                return
-
-        # ── 常规阶段 ──
-        if lc.t_peak is None:
+        elif lc.t_peak is None:
             lc.current_phase = "exploration"
         elif alpha > lc.peak_alpha * 0.8:
             lc.current_phase = "burst"
@@ -190,7 +174,6 @@ class AlphaTracker:
         else:
             lc.current_phase = "extinct"
             lc.is_alive = False
-
 
     def get_phase(self, family_id: int) -> str:
         """????????????????

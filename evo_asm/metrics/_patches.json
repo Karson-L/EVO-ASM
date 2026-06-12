@@ -1,0 +1,10 @@
+[
+  {
+    "old": "self.alpha_tracker: AlphaTracker = AlphaTracker(",
+    "new": "        self._families_snapshots: list = []\n        self._prev_family_wealth: dict[int, float] = {}\n        self._snapshot_interval: int = min(config.K, max(1, config.T // 4))\n\n        self.alpha_tracker: AlphaTracker = AlphaTracker("
+  },
+  {
+    "old": "        self._update_alpha_tracker(step, agents, price, ancestor_ids)",
+    "new": "        self._update_alpha_tracker(step, agents, price, ancestor_ids)\n\n        if step % self._snapshot_interval == 0 or step == self.config.T - 1:\n            self._snapshot_families(step)"
+  }
+]

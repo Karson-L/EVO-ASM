@@ -1,4 +1,4 @@
-﻿"""EVO-ASM 顶层模型。
+"""EVO-ASM 顶层模型。
 
 协调 Market、EvolutionEngine、SignalComputer 和 Agent 集合。
 实现 MODEL_SPEC §10.1 的完整主循环。
@@ -85,6 +85,7 @@ class EVOASMModel:
         self.metrics_collector: MetricsCollector = MetricsCollector(
             self.config, self,
         )
+        self._agent_snapshots: list[dict] = []
         # backward compat
         self.metrics = self.metrics_collector.data
         self._return_buffer: list[float] = []  # 用于滚动 ACF1
@@ -156,6 +157,11 @@ class EVOASMModel:
 
         # ── 7. 记录度量 ──
         self._record_metrics()
+
+        # Periodic agent snapshot (matches families snapshot interval)
+        snap_interval = self.metrics_collector._snapshot_interval
+        if self.step_count % snap_interval == 0 or self.step_count == self.config.T - 1:
+            self._snapshot_agents()
 
         # ── 8-13. 演化（每 K 步） ──
         self.step_count += 1
@@ -278,15 +284,12 @@ class EVOASMModel:
         # market.csv
         self.metrics_collector.to_dataframe().to_csv(out / "market.csv", index=False)
 
-        # families.csv (strategy family data)
-        try:
-            fam_df = self.metrics_collector.to_families_dataframe()
-            if len(fam_df) > 0:
-                fam_df.to_csv(out / "families.csv", index=False)
-        except Exception:
-            pass
+        # families.csv (strategy family data — multi-timepoint)
+        fam_df = self.metrics_collector.to_families_dataframe()
+        if len(fam_df) > 0:
+            fam_df.to_csv(out / "families.csv", index=False)
 
-        # agents.csv（当前快照）
+        # agents.csv — all accumulated snapshots, not just final
         self._save_agents_csv(out / "agents.csv")
 
         # summary.json
@@ -294,30 +297,57 @@ class EVOASMModel:
 
         return out
 
-    def _save_agents_csv(self, path: Path) -> None:
-        """保存当前 agent 状态为 CSV。"""
+    def _snapshot_agents(self) -> None:
         rows = []
         for a in self.agents:
             rows.append({
-                "step": self.step_count,
-                "agent_id": a.agent_id,
-                "ancestor_id": a.ancestor_id,
-                "parent_id": a.parent_id if a.parent_id is not None else -1,
-                "wealth": a.compute_wealth(self.market.P),
-                "cash": a.cash,
-                "holdings": float(a.holdings[0]),
-                "weight_0": float(a.strategy.weights[0]),
-                "weight_1": float(a.strategy.weights[1]),
-                "weight_2": float(a.strategy.weights[2]),
-                "weight_3": float(a.strategy.weights[3]),
-                "weight_4": float(a.strategy.weights[4]),
-                "weight_5": float(a.strategy.weights[5]),
-                "threshold": a.strategy.threshold,
-                "holding_period": a.strategy.holding_period,
-                "risk_appetite": a.strategy.risk_appetite,
-                "age": a.age,
+                'step': self.step_count,
+                'agent_id': a.agent_id,
+                'ancestor_id': a.ancestor_id,
+                'parent_id': a.parent_id if a.parent_id is not None else -1,
+                'wealth': a.compute_wealth(self.market.P),
+                'cash': a.cash,
+                'holdings': float(a.holdings[0]),
+                'weight_0': float(a.strategy.weights[0]),
+                'weight_1': float(a.strategy.weights[1]),
+                'weight_2': float(a.strategy.weights[2]),
+                'weight_3': float(a.strategy.weights[3]),
+                'weight_4': float(a.strategy.weights[4]),
+                'weight_5': float(a.strategy.weights[5]),
+                'threshold': a.strategy.threshold,
+                'holding_period': a.strategy.holding_period,
+                'risk_appetite': a.strategy.risk_appetite,
+                'age': a.age,
             })
-        pd.DataFrame(rows).to_csv(path, index=False)
+        self._agent_snapshots.append(rows)
+
+    def _save_agents_csv(self, path: Path) -> None:
+        all_rows = []
+        if self._agent_snapshots:
+            for snap in self._agent_snapshots:
+                all_rows.extend(snap)
+        else:
+            for a in self.agents:
+                all_rows.append({
+                    "step": self.step_count,
+                    "agent_id": a.agent_id,
+                    "ancestor_id": a.ancestor_id,
+                    "parent_id": a.parent_id if a.parent_id is not None else -1,
+                    "wealth": a.compute_wealth(self.market.P),
+                    "cash": a.cash,
+                    "holdings": float(a.holdings[0]),
+                    "weight_0": float(a.strategy.weights[0]),
+                    "weight_1": float(a.strategy.weights[1]),
+                    "weight_2": float(a.strategy.weights[2]),
+                    "weight_3": float(a.strategy.weights[3]),
+                    "weight_4": float(a.strategy.weights[4]),
+                    "weight_5": float(a.strategy.weights[5]),
+                    "threshold": a.strategy.threshold,
+                    "holding_period": a.strategy.holding_period,
+                    "risk_appetite": a.strategy.risk_appetite,
+                    "age": a.age,
+                })
+        pd.DataFrame(all_rows).to_csv(path, index=False)
 
     def _save_summary_json(self, path: Path) -> None:
         """保存运行摘要 JSON。"""

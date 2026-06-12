@@ -1,11 +1,4 @@
-﻿# -*- coding: utf-8 -*-
-"""Fig 4.8: Strategy interaction network.
-
-节点大小表示财富占比，边表示策略间的竞争（红色）或互补（蓝色）关系。
-网络结构随时间从分散的小团体演化为围绕少数核心家族的星形结构。
-
-Usage: python fig4_8_interaction_network.py --data-dir <path>
-"""
+﻿"""Fig 4.8: Strategy interaction network (colour-corrected)."""
 import sys, argparse
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent))
@@ -13,46 +6,52 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent))
 import matplotlib; matplotlib.use("Agg")
 matplotlib.rcParams["font.sans-serif"] = ["SimHei","Microsoft YaHei","DejaVu Sans"]
 matplotlib.rcParams["axes.unicode_minus"] = False
-matplotlib.rcParams.update({'figure.dpi':150,'savefig.dpi':300,'savefig.bbox':'tight',
-    'font.size':10,'axes.titlesize':12,'axes.labelsize':11,
-    'xtick.labelsize':9,'ytick.labelsize':9,'legend.fontsize':9,
-    'lines.linewidth':1.5,'axes.grid':False})
+matplotlib.rcParams.update({"figure.dpi":150,"savefig.dpi":300,"savefig.bbox":"tight",
+    "font.size":10,"axes.titlesize":12,"axes.labelsize":11,
+    "xtick.labelsize":9,"ytick.labelsize":9,"legend.fontsize":9,
+    "lines.linewidth":1.5,"axes.grid":False})
 
 import pandas as pd, matplotlib.pyplot as plt, numpy as np
 import networkx as nx
 
-TOP_N = 30          # show top N families by wealth
-POS_THRESH = 0.5    # similarity above this = complementary (blue)
-NEG_THRESH = -0.3   # similarity below this = competitive (red)
+TOP_N = 25
+POS_THRESH = 0.3    # lowered from 0.5
+NEG_THRESH = -0.15  # lowered from -0.3
+
+PHASE_COLORS = {
+    "exploration": "#17becf",
+    "burst": "#FFC107",
+    "crowding": "#FF5722",
+    "decay": "#9C27B0",
+    "extinct": "#607D8B",
+    "recovery": "#2ca02c",
+}
 
 
-def build_family_network(agents, families):
-    """Aggregate agent weight vectors by family (ancestor_id), compute
-    pairwise cosine similarity, and return a networkx graph with edge
-    colour / width attributes."""
-    weights_cols = [f"weight_{i}" for i in range(6)]
-    agents = agents.copy()
-    agents["family_id"] = agents["ancestor_id"]
+def build_family_network(agents, families, step_val):
+    weight_cols = [f"weight_{i}" for i in range(6)]
+    ag = agents[agents["step"] == step_val].copy()
+    ag["family_id"] = ag["ancestor_id"]
 
-    # per-family aggregates (only families present in agents)
-    fam_w = agents.groupby("family_id")[weights_cols].mean()
-    fam_wealth = agents.groupby("family_id")["wealth"].sum()
+    fam_w = ag.groupby("family_id")[weight_cols].mean()
+    fam_wealth = ag.groupby("family_id")["wealth"].sum()
     live_ids = set(fam_w.index)
 
-    # merge with families.csv metadata
-    fam_info = families[["family_id","wealth_share","phase","n_agents"]].copy()
+    fam_info = families[families["step"] == step_val].copy()
     fam_info = fam_info[fam_info["family_id"].isin(live_ids)]
     fam_info = fam_info.set_index("family_id")
 
-    # centre then normalise weight vectors (allows negative cosine)
-    w = fam_w.values
+    if len(fam_info) < 2:
+        return None
+
+    w = fam_w.loc[fam_info.index].values
     w = w - w.mean(axis=0, keepdims=True)
     w = w / (np.linalg.norm(w, axis=1, keepdims=True) + 1e-10)
-    sim = w @ w.T   # cosine similarity (signed)
+    sim = w @ w.T
 
-    # select top families by wealth_share
-    top_ids = fam_info["wealth_share"].nlargest(min(TOP_N, len(fam_info))).index.tolist()
-    top_idx = [list(fam_w.index).index(fid) for fid in top_ids]
+    top_n = min(TOP_N, len(fam_info))
+    top_ids = fam_info["wealth_share"].nlargest(top_n).index.tolist()
+    idx_map = {fid: i for i, fid in enumerate(fam_info.index)}
 
     G = nx.Graph()
     for fid in top_ids:
@@ -60,12 +59,11 @@ def build_family_network(agents, families):
         G.add_node(fid, wealth_share=info["wealth_share"],
                    phase=info["phase"], n_agents=int(info["n_agents"]))
 
-    # add edges
     for i, ia in enumerate(top_ids):
         for j, jb in enumerate(top_ids):
             if i >= j:
                 continue
-            s = sim[top_idx[i], top_idx[j]]
+            s = sim[idx_map[ia], idx_map[jb]]
             if s > POS_THRESH:
                 G.add_edge(ia, jb, weight=s, color="blue")
             elif s < NEG_THRESH:
@@ -75,56 +73,48 @@ def build_family_network(agents, families):
 
 
 def draw_network(G, ax, title):
-    """Draw the network on the given axes."""
-    pos = nx.spring_layout(G, k=1.8, seed=42, iterations=300)
-    node_sizes = [G.nodes[n]["wealth_share"] * 18000 for n in G.nodes]
+    pos = nx.spring_layout(G, k=2.5, seed=42, iterations=500)
+    node_sizes = [max(G.nodes[n]["wealth_share"] * 18000, 80) for n in G.nodes]
+    node_colors = [PHASE_COLORS.get(G.nodes[n]["phase"], "#888888") for n in G.nodes]
 
-    # node colours by phase
-    phase_colors = {"crowding": "#2ca02c", "extinct": "#d62728",
-                    "growing": "#1f77b4", "stable": "#ff7f0e", "decay": "#9467bd"}
-    node_colors = [phase_colors.get(G.nodes[n]["phase"], "#888888") for n in G.nodes]
-
-    # draw edges - red first, then blue on top for cleaner look
-    for edge_type, edge_color in [("red", "#d62728"), ("blue", "#1f77b4")]:
-        edges = [(u, v) for u, v, d in G.edges(data=True) if d["color"] == edge_type]
+    # Edges: red (competition) first, then blue (complementary)
+    for etype, ecolor, lw_mult in [("red", "#d62728", 4.0), ("blue", "#1f77b4", 2.5)]:
+        edges = [(u, v) for u, v, d in G.edges(data=True) if d["color"] == etype]
         if not edges:
             continue
-        widths = [G[u][v]["weight"] * 3.0 for u, v in edges]
-        nx.draw_networkx_edges(G, pos, edgelist=edges, edge_color=edge_color,
-                               width=widths, alpha=0.45, ax=ax)
+        widths = [G[u][v]["weight"] * lw_mult for u, v in edges]
+        nx.draw_networkx_edges(G, pos, edgelist=edges, edge_color=ecolor,
+                               width=widths, alpha=0.5, ax=ax)
 
-    # draw nodes
     nx.draw_networkx_nodes(G, pos, node_size=node_sizes, node_color=node_colors,
-                           edgecolors="#333333", linewidths=0.6, alpha=0.9, ax=ax)
+                           edgecolors="#333333", linewidths=0.8, alpha=0.95, ax=ax)
 
-    # labels: family_id
     labels = {n: str(n) for n in G.nodes}
-    nx.draw_networkx_labels(G, pos, labels, font_size=6, font_color="white",
+    nx.draw_networkx_labels(G, pos, labels, font_size=5, font_color="white",
                             font_weight="bold", ax=ax)
 
     ax.set_title(title, fontsize=13, fontweight="bold")
     ax.set_axis_off()
 
-    # custom legend
     from matplotlib.lines import Line2D
     legend_elements = [
-        Line2D([0], [0], marker='o', color='w', markerfacecolor='#2ca02c',
-               markersize=10, label='拥挤期 (crowding)'),
-        Line2D([0], [0], marker='o', color='w', markerfacecolor='#1f77b4',
-               markersize=10, label='成长期 (growing)'),
-        Line2D([0], [0], marker='o', color='w', markerfacecolor='#ff7f0e',
-               markersize=10, label='稳定期 (stable)'),
-        Line2D([0], [0], marker='o', color='w', markerfacecolor='#d62728',
-               markersize=10, label='灭绝期 (extinct)'),
-        Line2D([0], [0], marker='o', color='w', markerfacecolor='#9467bd',
-               markersize=10, label='衰退期 (decay)'),
-        Line2D([0], [0], marker='o', color='w', markerfacecolor='#9467bd',
-               markersize=10, label='衰退期 (decay)'),
-        Line2D([0], [0], color='#d62728', lw=2, label='竞争 (competition)'),
-        Line2D([0], [0], color='#1f77b4', lw=2, label='互补 (complement)'),
+        Line2D([0], [0], marker="o", color="w", markerfacecolor=PHASE_COLORS["exploration"],
+               markersize=8, label="exploration"),
+        Line2D([0], [0], marker="o", color="w", markerfacecolor=PHASE_COLORS["burst"],
+               markersize=8, label="burst"),
+        Line2D([0], [0], marker="o", color="w", markerfacecolor=PHASE_COLORS["crowding"],
+               markersize=8, label="crowding"),
+        Line2D([0], [0], marker="o", color="w", markerfacecolor=PHASE_COLORS["decay"],
+               markersize=8, label="decay"),
+        Line2D([0], [0], marker="o", color="w", markerfacecolor=PHASE_COLORS["extinct"],
+               markersize=8, label="extinct"),
+        Line2D([0], [0], marker="o", color="w", markerfacecolor=PHASE_COLORS["recovery"],
+               markersize=8, label="recovery"),
+        Line2D([0], [0], color="#d62728", lw=2, label="competition (red)"),
+        Line2D([0], [0], color="#1f77b4", lw=2, label="complement (blue)"),
     ]
-    ax.legend(handles=legend_elements, loc='upper left',
-              fontsize=7, framealpha=0.8, ncol=2)
+    ax.legend(handles=legend_elements, loc="upper left",
+              fontsize=6, framealpha=0.85, ncol=2)
 
 
 def main(data_dir=None, output_dir=None):
@@ -134,48 +124,46 @@ def main(data_dir=None, output_dir=None):
     else:
         data_dir = Path(data_dir)
     if output_dir is None:
-        output_dir = data_dir / "plots"
+        output_dir = root / "paper" / "thesis" / "figures" / "e4"
     output_dir = Path(output_dir); output_dir.mkdir(parents=True, exist_ok=True)
 
-    agents_file = data_dir / "agents.csv"
-    families_file = data_dir / "families.csv"
-    if not agents_file.exists():
-        print("agents.csv not found in %s" % data_dir); return
-
-    agents = pd.read_csv(agents_file)
-    families = pd.read_csv(families_file)
-
-    # Check for multi-step: use families to get available steps
+    agents = pd.read_csv(data_dir / "agents.csv")
+    families = pd.read_csv(data_dir / "families.csv")
     steps = sorted(families["step"].unique())
-    print("Available steps in families.csv: %d" % len(steps))
 
-    if len(steps) == 1:
-        # single snapshot
-        step = steps[0]
-        fam_step = families[families["step"] == step]
-        ag_step = agents[agents["step"] == step]
-        G = build_family_network(ag_step, fam_step)
-        fig, ax = plt.subplots(figsize=(12, 10))
-        draw_network(G, ax, "策略交互网络 (step=%d)" % step)
-        fig.savefig(output_dir / "fig4_8_interaction_network.png")
-        plt.close(fig)
-        print("Saved Fig 4.8 -> %s" % (output_dir / "fig4_8_interaction_network.png"))
-    else:
-        # multi-step: pick early, mid, late snapshots
-        n_steps = len(steps)
-        idxs = [0, n_steps // 2, n_steps - 1]
-        fig, axes = plt.subplots(1, 3, figsize=(24, 8))
-        for ax, si in zip(axes, idxs):
-            step = steps[si]
-            fam_step = families[families["step"] == step]
-            ag_step = agents[agents["step"] == step]
-            G = build_family_network(ag_step, fam_step)
-            draw_network(G, ax, "step=%d" % step)
-        fig.suptitle("策略交互网络的时间演化", fontsize=15, fontweight="bold")
-        fig.tight_layout()
-        fig.savefig(output_dir / "fig4_8_interaction_network.png")
-        plt.close(fig)
-        print("Saved Fig 4.8 -> %s" % (output_dir / "fig4_8_interaction_network.png"))
+    # Use three snapshots: early (step with most phase diversity), mid, late-1
+    # Pick step with highest number of non-extinct families
+    best_step = steps[0]
+    best_n = 0
+    for s in steps:
+        fam_s = families[families["step"] == s]
+        n_alive = (fam_s["phase"] != "extinct").sum()
+        if n_alive > best_n:
+            best_n = n_alive
+            best_step = s
+
+    # Pick 3 diverse snapshots
+    idxs = [0, len(steps)//2, -1]
+    n_snapshots = len(idxs)
+    fig, axes = plt.subplots(1, n_snapshots, figsize=(8*n_snapshots, 8))
+    if n_snapshots == 1:
+        axes = [axes]
+
+    for ax, si in zip(axes, idxs):
+        step = steps[si]
+        G = build_family_network(agents, families, int(step))
+        if G is None or len(G.nodes) < 2:
+            ax.text(0.5, 0.5, f"step={step}: insufficient data", transform=ax.transAxes, ha="center")
+            continue
+        fam_s = families[families["step"] == step]
+        n_alive = (fam_s["phase"] != "extinct").sum()
+        draw_network(G, ax, f"$t={step}$ (alive families: {n_alive})")
+
+    fig.suptitle("策略交互网络的时序演化（E4 基线，seed=42）", fontsize=15, fontweight="bold")
+    fig.tight_layout()
+    out = output_dir / "fig4_8_interaction_network.png"
+    fig.savefig(out, dpi=300); plt.close(fig)
+    print(f"Saved: {out}")
 
 
 if __name__ == "__main__":
