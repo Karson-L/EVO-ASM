@@ -1,4 +1,4 @@
-% Forked from Sakura-shem/JLUThesis and modified by geekifan.
+﻿% Forked from Sakura-shem/JLUThesis and modified by geekifan.
 % This work may be distributed and/or modified under the
 % conditions of the MIT License,
 % available at https://mit-license.org/.
@@ -18,6 +18,7 @@
 \RequirePackage{graphicx}
 \RequirePackage{setspace}
 \RequirePackage[colorlinks,linkcolor=black,citecolor=black]{hyperref}
+\RequirePackage{bookmark}
 \RequirePackage{algorithmicx,algorithm,algpseudocode}
 \RequirePackage{amsthm}
 \RequirePackage{caption}
