@@ -1,7 +1,7 @@
 ﻿\chapter{EVO-ASM模型设计}
 \label{chap:model}
 
-本章详细介绍演化人工股票市场（Evolutionary Artificial Stock Market, EVO-ASM）的数学模型设计。模型由三个核心模块构成：资产市场模块（Market）、Agent种群模块（Agent Population）和演化动力与生态模块（Evolution \& Ecology Module）。本章严格使用数学符号对模型各组成部分进行形式化定义。
+EVO-ASM模型由三个模块构成：资产市场、Agent种群和演化动力学。模型设计参考了张维等\cite{zhangwei2013}关于基于Agent计算金融学的系统论述，在经典人工股票市场模型的基础上引入了策略层面的演化动力学。模型由三个模块构成：资产市场模块（Market）、Agent种群模块（Agent Population）和演化动力与生态模块（Evolution \& Ecology Module）。本章严格使用数学符号对模型各组成部分进行形式化定义。
 
 \section{符号约定}
 
@@ -227,7 +227,7 @@ P^{(n)}(t) = \text{clamp}\bigl(P^{(n)}_{\text{new}},\; P^{(n)}(t-1) \cdot (1-\el
 
 \subsection{限价订单簿（方案B）}
 
-方案B采用连续双向拍卖机制，所有Agent提交限价订单至中央订单簿，按价格优先-时间优先原则撮合成交。本文实验主要采用方案A以降低计算复杂度，方案B留作稳健性检验。
+方案B采用连续双向拍卖机制，所有Agent提交限价订单至中央订单簿，按价格优先-时间优先原则撮合成交。本文实验采用方案A。这一选择主要基于计算效率的考虑；方案B作为潜在的稳健性检验留待后续验证。
 
 \section{财富更新规则}
 
