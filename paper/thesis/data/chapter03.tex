@@ -5,34 +5,77 @@
 
 \section{通用实验框架}
 
-四组实验共享一组控制参数（表\ref{tab:fixed_params}），这些参数在实验过程中保持不变。Agent初始财富$W_i(0)=20,000$，初始持仓为零，策略权重从$\mathcal{N}(0,1)$采样后做$L_2$归一化。市场初始价格$P(0)=\bar{F}=100$，与基础价值初始水平一致。
+四组实验共享表\ref{tab:fixed_params}所列市场和交易参数，以及表\ref{tab:evol_params}所列演化参数——后者在E1中全部关闭，在E2--E4中根据实验设计逐步激活。为在基线实验中充分观测静态策略分布的长期行为，E1使用$M=200$个Agent，$T=1000$期；E2--E4为容纳演化动力学，将Agent数量扩大至$M=500$个，模拟时长延长至$T=2000$期。演化周期统一设定为$K=200$期，即E2--E4每200期执行一轮淘汰-复制（-突变）操作。
+
+\subsection{市场与交易参数}
+
+表\ref{tab:fixed_params}汇总了跨实验不变的市场微观结构和资产定价参数。参数选取参考了中国A股市场的制度特征：涨跌停板$\pm 10\%$、佣金费率万分之三、印花税率千分之一（仅卖方征收）。基础价值$F(t)$服从带均值回复的对数正态随机游走（定义见第二章式\eqref{eq:fundamental}），漂移率$\mu_F=0$，波动率$\sigma_F=0.01$，均值回复强度$\phi=0.001$。市场出清采用线性价格调节机制，敏感度$\kappa=0.001$。
 
 \begin{table}[htb]
 \centering
-\caption{跨实验固定控制变量}
+\caption{跨实验固定市场与交易参数}
 \label{tab:fixed_params}
 \begin{tabular}{@{}lll@{}}
 \toprule
-变量 & 符号 & 固定值 \\
+参数 & 符号 & 固定值 \\
 \midrule
-Agent数量 & $M$ & 500 \\
 资产数量 & $N$ & 1 \\
-模拟期数（E1） & $T$ & 1000 \\
-模拟期数（E2--E4） & $T$ & 2000 \\
 信号维度 & $D$ & 6 \\
 市场出清敏感度 & $\kappa$ & 0.001 \\
+基础价值漂移率 & $\mu_F$ & 0.0 \\
 基础价值波动率 & $\sigma_F$ & 0.01 \\
 均值回复强度 & $\phi$ & 0.001 \\
 涨跌停板 & $\ell$ & $\pm 10\%$ \\
 佣金费率 & $c_{\text{comm}}$ & 0.0003 \\
 印花税率 & $c_{\text{stamp}}$ & 0.001 \\
 无风险利率 & $r_f$ & 0.0 \\
-随机种子 & seed & $\{42, 123, 456, 789, 1024\}$ \\
+噪声交易冲击 & $\sigma_{\text{noise}}$ & 0.005 \\
+Alpha滚动窗口 & $\Delta$ & 60 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-每步记录以下市场级指标：策略香农熵$H_{\text{strat}}(t)=-\sum_k p_k\ln p_k$（$p_k$为策略家族$k$的财富份额）、活跃策略家族数量$K(t)$、财富基尼系数、对数收益率$r(t)=\ln(P(t)/P(t-1))$、收益率一阶自相关$\rho_1(t)$（60期滚动窗口）、成交量、基础价值偏离度。演化实验（E2--E4）额外记录每个策略家族的Alpha值（家族内Agent的平均夏普比率）、拥挤度（家族财富份额的变化率）、存续阶段（成长期/拥挤期/衰退期/灭绝期）和谱系关系。
+\begin{table}[htb]
+\centering
+\caption{跨实验演化参数（E1中全部关闭）}
+\label{tab:evol_params}
+\begin{tabular}{@{}llll@{}}
+\toprule
+参数 & 符号 & 基准值 & 实验扫描范围 \\
+\midrule
+演化周期 & $K$ & 200 & — \\
+淘汰比例 & $P_{\text{eliminate}}$ & 0.20 & $\{0.10, 0.20, 0.35\}$ \\
+选择压力 & $\lambda_{\text{select}}$ & 3.0 & $\{2.0, 5.0, 10.0\}$ \\
+突变概率 & $p_{\text{mut}}$ & 0.20 & $\{0.05, 0.10, 0.20, 0.40\}$ \\
+权重变异幅度 & $\sigma_{\text{mut}}$ & 0.03 & — \\
+阈值变异幅度 & $\sigma_\theta$ & 0.01 & — \\
+风险偏好变异幅度 & $\sigma_\alpha$ & 0.03 & — \\
+随机种子 & seed & $\{42, 123, 456, 789, 1024\}$ & — \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{初始化规则}
+
+所有实验共享统一的初始化流程。各Agent初始财富均等分配：
+\begin{equation}
+W_i(0) = \frac{W_{\text{total}}}{M} = 20{,}000,\quad h_i(0)=0,\quad C_i(0)=W_i(0)
+\end{equation}
+策略权重$\mathbf{w}_i(0)$从$\mathcal{N}(\mathbf{0}, \mathbf{I}_D)$采样后做$L_2$归一化（$\|\mathbf{w}_i\|_2=1$），进入阈值$\theta_i(0)\sim\mathcal{U}(0.01, 0.5)$，持仓周期$\tau_i(0)$从$\{1,3,5,10,20,60\}$中均匀抽取，风险偏好$\alpha_i(0)\sim\mathcal{U}(0.2, 0.8)$。市场初始价格$P(0)=\bar{F}=100$。
+
+\subsection{通用因变量}
+
+所有实验在每期采集以下市场级指标：
+\begin{enumerate}[label=(\arabic*)]
+    \item 策略香农熵 $H_{\text{strat}}(t)=-\sum_k p_k(t)\ln p_k(t)$，其中$p_k(t)$为策略家族$k$在$t$时刻的财富份额；
+    \item 活跃策略家族数量 $K(t)$；
+    \item 财富基尼系数 $\text{Gini}(t)$（定义见第二章式\eqref{eq:gini}）；
+    \item 对数收益率 $r(t)=\ln\bigl(P(t)/P(t-1)\bigr)$；
+    \item 收益率$\Delta=60$期滚动一阶自相关 $\rho_1(t\mid\Delta)$（定义见第二章式\eqref{eq:efficiency}）；
+    \item 成交量 $V(t)=\sum_i\sum_n |D_i^{(n)}(t)|$；
+    \item 平均适应度 $\bar{\mathcal{F}}(t)$（所有Agent滚动夏普比率的截面均值）。
+\end{enumerate}
+演化实验（E2--E4）额外在每$K$期记录：各策略家族的Alpha值$\alpha_k(t\mid\Delta)$、拥挤度$C_k(t)$、生命周期阶段标签和谱系关系（parent\_id/ancestor\_id）。所有原始数据以CSV格式保存，结果目录结构见附录。
 
 \section{Experiment 1：无演化基线}
 
@@ -363,6 +406,47 @@ E4开放达尔文演化循环的全部三个环节：选择（财富淘汰）、
 \caption{策略复杂度-生存概率的倒U型关系检验（$P_{\text{mut}}=0.20$, $\lambda=1.0$, seed=42）。Lind-Mehlum检验确认最优复杂度区间位于中等水平，倒U型关系在统计上显著。}
 \label{fig:e4_u_shape}
 \end{figure}
+\subsection{制度冲击与谱系演化}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.88\textwidth]{../../results/e4_full_evolution/p_mut=0.20_lambda=1.00_sigma=0.02_seed=42/plots/fig4_10_regime_shock.png}
+\caption{制度冲击前后策略熵的对比（$P_{\text{mut}}=0.20$, seed=42）。制度参数（涨跌停板幅度、佣金费率）的改变对策略生态施加了外部选择压力。当涨跌停板从$\pm 10\%$收紧至$\pm 5\%$时，高波动策略（如波动率型和动量型）的生存空间受到压缩，策略熵出现约5\%--8\%的额外下降。}
+\label{fig:e4_regime}
+\end{figure}
+
+图\ref{fig:e4_regime}检验了制度冲击对策略生态的调节效应。微观结构参数——涨跌停板幅度、佣金费率——构成了策略演化的外部约束。涨跌停板的收紧压缩了极端价格波动的空间，使得依赖大幅价格运动的策略（高动量权重、高波动率权重）失去了盈利基础。这些策略家族的财富份额在制度冲击后约100期内出现显著下降，与之伴随的是策略熵的额外衰减。结果表明，市场制度设计可以被理解为对策略生态系统施加的外部选择压力——不同的制度参数系统地改变可存活策略类型的组成。
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.90\textwidth]{../../results/e4_full_evolution/p_mut=0.20_lambda=1.00_sigma=0.02_seed=42/plots/fig4_11_full_lineage.png}
+\caption{完整演化谱系树（$P_{\text{mut}}=0.20$, $\lambda=1.0$, seed=42，2000期全范围）。横轴为时间，纵轴为各家族的财富份额。颜色标识策略类型，分支点表示突变事件产生的新的策略家族。谱系树展示了2000期内策略家族的完整生命周期——从诞生、扩张、竞争到衰退或持续的演化图景。}
+\label{fig:e4_lineage}
+\end{figure}
+
+完整谱系树（图\ref{fig:e4_lineage}）将2000期内的策略生态演化浓缩为一张全景图。图中的每一个分支点对应一次成功突变产生的新的策略家族，分支的宽度表示该家族的财富份额。谱系树清晰地展示了：初期（0--400期）为广泛的策略探索阶段，分支密集但个体的财富份额小；中期（400--1200期）进入竞争收缩阶段，少数优势家族开始扩张，大量小家族消亡；后期（1200--2000期）形成稳定但非静止的动态平衡——新突变持续产生新分支，但多数新分支在短时间内消失，少数成功融入主流。这一图景与演化生物学中适应性辐射（adaptive radiation）和选择性灭绝（selective extinction）的历史模式高度相似。
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.85\textwidth]{../../results/e4_full_evolution/p_mut=0.20_lambda=1.00_sigma=0.02_seed=42/plots/fig4_12_regime_halflife.png}
+\caption{不同制度参数下的Alpha半衰期分布（$P_{\text{mut}}=0.20$, seed=42）。基准制度（涨跌停$\pm 10\%$，佣金0.0003）下的Alpha中位半衰期最长；收紧涨跌停或提高佣金均导致半衰期缩短。制度参数通过影响策略的盈利基础，间接调节Alpha的持续性。}
+\label{fig:e4_regime_halflife}
+\end{figure}
+
+图\ref{fig:e4_regime_halflife}为制度冲击假说（H5）提供了初步的定量证据。在基准制度参数下，Alpha中位半衰期约为1000期。当涨跌停板收紧至$\pm 5\%$时，中位半衰期缩短至约750期；当佣金费率提高至0.001时，中位半衰期缩短至约800期。制度参数通过压缩策略的盈利空间，间接加速了Alpha的衰减。这一发现与张维等\cite{zhangwei2009}关于市场制度对资产定价行为影响的论述在逻辑上一致。
+
+\subsection{E4小结}
+
+E4构建了四组实验中最为完整的策略演化图景。在达尔文演化循环全部开放的条件下，以下发现构成了E4的核心贡献。
+
+第一，Alpha生命周期——探索、爆发、拥挤、衰退、恢复/灭绝——在完整演化条件下得到了系统观测。这五个阶段不是预设的模型结构，而是从策略生态系统自发涌现的动力学模式，证实了Alpha衰减是内生生态过程而非外部冲击的产物。
+
+第二，策略生态系统在突变率-选择压力的参数空间中存在临界相变。当选择压力与突变创新的比值越过阈值时，系统从多样化状态不可逆地跃迁至同质化状态。这一发现超越了单纯的Alpha衰减问题，指向了策略生态系统可能存在的整体性的稳定性边界。
+
+第三，突变是延缓Alpha衰减的最有效机制。在$P_{\text{mut}}=0.20$的适度突变率下，策略熵稳定于中等水平，Alpha半衰期较E3延长约40\%--60\%。但突变并非越多越好——突变后代在$P_{\text{mut}}\approx 0.10$--0.20时存活率最高，过高突变率破坏了父代策略中积累的有效信息。
+
+第四，制度参数对策略生态施加了显著的选择压力。涨跌停板的收紧迫使策略类型组成发生系统性改变，Alpha半衰期随制度收紧而缩短。这一发现将市场微观结构设计与策略演化动力学联系了起来。
+
 
 \section{跨实验横向比较}
 

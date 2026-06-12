@@ -1,0 +1,85 @@
+﻿*** Begin Patch
+*** Update File: paper/thesis/data/chapter03.tex
+@@ -6,29 +6,74 @@
+
+ \section{通用实验框架}
+
+-四组实验共享表\ref{tab:fixed_params}所列控制参数。E1使用=200，=1000；E2--E4使用=500，=2000，每=200。Agent初始财富(0)=20,000$，初始持仓(0)=0$。策略权重从$\mathcal{N}(0,1)，$\theta_i(0)\sim\mathcal{U}(0.01,0.5)$，风险偏好$\alpha_i(0)\sim\mathcal{U}(0.2,0.8)$。市场初始价格(0)=\bar{F}=100$。
++四组实验共享表\ref{tab:fixed_params}所列市场和交易参数，以及表\ref{tab:evol_params}所列演化参数——后者在E1中全部关闭，在E2--E4中根据实验设计逐步激活。为在基线实验中充分观测静态策略分布的长期行为，E1使用=200，=1000；E2--E4为容纳演化动力学，将Agent数量扩大至=500，模拟时长延长至=2000。演化周期统一设定为=200，即E2--E4每200期执行一轮淘汰-复制（-突变）操作。
+
++\subsection{市场与交易参数}
++
++表\ref{tab:fixed_params}汇总了跨实验不变的市场微观结构和资产定价参数。参数选取参考了中国A股市场的制度特征：涨跌停板$\pm 10\%$、佣金费率万分之三、印花税率千分之一（仅卖方征收）。基础价值(t)（定义见第二章式\eqref{eq:fundamental}），漂移率$\mu_F=0$，波动率$\sigma_F=0.01$，均值回复强度$\phi=0.001$。市场出清采用线性价格调节机制，敏感度$\kappa=0.001$。
++
+ \begin{table}[htb]
+ \centering
+-\caption{跨实验固定控制变量}
++\caption{跨实验固定市场与交易参数}
+ \label{tab:fixed_params}
+ \begin{tabular}{@{}lll@{}}
+ \toprule
+-变量 & 符号 & 固定值 \\
++参数 & 符号 & 固定值 \\
+ \midrule
++资产数量 & $ & 1 \\
+ 信号维度 & $ & 6 \\
+ 市场出清敏感度 & $\kappa$ & 0.001 \\
++基础价值漂移率 & $\mu_F$ & 0.0 \\
+ 基础价值波动率 & $\sigma_F$ & 0.01 \\
+ 均值回复强度 & $\phi$ & 0.001 \\
+ 涨跌停板 & $\ell$ & $\pm 10\%$ \\
+ 佣金费率 & {\text{comm}}$ & 0.0003 \\
+ 印花税率 & {\text{stamp}}$ & 0.001 \\
+ 无风险利率 & $ & 0.0 \\
+-演化周期 & $ & 200 \\
+-初始策略离散度 & $\sigma_{\text{init}}$ & 0.10 \\
+-随机种子 & seed & $\{42, 123, 456, 789, 1024\}$ \\
++噪声交易冲击 & $\sigma_{\text{noise}}$ & 0.005 \\
++Alpha滚动窗口 & $\Delta$ & 60 \\
++\bottomrule
++\end{tabular}
++\end{table}
++
++\begin{table}[htb]
++\centering
++\caption{跨实验演化参数（E1中全部关闭）}
++\label{tab:evol_params}
++\begin{tabular}{@{}llll@{}}
++\toprule
++参数 & 符号 & 基准值 & 实验扫描范围 \\
++\midrule
++演化周期 & $ & 200 & — \\
++淘汰比例 & {\text{eliminate}}$ & 0.20 & $\{0.10, 0.20, 0.35\}$ \\
++选择压力 & $\lambda_{\text{select}}$ & 3.0 & $\{2.0, 5.0, 10.0\}$ \\
++突变概率 & {\text{mut}}$ & 0.20 & $\{0.05, 0.10, 0.20, 0.40\}$ \\
++权重变异幅度 & $\sigma_{\text{mut}}$ & 0.03 & — \\
++阈值变异幅度 & $\sigma_\theta$ & 0.01 & — \\
++风险偏好变异幅度 & $\sigma_\alpha$ & 0.03 & — \\
++随机种子 & seed & $\{42, 123, 456, 789, 1024\}$ & — \\
+ \bottomrule
+ \end{tabular}
+ \end{table}
+
+-每步采集以下市场级指标：策略香农熵{\text{strat}}(t)=-\sum_k p_k\ln p_k$（）、活跃策略家族数量(t)$、财富基尼系数、对数收益率(t)=\ln(P(t)/P(t-1))$、收益率60期滚动一阶自相关$\rho_1(t)$、成交量和平均适应度$\bar{\mathcal{F}}(t)$。演化实验（E2--E4）额外记录每个策略家族的Alpha值、拥挤度、存续阶段和谱系关系。
++\subsection{初始化规则}
++
++所有实验共享统一的初始化流程。各Agent初始财富均等分配：
++\begin{equation}
++W_i(0) = \frac{W_{\text{total}}}{M} = 20{,}000,\quad h_i(0)=0,\quad C_i(0)=W_i(0)
++\end{equation}
++策略权重$\mathbf{w}_i(0)$\mathcal{N}(\mathbf{0}, \mathbf{I}_D)（$\|\mathbf{w}_i\|_2=1$），进入阈值$\theta_i(0)\sim\mathcal{U}(0.01, 0.5)$，持仓周期$\tau_i(0)$\{1,3,5,10,20,60\}，风险偏好$\alpha_i(0)\sim\mathcal{U}(0.2, 0.8)$。市场初始价格(0)=\bar{F}=100$。
++
++\subsection{通用因变量}
++
++所有实验在每期采集以下市场级指标：
++\begin{enumerate}[label=(\arabic*)]
++    \item 策略香农熵 {\text{strat}}(t)=-\sum_k p_k(t)\ln p_k(t)$，其中(t)；
++    \item 活跃策略家族数量 (t)$；
++    \item 财富基尼系数 $\text{Gini}(t)$（定义见第二章式\eqref{eq:gini}）；
++    \item 对数收益率 (t)=\ln\bigl(P(t)/P(t-1)\bigr)$；
++    \item 收益率$\Delta=60 $\rho_1(t\mid\Delta)$（定义见第二章式\eqref{eq:efficiency}）；
++    \item 成交量 (t)=\sum_i\sum_n |D_i^{(n)}(t)|$；
++    \item 平均适应度 $\bar{\mathcal{F}}(t)$（所有Agent滚动夏普比率的截面均值）。
++\end{enumerate}
++演化实验（E2--E4）额外在每：各策略家族的Alpha值$\alpha_k(t\mid\Delta)$、拥挤度(t)$、生命周期阶段标签和谱系关系（parent\_id/ancestor\_id）。所有原始数据以CSV格式保存，结果目录结构见附录\ref{app:data_format}。
+*** End Patch

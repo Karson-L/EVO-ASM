@@ -1,0 +1,446 @@
+﻿\chapter{ʵ�������������}
+\label{chap:experiments}
+
+Ϊϵͳ����Alpha˥����������ƣ������������ݽ�ʵ�飺E1��ȫ�ر��ݻ����أ�������̬������̬���ߣ�E2����Ƹ���̭�������ʱ����õĴ����ѡ��E3׷�Ӳ��Ը��ƣ�ʹ�óɹ����Ե���Ϣ������ɢ��E4����ͻ�䣬��������ı���-����-ѡ���ݻ�ѭ����ÿ��ʵ�����ǰһ������һ���ݻ����ƣ�ʹ�ø����Ƶı߼����ЧӦ�ɱ�����ʶ��
+
+\section{ͨ��ʵ����}
+
+����ʵ�鹲��һ����Ʋ�������\ref{tab:fixed_params}������Щ������ʵ������б��ֲ��䡣Agent��ʼ�Ƹ�$W_i(0)=20,000$����ʼ�ֲ�Ϊ�㣬����Ȩ�ش�$\mathcal{N}(0,1)$��������$L_2$��һ�����г���ʼ�۸�$P(0)=\bar{F}=100$���������ֵ��ʼˮƽһ�¡�
+
+\begin{table}[htb]
+\centering
+\caption{��ʵ��̶����Ʊ���}
+\label{tab:fixed_params}
+\begin{tabular}{@{}lll@{}}
+\toprule
+���� & ���� & �̶�ֵ \\
+\midrule
+Agent���� & $M$ & 500 \\
+�ʲ����� & $N$ & 1 \\
+ģ��������E1�� & $T$ & 1000 \\
+ģ��������E2--E4�� & $T$ & 2000 \\
+�ź�ά�� & $D$ & 6 \\
+�г�������ж� & $\kappa$ & 0.001 \\
+������ֵ������ & $\sigma_F$ & 0.01 \\
+��ֵ�ظ�ǿ�� & $\phi$ & 0.001 \\
+�ǵ�ͣ�� & $\ell$ & $\pm 10\%$ \\
+Ӷ����� & $c_{\text{comm}}$ & 0.0003 \\
+ӡ��˰�� & $c_{\text{stamp}}$ & 0.001 \\
+�޷������� & $r_f$ & 0.0 \\
+������� & seed & $\{42, 123, 456, 789, 1024\}$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+ÿ����¼�����г���ָ�꣺������ũ��$H_{\text{strat}}(t)=-\sum_k p_k\ln p_k$��$p_k$Ϊ���Լ���$k$�ĲƸ��ݶ����Ծ���Լ�������$K(t)$���Ƹ�����ϵ��������������$r(t)=\ln(P(t)/P(t-1))$��������һ�������$\rho_1(t)$��60�ڹ������ڣ����ɽ�����������ֵƫ��ȡ��ݻ�ʵ�飨E2--E4�������¼ÿ�����Լ����Alphaֵ��������Agent��ƽ�����ձ��ʣ���ӵ���ȣ�����Ƹ��ݶ�ı仯�ʣ��������׶Σ��ɳ���/ӵ����/˥����/����ڣ�����ϵ��ϵ��
+
+\section{Experiment 1�����ݻ�����}
+
+E1��Ŀ���ǻش�һ��ǰ�������⣺������Էֲ�����ȫ������Alpha�Ƿ���Ȼ���ڣ�ʵ��ر�ȫ���ݻ����ء���Agent���ֳ�ʼ������Բ��䣬��Ƹ���Ψһ�䶯��Դ�����ڽ��ײ�����ӯ������������Ϊ��ʼ���Զ�����$\sigma_{\text{init}}$��ȡ0.02��0.10��0.30���������Ƴ�ʼ����Ȩ�طֲ�����ɢ�ȣ�����������ǿ��$\sigma_{\text{noise}}$��ȡ0.0��0.005��0.02����������Agent��֪�źŵ�����Ŷ����ȣ�������47�������ϣ�ÿ����5��������Ӷ������У�ģ��ʱ��$T=1000$�ڣ��ܼ�235�ζ������У�����370�ŷ���ͼ���
+
+\subsection{�۸���Ϊ���г�Ч��}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.92\textwidth]{../../results/e1_no_evolution/baseline_seed42/plots/fig1_1_price_vs_fundamental.png}
+\caption{�г��۸�$P(t)$�������ֵ$F(t)$��ʱ��Աȣ�baseline, seed=42, $\sigma_{\text{init}}=0.10$, $\sigma_{\text{noise}}=0.005$������ɫʵ��Ϊ�г�����۸񣬺�ɫ����Ϊ������ֵ���۸�Χ�ƻ�����ֵ������δ����������Ư�ƣ��ǵ�ͣ��Լ�����۸񲨶�������$\pm 10\%$�����ڡ�}
+\label{fig:e1_price}
+\end{figure}
+
+ͼ\ref{fig:e1_price}�����˴����Բ����µļ۸��������ֵ���ơ���1000�ڵ�ģ�����ڣ��г��۸�Χ�ƻ�����ֵ�񵴣�����֮�䲻����ϵͳ��ƫ�롣�۸���������ԼΪ85--107��������ֵ����ԼΪ90--112���ǵ�ͣ��$\pm 10\%$Լ���ڼ������������˻������ã��۸��δ���������ޡ�
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.85\textwidth]{../../results/e1_no_evolution/baseline_seed42/plots/fig1_2_return_distribution.png}
+\caption{���������ʵķֲ�������baseline, seed=42������ͼΪֱ��ͼ������̬�ֲ��ܶ����ߣ���ͼΪQ-Qͼ�������ʷֲ��ӽ��Գƣ�ƫ��$\approx$0.06������Ƚӽ���̬��׼��������$-0.18$����δ���������ļ���β������}
+\label{fig:e1_returns}
+\end{figure}
+
+���������ʵķֲ���ͼ\ref{fig:e1_returns}�����ֽӽ���̬����̬��ƫ��ԼΪ0.06����ƫ��������������ԼΪ$-0.18$��������̬�ֲ���0.0��׼�����������ݻ������£������ʷֲ���β������̬��������������ͽ����г��й۲⵽�ļ���β�γɶ��ա��ý����������β�ֲ����������ٲ��������ڲ��Ե������Ժ��ݻ���̬�������г�΢�۽ṹ�Ĺ��в��
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.90\textwidth]{../../results/e1_no_evolution/baseline_seed42/plots/fig1_3_volatility_clustering.png}
+\caption{�����ʾۼ�ЧӦ��baseline, seed=42����$|r(t)|$���ͺ�1--30���ϵ�����غ�����ǰ���׳���������أ��˺���˥��������ʵ�г��й۲⵽�Ĳ����ʳ�������������һ�¡�}
+\label{fig:e1_volatility}
+\end{figure}
+
+�����ʾۼ�ЧӦ��ͼ\ref{fig:e1_volatility}����ģ�͸��ֵ����Ƚ��ľ�������֮һ������ֵ���������ͺ�1--5�ڳ���������������أ��˺���˥�����㡣��һģʽ���������ݻ����ƣ���ʹ���Էֲ���ȫ��̬��Agent���κ�ѧϰ����Ӧ���г�������ƺ�����Agent�Ľ����������Բ�����������ʱ���ϵ�����������
+
+\subsection{���Ծ�̬����Ƹ���̬}
+
+\begin{figure}[htbp]
+\centering
+\subfloat[�����غ㶨]{
+  \includegraphics[width=0.32\textwidth]{../../results/e1_no_evolution/baseline_seed42/plots/fig1_4_entropy_constant.png}
+  \label{fig:e1_baseline_a}
+}
+\hfill
+\subfloat[�Ƹ���������]{
+  \includegraphics[width=0.32\textwidth]{../../results/e1_no_evolution/baseline_seed42/plots/fig1_6_wealth_gini.png}
+  \label{fig:e1_baseline_b}
+}
+\hfill
+\subfloat[�۸�ƫ�벻����]{
+  \includegraphics[width=0.32\textwidth]{../../results/e1_no_evolution/baseline_seed42/plots/fig1_7_price_deviation.png}
+  \label{fig:e1_baseline_c}
+}
+\caption{E1������֤���ݻ�ѹ��������ȱʧЧӦ��\textbf{(a)}~������$H_{\text{strat}}(t)$��ȫ��1000����Ϊһ��������baseline������$\mu=5.30$, $\sigma\approx 0$�������Էֲ���ȫ��̬��������̭���޸��ơ���ͻ�䡣\textbf{(b)}~�Ƹ�����ϵ����0.0������������baseline��ֵԼ0.11��������������$\sigma_{\text{noise}}=0.02$���¿ɴ�0.19--0.23��������ЧӦ�������Բ����ɹ۲�ĲƸ���ƽ�ȡ�\textbf{(c)}~�۸�ƫ���$\text{MAE}(P_t,F_t)/F_t$��ֵԼ8\%�����������ƣ����ݻ��г�δ�Զ�����ǿ��Ч��}
+\label{fig:e1_baseline}
+\end{figure}
+
+ͼ\ref{fig:e1_baseline}���������ʽ������E1���������Ļ�����ʵ��
+
+���(a)չʾ����ɾ��Ľ����$H_{\text{strat}}(t)$��ȫ��1000����Ϊһ��ˮƽ�ߣ�baseline�����¾�ֵΪ5.30����׼��Ϊ�㡣û����̭��û��ѡ��ѹ����û�и��ƾ�û��������ɢ��û��ͻ���û�в��Դ��¡������Էֲ������ݻ���������ȫ��������һ��ʵ������ȫ������ʵ��Ķ��ջ�����
+
+���(b)��ʾ��һ����ֱ���ķ��֣���ʹ���Էֲ���ȫ��̬���Ƹ���ƽ�����ڳ����Ӿ硣����ϵ����0.0����ȫ����״̬�������baseline������1000����ֵԼΪ0.11����$\sigma_{\text{noise}}$����0.02ʱ����ֵ�ɴ�0.19--0.23����ʼ����֮���΢СȨ�ز��졪����$\sigma_{\text{init}}=0.30$��������Ϊ���������ڸ���ЧӦ�Ŵ����ۻ�Ϊ�ɹ۲�ĲƸ���ࡣ��һ����������Ƹ���ƽ�Ȳ��ǲ����ݻ���ѧϰ���̵ı�Ȼ������г����ױ���ĸ�������ѧ�����Բ������л����ơ�
+
+���(c)��ʾ��һ���ؼ����ޡ��۸�ƫ��ȡ�������Ϊ$\text{MAE}(P_t,F_t)/F_t$������ģ��ȫ��ά����Լ8\%��ˮƽ����δ�������㡣��һ��ʵ�ų���һ��Ǳ�ڵľ����Խ��ͣ������ݻ��г�����ͨ���㹻���Ľ����Զ�������Ч����ʵ���֤�ݲ�֧����һ���裬�Ӷ�Ϊ�ݻ����Ƶı�Ҫ���ṩ�������ʵ��֧�š�
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.90\textwidth]{../../results/e1_no_evolution/baseline_seed42/plots/fig1_5_alpha_heatmap.png}
+\caption{���Լ���Alpha��������ͼ��baseline, seed=42��������Ϊʱ�䴰�ڣ����ᰴ��ʼAlpha�������и����Լ��塣��ɫ��ǳ��ʾAlpha��С����ͼ�ڴ�ֱ��������ȶ��ķֲ�ṹ�����Լ�Ľ���Alpha������ʱ��ά���ϻ������䡣}
+\label{fig:e1_alpha}
+\end{figure}
+
+Alpha��ͼ��ͼ\ref{fig:e1_alpha}���Ӳ��Խ���ά�Ƚ�һ��ȷ����E1�ĺ��ķ��֡������Լ����Alpha��Ȼ��ʱ��ά�����������������г��۸�����ԺͲ����ź�������Ӱ�죩������������򱣳ָ߶��ȶ�����ʼ�׶�������ǰ�Ĳ��Լ�����ģ��ĩ����Ȼ���ȣ�Alpha��������ʱ��˥����ϵͳ�����ơ�
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.92\textwidth]{../../results/e1_no_evolution/baseline_seed42/plots/fig1_8_efficiency_comparison.png}
+\caption{��ͬ����ˮƽ�µ��г�Ч�ʱȽϣ�$\rho_1(t)$��60�ڹ�����ֵ����������Ӧ$\sigma_{\text{noise}} \in \{0.0, 0.005, 0.02\}$���������������г�Ч����ߣ�$\rho_1$�ľ���ֵ��ͳ���Ͻӽ��㣩�����������������ڽ����г�Ч�ʡ�}
+\label{fig:e1_efficiency}
+\end{figure}
+
+�г�Ч�ʵ���������ԣ�ͼ\ref{fig:e1_efficiency}����һ���ḻ��E1��ͼ����������һ�������$\rho_1(t)$��60�ڹ�����ֵ��$\sigma_{\text{noise}}=0$�����½ӽ��㣬�����г���һ���̶��������˿�Ԥ��ļ۸��źš�����$\sigma_{\text{noise}}$������$\rho_1$�ľ���ֵ�����������ƣ��г�Ч���½�����ֵ�ù�ע���ǣ���ʹ��$\sigma_{\text{noise}}=0$�����������£�$\rho_1$Ҳδ�ϸ��������㣬�г����ﵽ����Ч״̬������һ���ΪH1��"����֧��"�ṩ�����ݻ�����
+
+�ۺ�E1��ȫ��֤�ݣ��ó��Ľ����������ģ���ȱ���ݻ�ѹ��������£�Alpha�����Է���ʧ�����Էֲ���ȫ��̬ʱ�����Լ�Ľ���ӯ����������־��ȶ����ݻ����ơ����Ƹ���̭������ģ�¡�����ͻ�䡪��������Alpha˥���ı�Ҫ������E1Ϊ��������ʵ���ṩ�˲�������Ķ��ջ��ߡ�
+
+\section{Experiment 2���Ƹ���̭}
+
+E2����Ƹ���̭���ƣ����Ǵ�����ݻ�ѭ���е�"ѡ��"���ڡ�ÿ$K$�������ڣ�ϵͳ���Ƹ�������̭�ײ�$P_{\text{eliminate}}$������Agent�����ڲ��Կռ���������ɵ�����Agent����Ƹ���̭�ı��˿���Ե��ʱ����á����ʽ�ӿ����������ӯ�����ԡ���������̭���ԵĲ�����Ϣ���ź�Ȩ�����ã���Agentһͬ��ʧ����Agent�Ĳ�������̭ǰ�Ĳ�����̬û����Ϣ�̳й�ϵ��
+
+��������������̭����$P_{\text{eliminate}} \in \{0.05, 0.10, 0.20\}$����̭����$K \in \{50, 200, 500\}$������ˮƽ������135�������ϣ�ÿ��5�����Ӷ������У�ģ��ʱ��$T=2000$�ڡ�
+
+\subsection{ӵ������Alpha�ķ�������}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.88\textwidth]{../../results/e2_capital_expansion/p_eliminate=0.05_lambda=1.00_sigma=0.02_seed=42/plots/fig2_1_crowding_alpha_dualaxis.png}
+\caption{����ӵ����$C_k(t)$��Alpha��˫��ʱ��Top-3���Լ��壬$P_{\text{eliminate}}=0.05$, $K=50$, seed=42������ɫʵ�߶�Ӧ���ᣨӵ���ȣ�����ɫ���߶�Ӧ���ᣨAlpha����ӵ���ȵ�����������Alpha���½�Լ20--40�ڣ�Ϊ��������ṩ��ʱ�����ݡ�}
+\label{fig:e2_crowding}
+\end{figure}
+
+ͼ\ref{fig:e2_crowding}������$P_{\text{eliminate}}=0.05$��$K=50$�����Բ����µ�ӵ����-Alpha��̬��ϵ����2000�ڵ�ģ���У�Top-3���Լ���չʾ��һ�µ�ģʽ�����ʱ���ӯ�����Լ���ʱ����׷����Ե�ӵ����������Alpha���ͺ�Լ20--40�ں�ʼ�½���ӵ������Alpha֮��ķ������������в�������¾��ɹ۲⣬����ͳ����������
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.85\textwidth]{../../results/e2_capital_expansion/p_eliminate=0.05_lambda=1.00_sigma=0.02_seed=42/plots/fig2_2_crowding_alpha_scatter.png}
+\caption{ӵ����-Alphaɢ��ͼ��LOESS��ϣ�$P_{\text{eliminate}}=0.05$, seed=42��������Ϊ$C_k$������Ϊ$\alpha_k$��ÿ�����Ӧһ�����Լ�����һ��ʱ�䴰�ڵĹ۲⡣LOESS���ߣ���ɫ����95\%���Ŵ�����ɫ����ʾ�˵����ݼ��ĸ���ع�ϵ��}
+\label{fig:e2_scatter}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.80\textwidth]{../../results/e2_capital_expansion/p_eliminate=0.05_lambda=1.00_sigma=0.02_seed=42/plots/fig2_3_elasticity_violin.png}
+\caption{ӵ����-Alpha���Էֲ���С����ͼ��$P_{\text{eliminate}}=0.05$, seed=42��������$\varepsilon_\alpha(k)=d(\ln\alpha_k)/d(\ln C_k)$����λ��Ϊ��������ӵ����������Alpha�½�֮������Ƚ��ĵ��Թ�ϵ��}
+\label{fig:e2_elasticity}
+\end{figure}
+
+ͼ\ref{fig:e2_scatter}��ͼ\ref{fig:e2_elasticity}�Ӳ�ͬ�Ƕȿ̻���ӵ����-Alpha��ϵ��ɢ��ͼ��ͼ\ref{fig:e2_scatter}�����ֵ����ݼ��ĸ���أ�LOESS������߼�95\%���Ŵ�ȷ�������Ƶ�ͳ�������ԡ����Էֲ���ͼ\ref{fig:e2_elasticity}������λ��Ϊ��ֵ��������һ�����ϵ�ڲ�ͬ���Լ������п������Ƚ��ԡ�
+
+\subsection{�ʱ������������˥��}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.85\textwidth]{../../results/e2_capital_expansion/p_eliminate=0.05_lambda=1.00_sigma=0.02_seed=42/plots/fig2_4_capital_concentration.png}
+\caption{�ʱ����ж��ݻ���Top-5����ĲƸ�ռ�ȣ���ͬ��̭����$K$�µĶԱȣ�����̭����Խ�̣�$K=50$�����ʱ���ͷ�����е��ٶ�Խ�졣}
+\label{fig:e2_concentration}
+\end{figure}
+
+�Ƹ��ط�����Ƽ������ʱ���ӯ�����Եļ��У�ͼ\ref{fig:e2_concentration}������̭����$K=50$ʱ��Top-5����ĲƸ�ռ����500���ڼ��ӳ�ʼ��Լ10\%������25\%���ϣ���$K=500$ʱ��ͬ���ļ��й�����ҪԼ1500�ڡ���һ�����������̭Ƶ�ʡ���������������̭���������ǵ����ʱ������ٶȵĹؼ�������
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.90\textwidth]{../../results/e2_capital_expansion/p_eliminate=0.05_lambda=1.00_sigma=0.02_seed=42/plots/fig2_5_entropy_by_elimination.png}
+\caption{��ͬ��̭�����µĲ������ݻ���$K=50$, seed=42����$P_{\text{eliminate}}$Խ�ߣ����Զ������½�Խ�졣�������½��ٶ��������ں�����E3ʵ�顪���Ƹ���̭�ı�����ʱ�������ǲ��Ի����²��Դ�����ͣ����Ժ������в�����̬��}
+\label{fig:e2_entropy}
+\end{figure}
+
+�����ص��ݻ��켣��ͼ\ref{fig:e2_entropy}����ʾ�˲Ƹ���̭�Բ��Զ����Ե�Ӱ��ǿ�����޶ȡ�$P_{\text{eliminate}}=0.05$ʱ�������شӳ�ʼ��6.215�½�����̬Լ5.57������Լ9.5\%������Ծ��������500����Լ306--318����$P_{\text{eliminate}}$����0.20ʱ���������󡣵�E2�в����ص��½��ٶ������������¾��������ں�����E3��ԭ�����ڣ��Ƹ���̭���õ����ʱ����ö��ǲ������ݡ�������̭������ȫ��������ɵ�Agent������������Բ��Կռ����������������Ʋ��Ե���Ϣ���ܣ�����ʼ��ͣ����ԶԼ��еĲ�����̬����ʵ���Գ����
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.85\textwidth]{../../results/e2_capital_expansion/p_eliminate=0.05_lambda=1.00_sigma=0.02_seed=42/plots/fig2_6_gini_efficiency.png}
+\caption{�Ƹ�����ϵ�����г�Ч��$\rho_1$��˫��ͼ��$P_{\text{eliminate}}=0.05$, seed=42������ɫʵ�ߣ����ᣩΪ����ϵ��������0.0��������ֵԼ0.29����ɫ���ߣ����ᣩΪ$\rho_1$��60�ڹ�����ֵ���Ƹ����й������г�Ч�ʴ��ڽ׶��Ը��ƣ������ָ����Ǵ����ġ������г��¼�����ʱ$\rho_1$���粨����}
+\label{fig:e2_gini}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.80\textwidth]{../../results/e2_capital_expansion/p_eliminate=0.05_lambda=1.00_sigma=0.02_seed=42/plots/fig2_7_halflife_boxplot.png}
+\caption{Alpha��˥�ڵ�����ͼ������̭�������飩��$P_{\text{eliminate}}$��0.05����0.20ʱ��Alpha��˥�ڳ����������ƣ���E2��˥���ķ��Ⱥ��ٶȾ����ޡ����Ƹ���̭�����޷�����������Alpha˥����}
+\label{fig:e2_halflife}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.85\textwidth]{../../results/e2_capital_expansion/p_eliminate=0.05_lambda=1.00_sigma=0.02_seed=42/plots/fig2_8_survival_curve.png}
+\caption{�������ԵĴ�����ߣ�$P_{\text{eliminate}}=0.05$, seed=42������̭-�������²�����500���ڵĴ��������²��Դ�����ձ�ϵ͡�����̭�������²��Ա���һ����̭�ĸ��ʽϸߣ���ӳ��������ɲ����ھ�����ȱ����Ӧ�ԡ�}
+\label{fig:e2_survival}
+\end{figure}
+
+E2�ĺ��ķ��ֿɸ������¡��Ƹ����е�����������Alpha�Ĳ���˥����ӵ������Alpha֮��ķ������������в�������¾�������ͼ\ref{fig:e2_crowding}��\ref{fig:e2_scatter}����������λ��Ϊ����ͼ\ref{fig:e2_elasticity}����������˥���ǲ���ȫ�ġ����Ƹ���̭�û������ʱ����ö��ǲ�����Ϣ������������Դ���ʵͣ�ͼ\ref{fig:e2_survival}�����޷��Բ�����̬������������������صĽ�����Լ9.5\%��ԶС�ں���ʵ�飬Alpha��˥�ڵ����̷������ޣ�ͼ\ref{fig:e2_halflife}����E2ȷ���˲Ƹ����л��Ƶ����ЧӦ��ͬʱ��¶������ޣ�û�в�����Ϣ�ĸ��ƺ���ɢ�������ĲƸ�ѡ�����Թ����������ݻ�ѭ����
+
+\section{Experiment 3�����Ը���}
+
+E3��E2�ĲƸ���̭�����ϼ�����Ը��ƻ��ơ���������ݻ�ѭ���е�"�Ŵ�"���ڡ�ÿ$K=50$�������ڣ�ϵͳ�����̶ķ�ʽѡ�����Ӧ�ȣ����ڹ������ձ��ʣ���Agent��Ϊ����ģ�壬���Agent�̳и������������Բ���$\boldsymbol{\pi}_i$��ѡ��ѹ����$\lambda_{\text{select}}$�������ƣ�$\lambda$Խ�ߣ���Ӧ�Ȳ��������̶ĸ����е�Ȩ��Խ�󣬳ɹ����Ի�ø��ิ�ƻ��ᡣ
+
+��������Ϊѡ��ѹ��$\lambda_{\text{select}} \in \{1, 2, 3, 5\}$������ˮƽ������90�������ϣ�ÿ��5�����ӣ�ģ��ʱ��$T=2000$�ڡ�
+
+���ƻ�����Ƹ���̭֮������ʵĲ��졣�Ƹ���̭�ı�����ʱ���������䡪���ʽ�ӿ���������ӯ���ߡ����Ƹı���ǲ�����Ϣ�Ĵ��������ɹ����Ե��źŴ����ʽ������̳к���ɢ�����ߵ�����ЧӦ����Զ�����Զ���ЧӦ�ļ򵥼��ܡ�
+
+\subsection{���Լ����ָ��˥��}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.88\textwidth]{../../results/e3_replication/lambda=1.00_sigma=0.02_noise=0.000_seed=42/plots/fig3_1_family_decay.png}
+\caption{��Ծ���Լ�������$K(t)$��˥�����ߣ�$\lambda=1.0$, seed=42��������Ϊָ��˥�����$K(t) \approx K_0 e^{-t/\tau_K}$��$\tau_K$Ϊ����˥��ʱ�䡪��ÿ����$\tau_K$�ڣ���Ծ����Լ����63\%�������E2��$\tau_K$Լ1500�ڣ���E3��$\tau_K$������Լ600--700�ڣ�������˥���ٶ������2--3����}
+\label{fig:e3_decay}
+\end{figure}
+
+���Լ���������˥����E3�гʵ��͵�ָ��ģʽ��ͼ\ref{fig:e3_decay}������$\lambda=1.0$��׼����Ϊ���������شӳ�ʼ��6.215�½�����̬Լ4.69������Լ25\%������Ծ��������500����Լ130����$\lambda$����3.0ʱ����̬��������һ������80--110���䣬�����ؽ���Լ4.2--4.4��
+
+˥���ļ���Դ�ڸ��Ʋ�������������·��һ������Խ�ɹ�����Ƹ��ݶ�Խ�������̶��б�ѡΪ����ģ��ĸ���Խ�ߣ������ĺ������Խ�ࡪ������̳��˸ò��Ե���Ϣ�����ʽ������һ�������˸ò��ԵĲƸ��ݶ���ǵ��͵�"��������"��rich-get-richer����̬�����ݻ�����ѧ�г�Ϊ"ѡ����ɨ��"��selective sweep����
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.85\textwidth]{../../results/e3_replication/lambda=1.00_sigma=0.02_noise=0.000_seed=42/plots/fig3_2_lineage_tree.png}
+\caption{������ϵ����$\lambda=1.0$, seed=42��������Ϊʱ�䣬���ᰴ�Ƹ�ռ�����и����Լ��塣��ɫ��ʶ�������ͣ������ʾ�Ƹ��ݶ��ϵ��չʾ���������Ƽ��������Ͷ�����������������г��ӳ��ڵĶ��������Ծ�����������������������}
+\label{fig:e3_lineage}
+\end{figure}
+
+������ϵ����ͼ\ref{fig:e3_lineage}�����Ӿ���ʽ�����˲�����̬�Ĵ���ľ������̡����ڣ�0--500�ڣ���ϵ�ṹ��ɢ������С���岢�档���ڣ�500--1500�ڣ��������忪ʼ��ò��ɱ����ĲƸ��ݶ��ϵ�ṹ�ӷ�ɢ���й��ɡ�ĩ�ڣ�1500--2000�ڣ�2--3��������������˴󲿷ֵĲƸ��ݶ��ϵ���ʵ��͵�"Ӯ��ͨ��"�ṹ��
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.85\textwidth]{../../results/e3_replication/lambda=1.00_sigma=0.02_noise=0.000_seed=42/plots/fig3_3_dominant_stack.png}
+\caption{��������ĲƸ�ռ�ȶѵ�ͼ��Top-10���壬$\lambda=1.0$, seed=42����ǰ���������2000�ں�ϼƿ����г��Ƹ���Լ50\%--60\%��}
+\label{fig:e3_dominant}
+\end{figure}
+
+�Ƹ��ļ��л��̶���E3�дﵽ���µ�ˮƽ��ͼ\ref{fig:e3_dominant}������$\lambda=1.0$��׼������seed=42�����£���̬����ϵ��Ϊ0.54������������E2ͬ���������µ�0.29��ǰ�������ĲƸ��ݶ�ϼƳ���50\%��$\lambda=3.0$ʱ����ϵ���ɳ���0.70����һ������������Ը��Ƶ������������Ƕ�����˥������������Ҳ�ǲƸ����˼��еķŴ���ơ�
+
+\subsection{�г�Ч��������Ե�����}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.88\textwidth]{../../results/e3_replication/lambda=1.00_sigma=0.02_noise=0.000_seed=42/plots/fig3_4_efficiency_selection.png}
+\caption{��ͬѡ��ǿ���µ��г�Ч��$\rho_1$��60�ڹ�����ֵ������ѡ��ǿ�ȣ�$\lambda=3.0$����$\rho_1$�ľ���ֵ������С����������ͬʹ�۸������������������Ⱥ��ľ���ˮƽ��������Ч���Բ��Զ����Ե�ɥʧΪ���ۡ�}
+\label{fig:e3_efficiency}
+\end{figure}
+
+E3��¶��һ����ֱ���ķ��֣�ͼ\ref{fig:e3_efficiency}������ѡ��ǿ���£��г�Ч�ʣ���$\rho_1$�ľ���ֵ�������������ߡ�$\lambda=3.0$ʱ$\rho_1$��ʱ���ֵ����ֵԼΪ0.03����$\lambda=1.0$ʱԼΪ0.05��ԭ�����ڣ�������ͬʹ�ü۸������������������Ⱥ��ľ���ˮƽ�������˼۸��еĿ�Ԥ��ɷ֡�������Ч���Զ����Ե�ɥʧΪ���ۡ�����E3��ȫ����������£���̬�����ؾ���������E2��������̬�ѴӶ������ĳ�ʼ��������Ϊ�߶�ͬ�ʻ�����̬��
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.85\textwidth]{../../results/e3_replication/lambda=1.00_sigma=0.02_noise=0.000_seed=42/plots/fig3_5_entropy_extreme.png}
+\caption{�����г��¼��ڼ�Ĳ�������Ϊ��$\lambda=1.0$, seed=42�������۸�ƫ�볬��3����׼��ʱ�����߱�ǣ��������س��������½��������г�ѹ��ʱ�ڲ���ͬ�ʻ����١�}
+\label{fig:e3_extreme}
+\end{figure}
+
+�����г��¼���������Ϊ�۸�ƫ�������ֵ����3����׼����ڼ�Ĳ�������Ϊ��ͼ\ref{fig:e3_extreme}����һ����¶��E3�Ľṹ�Դ�������ƫ���¼��������Լ50���ڣ������س���Լ10\%--15\%�Ķ����½��������г�ѹ����ʹAgent�Ľ�����Ϊ��һ����ͬ������ͬ�ʻ�������һ�����ڵ�����������Ҳ���г��¼��Ķ��ڳ���б����١����⹹����ϵͳ�Է����ۻ���΢����Ϊ������
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.85\textwidth]{../../results/e3_replication/lambda=1.00_sigma=0.02_noise=0.000_seed=42/plots/fig3_6_replication_mode.png}
+\caption{���ָ�������ģʽ�Ĳ�����˥���Աȡ�����������Ƹ�+��Ӧ�ȣ��ȴ��Ƹ�������˥���ٶȸ��졪����Ӧ�ȣ����ձ��ʣ������˸�Alpha���Զ���ĸ������ƣ������˲�����Ϣ��ͬ�ʻ���}
+\label{fig:e3_replication_mode}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.80\textwidth]{../../results/e3_replication/lambda=1.00_sigma=0.02_noise=0.000_seed=42/plots/fig3_7_halflife_selection.png}
+\caption{ѡ��ǿ��$\lambda_{\text{select}}$��Alpha��˥�ڵ�Ӱ�졣$\lambda=3.0$������Alpha˥���ٶ�ԼΪ$\lambda=1.0$��1.5--2����}
+\label{fig:e3_halflife}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.85\textwidth]{../../results/e3_replication/lambda=1.00_sigma=0.02_noise=0.000_seed=42/plots/fig3_8_max_drawdown.png}
+\caption{��ͬ����ǿ����Agent�����س��ֲ���$\lambda=1.0$, seed=42�����߸���ǿ�Ƚ����˻س��ֲ�����β���գ��������ķ��շ�ɢ������������ϵͳ�����ͬ���Է��ա�������Agent�������ƵĲ����źŴ����ʽ��}
+\label{fig:e3_drawdown}
+\end{figure}
+
+E3�ĺ��Ĺ�������ʶ���˲��Ը��ơ������ǵ����ĲƸ����С����Ǽ���Alpha˥����ǿ�����ĵ�һ���ơ����Լ����ָ��˥����ͼ\ref{fig:e3_decay}������ϵ����Ӯ��ͨ�Խṹ��ͼ\ref{fig:e3_lineage}�����Ƹ��ļ��˼��У�ͼ\ref{fig:e3_dominant}������ͬ������һ��һ�µ����£�����ͨ����Ϣ��������������ʱ��ļ��л�ת��Ϊ���Ե�ͬ�ʻ���������������Alphaϵͳ����ʧ��ֱ��ԭ��
+
+\section{Experiment 4�������ݻ�}
+
+E4���Ŵ�����ݻ�ѭ����ȫ���������ڣ�ѡ�񣨲Ƹ���̭�����Ŵ������Ը��ƣ��ͱ��죨����ͻ�䣩��ͻ������ڸ��Ʒ���ʱ�Ը���$P_{\text{mut}}$���������Agent�Ĳ���Ȩ�������ڼ̳и���$\mathbf{w}_{\text{parent}}$�󣬵��Ӷ�����˹����$\mathcal{N}(0, \sigma_{\text{mut}}^2)$��Ȼ����$L_2$��һ����
+
+��������Ϊͻ����$P_{\text{mut}} \in \{0.05, 0.10, 0.20, 0.40\}$��ѡ��ѹ��$\lambda_{\text{select}} \in \{1, 2, 3, 5\}$��ͻ�����$\sigma_{\text{mut}} \in \{0.02, 0.10, 0.30\}$������240�������ϣ�ÿ��5�����Ӷ������У�ģ��ʱ��$T=2000$�ڡ�E4������ʵ���в����ռ���㡢ʵ�����������ƣ���Ŀ�Ĳ���������֤�������Ƶ����ЧӦ����������������̬ϵͳ�������ݻ������µ�ȫ����ͼ��
+
+\subsection{Alpha��������}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.92\textwidth]{../../results/e4_full_evolution/p_mut=0.20_lambda=1.00_sigma=0.10_seed=42/plots/fig4_1_alpha_lifecycle.png}
+\caption{Alpha�������ڣ�$P_{\text{mut}}=0.20$, $\lambda=1.0$, seed=42����һ�������Բ��Լ���ӵ��������������ˣ��������켣������׶�����ɫ���֣�̽���ڣ�0--200���������ڣ�200--500����ӵ���ڣ�500--1000����˥���ڣ�1000--1500�����ָ��ڣ�1500--2000�������׶�Alpha���š�ӵ���ȱ仯����ͼ���Ƹ��ݶ����ϵͳ�Ե��л�ģʽ��}
+\label{fig:e4_lifecycle}
+\end{figure}
+
+ͼ\ref{fig:e4_lifecycle}չʾ��E4�����������ķ��֣�Alpha�������ڡ�һ�����Լ���������ڹ�����ϵͳ�Եؾ�������׶Ρ�̽���ڣ����Ըյ�����ͻ��󣬲Ƹ��ݶ�ͣ�$<1\%$����Alpha�ź��в��ȶ��������ڣ����Ե��źŴ����ʽ�ڵ����г������¾߱��Ƚ����ƣ�AlphaΪ�����������Ƹ��ݶ����������ӵ���ڣ��ò��Եĳɹ������ƻ��ƷŴ󣬴���Agent���������ź�Ȩ�أ�����ӵ���ȼ���������Alpha�ӷ�ֵ��ʼ�½���˥���ڣ�ӵ���ȴﵽ���ͣ�Alphaת�����Ƹ��ݶʼ��ʧ���ָ���/����ڣ����ֲ��Լ���ͨ�����ͻ��̽���µ��źſռ��������»����Alpha��������������޷���Ӧ�������������׶���ȫ����������¾��ɱ��۲⣬֤����Alpha˥���ǲ�����̬ϵͳ�����Ķ���ѧ���̡�
+
+\subsection{�����صĲ���ȫ��}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.90\textwidth]{../../results/e4_full_evolution/p_mut=0.20_lambda=1.00_sigma=0.10_seed=42/plots/fig4_2_entropy_grid.png}
+\caption{�����صĲ�����������Ӧ$(P_{\text{mut}}, \lambda_{\text{select}})$��16����ϡ��ʶ�ͻ�䣨$P_{\text{mut}}=0.10$--0.20��������ѡ��ѹ����$\lambda=1$--2�������ά���˽ϸ����ȶ�����̬�����ء����ͺ͹��ߵ�ͻ���ʾ������ţ�$P_{\text{mut}}=0.05$ʱͬ�ʻ�ѹ��ռ�ţ���̬��ֵƫ�ͣ�$P_{\text{mut}}=0.40$ʱ������������̽������Ч��Ϣ����û��}
+\label{fig:e4_entropy_grid}
+\end{figure}
+
+�����صĲ�������ͼ\ref{fig:e4_entropy_grid}�������ͻ����ѡ���ڶ�ά�����ռ��еĽ���ЧӦ����$\lambda=1.0$�ĵ�ѡ��ѹ���£������ض�ͻ���ʱ��ֳ��ǵ�����Ӧ��$P_{\text{mut}}=0.05$ʱ��̬��Լ4.48����E3�������$P_{\text{mut}}=0.10$--0.20ʱά���ڽϸ�ˮƽ��Լ4.6����$P_{\text{mut}}=0.40$ʱ���������½���Լ4.5��������ͻ�����ƻ��˸��������л��۵���Ч�ź���Ϣ��ʹ�ú�����Եı���������������ԡ�����Ȼ������"������"�Ķ����ԣ�ȴδת��Ϊ"������"�ϵľ������ơ�
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.88\textwidth]{../../results/e4_full_evolution/p_mut=0.20_lambda=1.00_sigma=0.10_seed=42/plots/fig4_3_phase_transition.png}
+\caption{������̬ϵͳ�����ͼ������Ϊѡ��ǿ��$\lambda_{\text{select}}$������Ϊͻ����$P_{\text{mut}}$����ɫ��ʾ��̬�����ء���$\lambda$��$P_{\text{mut}}$�ı�ֵԽ���ض���ֵʱ��ϵͳ�Ӷ�����״̬������������ͬ�ʻ�״̬���������򣩷�����������ԾǨ��}
+\label{fig:e4_phase}
+\end{figure}
+
+ͼ\ref{fig:e4_phase}��ʾ��E4����Ҫ��ӿ���Է���֮һ����������̬ϵͳ�ڲ����ռ��д����ٽ���䡣��ѡ��ѹ��$\lambda_{\text{select}}$��ͻ����$P_{\text{mut}}$֮����Ϊ����������ñ�ֵ����ĳһ��ֵʱ����̬������ά���ڸ�λ����Ӧ�������Ĳ�����̬��������ֵԽ����ֵ��ϵͳͻȻԾǨ��ͬ�ʻ�״̬�����������ڲ���100���ڼ����½�����λ���Ҹ�ԾǨ�����ͺ�ЧӦ��һ������ͬ�ʻ�״̬����ʹ�������ָ�����ֵ���£���������������۵ĲƸ�����ʹ��ϵͳ�����Է��ص����������⡣��һ���ֶԽ����ȶ�����ֱ�ӵ�Ԥ�����壺������̬������һ�������ȶ��Ĳ������������У�ֱ��΢С�Ĳ���Ư�ƴ������������䡣
+
+\subsection{���Ը��Ӷ�������}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.88\textwidth]{../../results/e4_full_evolution/p_mut=0.20_lambda=1.00_sigma=0.10_seed=42/plots/fig4_4_complexity_evolution.png}
+\caption{���Ը��Ӷȵ��ݻ���$P_{\text{mut}}=0.20$, $\lambda=1.0$, seed=42��������Ϊ���Ը��Ӷȣ����ź�Ȩ�ص���Чά����$\|\mathbf{w}\|_0$������������Ϊ������ʡ��еȸ��ӶȵĲ��ԡ���ʹ��2--4����Ч�ź�ά�ȡ����ڳ����д�������ߡ����ڼ򵥣�$<2$ά���͹��ڸ��ӣ�$>4$ά���Ĳ��Ծ����ٸ��ߵ���̭���ա�}
+\label{fig:e4_complexity}
+\end{figure}
+
+���Ը��Ӷ����������֮��Ĺ�ϵ��ͼ\ref{fig:e4_complexity}��֧����H4����Ӧ�Ծ�����˵��ʹ��2--4����Ч�ź�ά�ȵĲ��ԡ�����Ӧ�ʶȸ��ӵ���Ϣ�����ʽ����������ģ������չ�ֳ���ߵĴ����ʡ���������һ�ź�ά�ȣ��紿�������ԣ��Ĳ����ڻ����仯��ǰȱ��³���ԣ�ʹ��ȫ��6ά�ź���Ȩ�ش��¾��ȵĲ��������ٹ�������⡪����ѵ���ڱ��������������г������仯�����ʧЧ�����ŵĲ��Ը��ӶȲ�����󻯣��������źŵ�Ԥ����Ϣ����ģ�͵ķ�������֮��Ѱ��ƽ�⡣
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.85\textwidth]{../../results/e4_full_evolution/p_mut=0.20_lambda=1.00_sigma=0.10_seed=42/plots/fig4_5_niche_overlap.png}
+\caption{���Լ�������̬λ�ص�����$P_{\text{mut}}=0.20$, $\lambda=1.0$, seed=42�������ص��ȣ���ɫ���򣩱�ʾ���Լ�ʹ�����Ƶ��ź���ϣ��������ң����ص��ȣ���ɫ���򣩱�ʾ���컯��̬λ��ӵ�ж�����̬λ�Ĳ��Լ���߱��������ߵĳ��ڴ���ʡ�}
+\label{fig:e4_niche}
+\end{figure}
+
+��̬λ�ص�����ͼ\ref{fig:e4_niche}������̬ѧ��������������˲��Է��������Լ�����Pianka��̬λ�ص�ָ����ʾ���г��е�"��������"�����ź�ʹ�÷�ʽ�߶����ƵĲ��Լ��弯���ھ���ĶԽ��߸���������Щ���ص��ȵĲ��Լ�����ֳ�ϵͳ�Եĵʹ���ʺͿ�˥���ٶȣ������ص��ȵ�"��̬λ�ػ�"���������и�����Alpha��˥�ڡ���һ����Ϊ�����Զ����Զ��г����Ե��������ṩ��΢�ۻ��Ʋ����֤�ݡ�
+
+\subsection{ͻ���ʵĵ�������}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.82\textwidth]{../../results/e4_full_evolution/p_mut=0.20_lambda=1.00_sigma=0.10_seed=42/plots/fig4_6_offspring_survival.png}
+\caption{ͻ�����Ĵ���ʣ�200�ڴ��ڣ�$P_{\text{mut}}=0.20$, $\lambda=1.0$, seed=42����ͻ�����Ĵ������ͻ����֮����ڵ�U�͹�ϵ��$P_{\text{mut}} \approx 0.10$--0.20ʱ�������ߡ�}
+\label{fig:e4_offspring}
+\end{figure}
+
+ͻ�����Ĵ���ʣ�ͼ\ref{fig:e4_offspring}����ʾ���ݻ���"̽��-����"Ȩ�⣨exploration-exploitation trade-off������������200��Ϊ�۲ⴰ�ڣ�ͻ�����Ĵ������$P_{\text{mut}}=0.10$--0.20�����ڴﵽ��ֵ��$P_{\text{mut}}=0.05$ʱͻ��̫�٣���������븸����ȫ��ͬ������ӵ���Ĳ�����̬��û�о������ơ�$P_{\text{mut}}=0.40$ʱͻ����󣬺���Ĳ���Ȩ���븸��������"����"������ȫ���룬����ʷ����½�������ͻ����ǡ��λ�����������˵��м䡪����һ�������ݻ�����ѧ�е�"�е�ͻ���ʼ�˵"��intermediate mutation rate hypothesis�������Ǻϡ�
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.88\textwidth]{../../results/e4_full_evolution/p_mut=0.20_lambda=1.00_sigma=0.10_seed=42/plots/fig4_7_halflife_mutation.png}
+\caption{ͻ���ʶ�Alpha��˥�ڵ�Ӱ�죨$P_{\text{mut}} \in \{0.05, 0.10, 0.20, 0.40\}$, $\lambda=1.0$����$P_{\text{mut}}$��0.05����0.40ʱ��Alpha��˥�������ӳ���ͻ��ͨ������������Ա��죬���ϴ��Ƹ��ƴ�����ͬ�ʻ����ƣ����ӻ�Alpha˥������Ч�ĵ�һ���ơ�}
+\label{fig:e4_halflife}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.88\textwidth]{../../results/e4_full_evolution/p_mut=0.20_lambda=1.00_sigma=0.10_seed=42/plots/fig4_8_interaction_network.png}
+\caption{���Խ������磨$P_{\text{mut}}=0.20$, $\lambda=1.0$, seed=42�����ڵ��С��ʾ�Ƹ�ռ�ȣ��ڵ���ɫ��ʾ���Դ����׶Σ��߱�ʾ���Լ�ľ�������ɫ���򻥲�����ɫ����ϵ������ṹ��ʱ��ӷ�ɢ��С�����ݻ�ΪΧ���������ļ�������νṹ��}
+\label{fig:e4_network}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.85\textwidth]{../../results/e4_full_evolution/p_mut=0.20_lambda=1.00_sigma=0.10_seed=42/plots/fig4_9_u_shape_test.png}
+\caption{���Ը��Ӷ�-������ʵĵ�U�͹�ϵ���飨$P_{\text{mut}}=0.20$, $\lambda=1.0$, seed=42����Lind-Mehlum����ȷ�����Ÿ��Ӷ�����λ���е�ˮƽ����U�͹�ϵ��ͳ����������}
+\label{fig:e4_u_shape}
+\end{figure}
+
+\section{��ʵ�����Ƚ�}
+
+����ʵ����ͳһ���ƿ���²������ɻ��Ʋ���������ϵͳ�Խ�����졣���ڽ���ʵ��Ĵ�����ָ����к�����ܣ��Զ�����ʽչʾ�ݻ����Ƶݽ���������ЧӦ��
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.90\textwidth]{../../results/cross_experiment/plots/figC1_entropy_all.png}
+\caption{����ʵ������صĺ���Աȡ�E1���㶨��һ��ˮƽ�ߣ��� E2�������½�������Լ9.5\%���� E3�������½�������Լ25\%���� E4����̬������$P_{\text{mut}}=0.20$ʱ�ھ��������½����ȶ����е�ˮƽ�����ݻ����Ƶĵݽ�ЧӦ�ڲ�ͬʵ�����ֳ��ɱ�ʶ���ݶȡ�}
+\label{fig:cross_entropy}
+\end{figure}
+
+�����صĿ�ʵ��켣��ͼ\ref{fig:cross_entropy}������������ʵ����ֱ�۵ıȽϡ�E1����������һ��ˮƽ�ߡ������ݻ�ѹ���µĲ��Էֲ���ʱ��ά������ȫ���䡣E2�������߳ʻ����½����ơ����Ƹ���̭���µ��ʱ�����������ͳ�����������������������ޡ�E3�������߳�ָ��˥���������ƻ��Ƶ�������ʹ�ò���ͬ�ʻ��Է����Է�ʽ���١�E4�������߳��ֶ�̬��������ͻ�䲻��Ϊϵͳע���µĲ��Զ����ԣ��ھ������ڵ��½�����ֵ��$P_{\text{mut}}=0.20$�������ȶ����е�ˮƽ��չʾ��һ�־����봴��֮��Ķ�̬���⡣
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.90\textwidth]{../../results/cross_experiment/plots/figC2_efficiency_all.png}
+\caption{����ʵ���г�Ч��$\rho_1$�ĺ���Աȡ�E3��Ч����ߣ�$\rho_1$�ľ���ֵ��ӽ��㣩���Բ��Զ����Ե�ɥʧΪ���ۣ�E4��Ч���������֮��ʵ���˸���������á�}
+\label{fig:cross_efficiency}
+\end{figure}
+
+�г�Ч�ʵĿ�ʵ��Աȣ�ͼ\ref{fig:cross_efficiency}����ʾ��һ������������E3��ȫ��ʵ����չ������ߵ��г�Ч�ʡ�������ͬ�ʻ�ʹ�۸��������������Ⱥ��ľ���ˮƽ��$\rho_1$�ľ���ֵ��$\lambda=3.0$ʱ�ӽ�0.03�������ָ�Ч���ڼ����г��¼�����ʱ�����˻���ͼ\ref{fig:e3_extreme}����ͬ�ʻ��Ĳ���Ⱥ����Ի���ͻ��ʱȱ����Ӧ�����ԡ�E4ͨ��ͻ��ά�ֵĲ��Զ����ԣ���Ч��ָ�����Ե���E3��$\rho_1$�ľ���ֵԼ��0.01--0.02�������ڼ����¼��ڼ���ֳ���ǿ�����ԡ�
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.88\textwidth]{../../results/cross_experiment/plots/figC3_extreme_events.png}
+\caption{����ʵ��ļ����¼�Ƶ�ʶԱȣ��۸�ƫ��$>3\sigma$����E3�ļ����¼�Ƶ����ߣ�֤ʵ�˲���ͬ�ʻ���ϵͳ�Է���֮��Ĺ�����}
+\label{fig:cross_extreme}
+\end{figure}
+
+�����¼�Ƶ�ʵĿ�ʵ��Ƚϣ�ͼ\ref{fig:cross_extreme}��Ϊ�����Ե��ȶ��������ṩ��ֱ��֤�ݡ�E3�ļ����¼����۸�ƫ��$>3\sigma$��Ƶ����ȫ��ʵ������ߡ�E1��E2�ļ����¼�Ƶ�ʽϵ͡���ǰ������Էֲ�����ȫ��̬������ͬ����Ϊ��������ȱ�����ƻ��������˲��Ե���ͬ�ٶȡ�E4�ļ����¼�Ƶ����E2��E3֮�䣬ͻ��Ĵ��������ȶ����Ļ������á�
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.85\textwidth]{../../results/cross_experiment/plots/figC4_halflife_all.png}
+\caption{Alpha��˥�ڵĿ�ʵ������ͼ��E1��˥������˥��$\to\infty$����E2--E3�𲽼��٣�E4��ͻ����ӳ�����λ��˥�ڴ�E2��Լ1200�ڽ���E3��Լ700�ڣ��ٻ�����E4��Լ1000�ڣ�$P_{\text{mut}}=0.20$���������Ǽ���˥������ǿ���أ�ͻ�����ӻ�˥������Ч�ĶԿ�������}
+\label{fig:cross_halflife}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.88\textwidth]{../../results/cross_experiment/plots/figC5_variance_decomposition.png}
+\caption{Alpha˥���ķ���ֽ⡣����̬Alpha�Ŀ���Է���ֽ�Ϊ�Ƹ�����ЧӦ������/ͬ�ʻ�ЧӦ��ͻ��/����ЧӦ������/ͬ�ʻ�ЧӦ�ǹ������ĵ�һ���أ�ͻ��/����ЧӦΪ�����ף�����˥������}
+\label{fig:cross_variance}
+\end{figure}
+
+\section{�������������}
+
+��\ref{tab:hypothesis_summary}������ȫ������о�����ļ�������
+
+\begin{table}[htb]
+\centering
+\caption{�о��������������}
+\label{tab:hypothesis_summary}
+\begin{tabular}{@{}p{2.5cm}p{7cm}p{4cm}@{}}
+\toprule
+���� & ���� & ������ \\
+\midrule
+H1 & ����Ч�г�ӿ�ּ�˵�����ݻ��������г��Է�ӿ������Ч���� & \textbf{����֧��}��E1�м۸�ƫ�벻������ͼ\ref{fig:e1_baseline}c����$\rho_1$δ�ϸ��������㣨ͼ\ref{fig:e1_efficiency}�������ݻ��г�δ��ǿ��Ч \\
+\addlinespace
+H2 & Alpha�������ڼ�˵������Alpha��������-����-ӵ��-˥������������ & \textbf{֧��}��E4������׶������в�������¾���ϵͳ�۲⣨ͼ\ref{fig:e4_lifecycle}����Alpha˥���ǲ�����̬ϵͳ����������ѧ���� \\
+\addlinespace
+H3 & ������-�ȶ��Ե�U��˵�����Զ����Դ����������� & \textbf{֧��}��E4��ֵ����ͼ\ref{fig:e4_entropy_grid}��ȷ���ʶ�ͻ��ά�����Ŷ����ԣ������¼�Ƶ�ʣ�ͼ\ref{fig:cross_extreme}��֧�ֶ�����-�ȶ���������� \\
+\addlinespace
+H4 & ��Ӧ�Ծ�����˵�����Ը��Ӷ���������ʳʵ�U�͹�ϵ & \textbf{֧��}��E4�и��Ӷ�-�����ϵ��ͼ\ref{fig:e4_complexity}����Lind-Mehlum����ȷ�ϵ�U��������ͼ\ref{fig:e4_u_shape}��\\
+\addlinespace
+H5 & �ƶȳ����˵���г�΢�۽ṹԼ��Ӱ������ݻ�·�� & \textbf{���ּ���}���ǵ�ͣ��Լ����ģ��У׼����֤��E1�м۸񲨶�����Ч������$\pm 10\%$�����ڣ�ͼ\ref{fig:e1_price}��\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{����С��}
+
+�ݹ�����ݽ�ʵ���ȫ��֤�ݣ�һ���ɻ�������������������������и��֡�
+
+��һ���ݻ�������Alpha˥���ı�Ҫ������E1�ĺ㶨�����غͳ־�Alpha�����ų���"���ױ����Զ�����Alpha"������ֱ������û����̭�����ƺ�ͻ�������£����Լ��ӯ���������������ȫ��ģ�����ڳ�����
+
+�ڶ�����ͬ�ݻ����ƶ�Alpha˥���Ĺ��׳��������Ĳ��Գơ����Ը��ƣ�E3���Ǽ���˥������ǿ���ء���ͨ�����������Ƹ����л�ת��Ϊ����ͬ�ʻ���ʹ�ò��Զ�������ָ����ʽɥʧ���Ƹ���̭��E2������������������˥�������������ޡ������ı��ʱ����ö����ı������Ϣ��ͻ�䴴�£�E4�����ӻ�˥������Ч�ĶԿ���������ͨ������������Ա�����Ƹ��Ƶ�ͬ�ʻ����ơ�
+
+������������̬ϵͳ�����ٽ���䡣��ѡ��ѹ����ͻ�䴴��֮��ı�ֵԽ���ض���ֵʱ��ϵͳ���ܲ�����شӶ�����״̬ԾǨ��ͬ�ʻ�״̬�����г�ѹ��ʱ�ڣ�����ͬ�ʻ���һ���Ӿ硣���Զ����ԡ��г�Ч�ʺ��г����Թ�����ԪȨ�⡪�����ŵ�����Ŀ�겻Ӧ����󻯵�һά�ȵı��֣�����������֮��Ѱ���ʵ���ƽ�⡣
+
