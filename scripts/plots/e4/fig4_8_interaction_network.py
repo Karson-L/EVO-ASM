@@ -81,7 +81,7 @@ def draw_network(G, ax, title):
 
     # node colours by phase
     phase_colors = {"crowding": "#2ca02c", "extinct": "#d62728",
-                    "growing": "#1f77b4", "stable": "#ff7f0e"}
+                    "growing": "#1f77b4", "stable": "#ff7f0e", "decay": "#9467bd"}
     node_colors = [phase_colors.get(G.nodes[n]["phase"], "#888888") for n in G.nodes]
 
     # draw edges - red first, then blue on top for cleaner look
@@ -116,6 +116,10 @@ def draw_network(G, ax, title):
                markersize=10, label='稳定期 (stable)'),
         Line2D([0], [0], marker='o', color='w', markerfacecolor='#d62728',
                markersize=10, label='灭绝期 (extinct)'),
+        Line2D([0], [0], marker='o', color='w', markerfacecolor='#9467bd',
+               markersize=10, label='衰退期 (decay)'),
+        Line2D([0], [0], marker='o', color='w', markerfacecolor='#9467bd',
+               markersize=10, label='衰退期 (decay)'),
         Line2D([0], [0], color='#d62728', lw=2, label='竞争 (competition)'),
         Line2D([0], [0], color='#1f77b4', lw=2, label='互补 (complement)'),
     ]
