@@ -92,7 +92,7 @@
         \songti \zihao{3} \bfseries 英文题目 \hspace{-0.4cm} \underline{\makebox[11cm]{\songti \zihao{3} \bfseries \cover@etitlef}}  \\[3pt]
                                     \hspace{2cm}    \underline{\makebox[11cm]{\songti \zihao{3} \bfseries \cover@etitles}}  \\[3pt]
                                     \hspace{2cm}    \underline{\makebox[11cm]{\songti \zihao{3} \bfseries \cover@etitlet}}  
-                                    \\[2.3cm]
+                                    \\[1.5cm]
 
 
         \songti \zihao{3} \bfseries 学生姓名            \underline{\makebox[11cm]{\cover@author}}  \\[3pt]
