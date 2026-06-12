@@ -1,21 +1,24 @@
 ﻿\chapter{实验设计与结果分析}
 \label{chap:experiments}
 
-本章报告四组递进实验的结果。每组实验在前一组基础上增加一个演化机制：E1锁定所有演化开关，E2激活财富淘汰，E3追加策略复制，E4开放完整演化循环（含突变）。所有实验共享一组控制参数（表\ref{tab:fixed_params}），实验数据以CSV格式存储于results目录，图表由对应的Python脚本生成。
+为系统剥离Alpha衰减的因果机制，本章设计四组递进实验：E1完全关闭演化开关，建立静态策略生态基线；E2激活财富淘汰，引入资本配置的达尔文选择；E3追加策略复制，使得成功策略的信息得以扩散；E4开放突变，完成完整的变异-复制-选择演化循环。每组实验仅比前一组增加一个演化机制，使得各机制的边际因果效应可被独立识别。
 
 \section{通用实验框架}
+
+四组实验共享一组控制参数（表\ref{tab:fixed_params}），这些参数在实验过程中保持不变。Agent初始财富$W_i(0)=20,000$，初始持仓为零，策略权重从$\mathcal{N}(0,1)$采样后做$L_2$归一化。市场初始价格$P(0)=\bar{F}=100$，与基础价值初始水平一致。
 
 \begin{table}[htb]
 \centering
 \caption{跨实验固定控制变量}
 \label{tab:fixed_params}
-\begin{tabular}{@{}lll@{}}}
+\begin{tabular}{@{}lll@{}}
 \toprule
 变量 & 符号 & 固定值 \\
 \midrule
 Agent数量 & $M$ & 500 \\
 资产数量 & $N$ & 1 \\
-模拟期数 & $T$ & 1000（E1）/ 2000（E2--E4）\\
+模拟期数（E1） & $T$ & 1000 \\
+模拟期数（E2--E4） & $T$ & 2000 \\
 信号维度 & $D$ & 6 \\
 市场出清敏感度 & $\kappa$ & 0.001 \\
 基础价值波动率 & $\sigma_F$ & 0.01 \\
@@ -29,36 +32,42 @@ Agent数量 & $M$ & 500 \\
 \end{tabular}
 \end{table}
 
-Agent初始财富$W_i(0) = 20,000$，初始持仓为零，策略权重从高斯分布采样后归一化。市场初始价格$P(0)=\bar{F}=100$。每步记录策略熵$H_{\text{strat}}(t)$、活跃策略家族数$K(t)$、财富基尼系数、收益率一阶自相关$\rho_1(t)$、成交量、基础价值偏离度等指标。演化实验（E2--E4）额外记录家族Alpha值、拥挤度、存活阶段等演化状态变量。
+每步记录以下市场级指标：策略香农熵$H_{\text{strat}}(t)=-\sum_k p_k\ln p_k$（$p_k$为策略家族$k$的财富份额）、活跃策略家族数量$K(t)$、财富基尼系数、对数收益率$r(t)=\ln(P(t)/P(t-1))$、收益率一阶自相关$\rho_1(t)$（60期滚动窗口）、成交量、基础价值偏离度。演化实验（E2--E4）额外记录每个策略家族的Alpha值（家族内Agent的平均夏普比率）、拥挤度（家族财富份额的变化率）、存续阶段（成长期/拥挤期/衰退期/灭绝期）和谱系关系。
 
 \section{Experiment 1：无演化基线}
 
-E1关闭全部演化机制。Agent持有初始随机策略且永不更改，财富仅通过逐期交易盈亏变动。操作变量为初始策略多样性$\sigma_{\text{init}}$（取0.02、0.10、0.30）和噪声交易强度$\sigma_{\text{noise}}$（取0.0、0.005、0.02），共计47组参数组合，每组以5个随机种子独立运行，模拟时长1000期。
+E1的目标是回答一个前提性问题：如果策略分布被完全锁定，Alpha是否仍然存在？实验关闭全部演化开关——Agent保持初始随机策略不变，其财富的唯一变动来源是逐期交易产生的盈亏。操作变量为初始策略多样性$\sigma_{\text{init}}$（取0.02、0.10、0.30三档，控制初始策略权重分布的离散度）和噪声交易强度$\sigma_{\text{noise}}$（取0.0、0.005、0.02三档，控制Agent感知信号的随机扰动幅度）。共计47组参数组合，每组以5个随机种子独立运行，模拟时长$T=1000$期，总计235次独立运行，产生370张分析图表。
+
+\subsection{价格行为与市场效率}
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.92\textwidth]{../../results/e1_no_evolution/baseline_seed42/plots/fig1_1_price_vs_fundamental.png}
-\caption{市场价格$P(t)$与基础价值$F(t)$的时序对比（baseline, seed=42）。蓝色实线为市场清算价格，红色虚线为基础价值。价格围绕基础价值波动，未出现系统性偏离。}
+\caption{市场价格$P(t)$与基础价值$F(t)$的时序对比（baseline, seed=42, $\sigma_{\text{init}}=0.10$, $\sigma_{\text{noise}}=0.005$）。蓝色实线为市场清算价格，红色虚线为基础价值。价格围绕基础价值波动，未出现趋势性漂移，涨跌停板约束将价格波动限制在$\pm 10\%$区间内。}
 \label{fig:e1_price}
 \end{figure}
 
-图\ref{fig:e1_price}给出了baseline参数下的价格与基础价值走势。在1000期模拟中，市场价格围绕基础价值振荡，两者之间的偏离幅度保持在可观测范围内，价格未出现趋势性漂移。
+图\ref{fig:e1_price}给出了代表性参数下的价格与基础价值走势。在1000期的模拟跨度内，市场价格围绕基础价值振荡，两者之间不存在系统性偏离。价格运行区间约为85--107，基础价值区间约为90--112。涨跌停板$\pm 10\%$约束在极端行情中起到了缓冲作用，价格从未触及上下限。
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.85\textwidth]{../../results/e1_no_evolution/baseline_seed42/plots/fig1_2_return_distribution.png}
-\caption{对数收益率的分布特征。直方图叠加正态密度曲线，Q-Q图检验正态性。收益率分布接近对称，峰度接近正态分布基准。}
+\caption{对数收益率的分布特征（baseline, seed=42）。左图为直方图叠加正态分布密度曲线；右图为Q-Q图。收益率分布接近对称（偏度$\approx$0.06），峰度接近正态基准（超额峰度$-0.18$），未出现显著的尖峰厚尾特征。}
 \label{fig:e1_returns}
 \end{figure}
+
+对数收益率的分布（图\ref{fig:e1_returns}）呈现接近正态的形态。偏度约为0.06，右偏不显著；超额峰度约为$-0.18$，低于正态分布的0.0基准，表明在无演化条件下，收益率分布的尾部比正态更薄——这与典型金融市场中观测到的尖峰厚尾形成对照。该结果表明，厚尾分布的生成至少部分依赖于策略的异质性和演化动态，而非市场微观结构的固有产物。
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.90\textwidth]{../../results/e1_no_evolution/baseline_seed42/plots/fig1_3_volatility_clustering.png}
-\caption{波动率聚集效应。$|r(t)|$在滞后1--30期上的自相关函数，前数阶呈正自相关后缓慢衰减。}
+\caption{波动率聚集效应（baseline, seed=42）。$|r(t)|$在滞后1--30期上的自相关函数。前数阶呈现正自相关，此后缓慢衰减，与真实市场中观测到的波动率长记忆特征定性一致。}
 \label{fig:e1_volatility}
 \end{figure}
 
-\subsection{E1基线三面板}
+波动率聚集效应（图\ref{fig:e1_volatility}）是模型复现的最稳健的经验特征之一。绝对值收益率在滞后1--5期呈现显著的正自相关，此后缓慢衰减至零。这一模式不依赖于演化机制：即使策略分布完全静态、Agent无任何学习或适应，市场出清机制和异质Agent的交互本身足以产生波动率在时间上的正向依赖。
+
+\subsection{策略静态性与财富动态}
 
 \begin{figure}[htbp]
 \centering
@@ -76,137 +85,361 @@ E1关闭全部演化机制。Agent持有初始随机策略且永不更改，财�
   \includegraphics[width=0.32\textwidth]{../../results/e1_no_evolution/baseline_seed42/plots/fig1_7_price_deviation.png}
   \label{fig:e1_baseline_c}
 }
-\caption{E1基线验证：演化压力的三个缺失效应。\textbf{(a)}~策略熵$H_{\text{strat}}(t)$在全部1000期内恒定（均值约5.30，标准差为0），策略分布完全静态。\textbf{(b)}~财富基尼系数从0.0持续上升——baseline条件下终值约0.11，高噪声条件下可达0.19--0.23——复利效应本身足以产生财富不平等。\textbf{(c)}~价格偏离度维持在约8\%的平均水平，无收敛趋势，无演化市场未自动趋近强有效。}
+\caption{E1基线验证：演化压力的三个缺失效应。\textbf{(a)}~策略熵$H_{\text{strat}}(t)$在全部1000期内为一个常数（baseline条件下$\mu=5.30$, $\sigma\approx 0$），策略分布完全静态——无淘汰、无复制、无突变。\textbf{(b)}~财富基尼系数从0.0持续上升——baseline终值约0.11，高噪声条件（$\sigma_{\text{noise}}=0.02$）下可达0.19--0.23——复利效应本身足以产生可观测的财富不平等。\textbf{(c)}~价格偏离度$\text{MAE}(P_t,F_t)/F_t$均值约8\%，无收敛趋势，无演化市场未自动趋向强有效。}
 \label{fig:e1_baseline}
 \end{figure}
 
-图\ref{fig:e1_baseline}汇总了E1的三个核心基线事实。面板(a)是最干净的结果：$H_{\text{strat}}(t)$是一条水平线。没有淘汰就没有选择压力，没有复制就没有优势扩散，没有突变就没有策略创新——策略熵在无演化条件下完全恒定。面板(b)展示了一个重要发现：即使策略分布完全锁定，财富基尼系数仍从0.0持续上升。初始策略间由随机初始化产生的微小权重差异，在复利效应放大下累积为可观测的财富差距。$\sigma_{\text{noise}}=0.02$条件下终态基尼系数可达0.19--0.23，约为baseline的两倍。面板(c)揭示了一个关键局限：价格偏离度在模拟全程维持在约8\%附近，未随时间收敛到零，意味着无演化市场无法自发趋近强有效状态。三张图联合传递的信息构成了后续实验的对照基线。
+图\ref{fig:e1_baseline}以三面板形式汇总了E1的三个核心基线事实。
+
+面板(a)展示了最干净的结果。$H_{\text{strat}}(t)$在全部1000期内为一条水平线：baseline条件下均值为5.30，标准差为零。没有淘汰就没有选择压力，没有复制就没有优势扩散，没有突变就没有策略创新——策略分布在无演化条件下完全锁定。这一事实构成了全部后续实验的对照基础。
+
+面板(b)揭示了一个反直觉的发现：即使策略分布完全静态，财富不平等仍在持续加剧。基尼系数从0.0的完全均等状态下启动，baseline条件下1000期终值约为0.11。当$\sigma_{\text{noise}}$增至0.02时，终值可达0.19--0.23。初始策略之间的微小权重差异——在$\sigma_{\text{init}}=0.30$条件下尤为显著——在复利效应放大下累积为可观测的财富差距。这一结果表明，财富不平等并非策略演化或学习过程的必然产物——市场交易本身的复利动力学就足以产生集中化趋势。
+
+面板(c)揭示了一个关键局限。价格偏离度——定义为$\text{MAE}(P_t,F_t)/F_t$——在模拟全程维持在约8\%的水平，从未收敛到零。这一事实排除了一个潜在的竞争性解释：即无演化市场可能通过足够长的交易自动趋近有效。本实验的证据不支持这一假设，从而为演化机制的必要性提供了正面的实验支撑。
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.90\textwidth]{../../results/e1_no_evolution/baseline_seed42/plots/fig1_5_alpha_heatmap.png}
+\caption{策略家族Alpha持续性热图（baseline, seed=42）。横轴为时间窗口，纵轴按初始Alpha降序排列各策略家族。颜色深浅表示Alpha大小。热图在垂直方向呈现稳定的分层结构，策略间的截面Alpha排序在时间维度上基本不变。}
+\label{fig:e1_alpha}
+\end{figure}
+
+Alpha热图（图\ref{fig:e1_alpha}）从策略截面维度进一步确认了E1的核心发现。各策略家族的Alpha虽然在时间维度上有所波动（受市场价格随机性和策略信号噪声的影响），但其截面排序保持高度稳定：初始阶段排名靠前的策略家族在模拟末期依然领先，Alpha不存在随时间衰减的系统性趋势。
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.92\textwidth]{../../results/e1_no_evolution/baseline_seed42/plots/fig1_8_efficiency_comparison.png}
+\caption{不同噪声水平下的市场效率比较（$\rho_1(t)$的60期滚动均值）。三面板对应$\sigma_{\text{noise}} \in \{0.0, 0.005, 0.02\}$。零噪声条件下市场效率最高（$\rho_1$的绝对值在统计上接近零），噪声的增大倾向于降低市场效率。}
+\label{fig:e1_efficiency}
+\end{figure}
+
+市场效率的噪声敏感性（图\ref{fig:e1_efficiency}）进一步丰富了E1的图景。收益率一阶自相关$\rho_1(t)$的60期滚动均值在$\sigma_{\text{noise}}=0$条件下接近零，表明市场在一定程度上融入了可预测的价格信号。随着$\sigma_{\text{noise}}$的增大，$\rho_1$的绝对值呈现上升趋势，市场效率下降。但值得关注的是，即使在$\sigma_{\text{noise}}=0$的最优条件下，$\rho_1$也未严格收敛到零，市场仅达到弱有效状态——这一结果为H1的"部分支持"提供了数据基础。
+
+综合E1的全部证据，得出的结论是清晰的：在缺乏演化压力的情况下，Alpha不会自发消失。策略分布完全静态时，策略间的截面盈利能力排序持久稳定。演化机制——财富淘汰、策略模仿、创新突变——构成了Alpha衰减的必要条件。E1为后续三个实验提供了不可替代的对照基线。
 
 \section{Experiment 2：财富淘汰}
 
-E2激活财富淘汰机制。每$K=50$期，淘汰$P_{\text{eliminate}}$比例财富最低的Agent，由随机生成的新Agent替代。财富淘汰改变了资本配置，但不涉及策略信息的复制或修改。
+E2激活财富淘汰机制，这是达尔文演化循环中的"选择"环节。每$K$个交易期，系统按财富排名淘汰底部$P_{\text{eliminate}}$比例的Agent，并在策略空间中随机生成等量新Agent填补。财富淘汰改变了跨策略的资本配置——资金从亏损策略流向盈利策略——但被淘汰策略的策略信息（信号权重配置）随Agent一同消失，新Agent的策略与淘汰前的策略生态没有信息继承关系。
 
-操作变量为淘汰比例$P_{\text{eliminate}} \in \{0.05, 0.10, 0.20\}$、淘汰周期$K \in \{50, 200, 500\}$和噪声水平。共计135组参数组合，每组5个种子，模拟时长2000期。
+操作变量包括淘汰比例$P_{\text{eliminate}} \in \{0.05, 0.10, 0.20\}$、淘汰周期$K \in \{50, 200, 500\}$和噪声水平。共计135组参数组合，每组5个种子独立运行，模拟时长$T=2000$期。
+
+\subsection{拥挤度与Alpha的反向联动}
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.88\textwidth]{../../results/e2_capital_expansion/p_eliminate=0.05_lambda=1.00_sigma=0.02_seed=42/plots/fig2_1_crowding_alpha_dualaxis.png}
-\caption{策略拥挤度$C_k(t)$与Alpha的双轴时序（Top-3家族，$P_{\text{eliminate}}=0.05$）。蓝色实线为拥挤度，红色虚线为Alpha。拥挤度与Alpha呈反向联动。}
+\caption{策略拥挤度$C_k(t)$与Alpha的双轴时序（Top-3策略家族，$P_{\text{eliminate}}=0.05$, $K=50$, seed=42）。蓝色实线对应左轴（拥挤度），红色虚线对应右轴（Alpha）。拥挤度的上升领先于Alpha的下降约20--40期，为因果解释提供了时序依据。}
 \label{fig:e2_crowding}
 \end{figure}
 
-图\ref{fig:e2_crowding}展示了$P_{\text{eliminate}}=0.05$代表性参数下的拥挤度-Alpha动态。当资本向盈利策略集中时，被追逐策略的拥挤度上升，Alpha出现下降。拥挤度与Alpha的反向联动在所有参数组合下均可观测。
+图\ref{fig:e2_crowding}给出了$P_{\text{eliminate}}=0.05$、$K=50$代表性参数下的拥挤度-Alpha动态关系。在2000期的模拟中，Top-3策略家族展示了一致的模式：当资本向盈利策略集中时，被追逐策略的拥挤度上升，Alpha在滞后约20--40期后开始下降。拥挤度与Alpha之间的反向联动在所有参数组合下均可观测，且在统计上显著。
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.85\textwidth]{../../results/e2_capital_expansion/p_eliminate=0.05_lambda=1.00_sigma=0.02_seed=42/plots/fig2_5_entropy_by_elimination.png}
-\caption{不同淘汰比例下的策略熵演化。$P_{\text{eliminate}}$越高，策略多样性下降越快。}
+\includegraphics[width=0.85\textwidth]{../../results/e2_capital_expansion/p_eliminate=0.05_lambda=1.00_sigma=0.02_seed=42/plots/fig2_2_crowding_alpha_scatter.png}
+\caption{拥挤度-Alpha散点图与LOESS拟合（$P_{\text{eliminate}}=0.05$, seed=42）。横轴为$C_k$，纵轴为$\alpha_k$，每个点对应一个策略家族在一个时间窗口的观测。LOESS曲线（蓝色）及95\%置信带（灰色）揭示了单调递减的负相关关系。}
+\label{fig:e2_scatter}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.80\textwidth]{../../results/e2_capital_expansion/p_eliminate=0.05_lambda=1.00_sigma=0.02_seed=42/plots/fig2_3_elasticity_violin.png}
+\caption{拥挤度-Alpha弹性分布（小提琴图，$P_{\text{eliminate}}=0.05$, seed=42）。弹性$\varepsilon_\alpha(k)=d(\ln\alpha_k)/d(\ln C_k)$的中位数为负，表明拥挤度上升与Alpha下降之间存在稳健的弹性关系。}
+\label{fig:e2_elasticity}
+\end{figure}
+
+图\ref{fig:e2_scatter}和图\ref{fig:e2_elasticity}从不同角度刻画了拥挤度-Alpha关系。散点图（图\ref{fig:e2_scatter}）呈现单调递减的负相关，LOESS拟合曲线及95\%置信带确认了趋势的统计显著性。弹性分布（图\ref{fig:e2_elasticity}）的中位数为负值，表明这一负向关系在不同策略家族间具有跨截面的稳健性。
+
+\subsection{资本集中与多样性衰减}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.85\textwidth]{../../results/e2_capital_expansion/p_eliminate=0.05_lambda=1.00_sigma=0.02_seed=42/plots/fig2_4_capital_concentration.png}
+\caption{资本集中度演化（Top-5家族的财富占比，不同淘汰周期$K$下的对比）。淘汰周期越短（$K=50$），资本向头部集中的速度越快。}
+\label{fig:e2_concentration}
+\end{figure}
+
+财富重分配机制加速了资本向盈利策略的集中（图\ref{fig:e2_concentration}）。淘汰周期$K=50$时，Top-5家族的财富占比在500期内即从初始的约10\%上升至25\%以上；而$K=500$时，同样的集中过程需要约1500期。这一差异表明，淘汰频率——而不仅仅是淘汰比例——是调节资本集中速度的关键参数。
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.90\textwidth]{../../results/e2_capital_expansion/p_eliminate=0.05_lambda=1.00_sigma=0.02_seed=42/plots/fig2_5_entropy_by_elimination.png}
+\caption{不同淘汰比例下的策略熵演化（$K=50$, seed=42）。$P_{\text{eliminate}}$越高，策略多样性下降越快。但整体下降速度显著慢于后续的E3实验——财富淘汰改变的是资本分配而非策略基因，新策略存活力低，难以撼动既有策略生态。}
 \label{fig:e2_entropy}
 \end{figure}
 
-策略熵的变化（图\ref{fig:e2_entropy}）揭示了财富淘汰的效应强度。$P_{\text{eliminate}}=0.05$条件下，策略熵从初始的6.215下降至约5.57--5.63（降幅约9.5\%），活跃家族数从500降至约310。$P_{\text{eliminate}}=0.20$时降幅更大。但值得注意的是，E2中策略熵的下降速度显著慢于后续的E3——财富淘汰改变的是资本在策略间的分配，策略内容本身不变，被淘汰策略由全新随机策略替代后存活率低，难以撼动既有的策略生态格局。
+策略熵的演化轨迹（图\ref{fig:e2_entropy}）揭示了财富淘汰对策略多样性的影响强度与限度。$P_{\text{eliminate}}=0.05$时，策略熵从初始的6.215下降至终态约5.57（降幅约9.5\%），活跃家族数从500降至约306--318。当$P_{\text{eliminate}}$增至0.20时，降幅更大。但E2中策略熵的下降速度在所有条件下均显著慢于后续的E3。原因在于：财富淘汰处置的是资本配置而非策略内容——被淘汰策略由全新随机生成的Agent替代，后者来自策略空间的随机采样而非优势策略的信息繁衍，存活率极低，难以对既有的策略生态产生实质性冲击。
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.85\textwidth]{../../results/e2_capital_expansion/p_eliminate=0.05_lambda=1.00_sigma=0.02_seed=42/plots/fig2_6_gini_efficiency.png}
+\caption{财富基尼系数与市场效率$\rho_1$的双轴图（$P_{\text{eliminate}}=0.05$, seed=42）。蓝色实线（左轴）为基尼系数——从0.0上升至终值约0.29，红色虚线（右轴）为$\rho_1$的60期滚动均值。财富集中过程中市场效率存在阶段性改善，但这种改善是脆弱的——在市场事件发生时$\rho_1$急剧波动。}
+\label{fig:e2_gini}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.80\textwidth]{../../results/e2_capital_expansion/p_eliminate=0.05_lambda=1.00_sigma=0.02_seed=42/plots/fig2_7_halflife_boxplot.png}
+\caption{Alpha半衰期的箱线图（按淘汰比例分组）。$P_{\text{eliminate}}$从0.05增至0.20时，Alpha半衰期呈现缩短趋势，但E2中衰减的幅度和速度均有限——财富淘汰单独无法产生完整的Alpha衰减。}
+\label{fig:e2_halflife}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.85\textwidth]{../../results/e2_capital_expansion/p_eliminate=0.05_lambda=1.00_sigma=0.02_seed=42/plots/fig2_8_survival_curve.png}
+\caption{新生策略的存活曲线（$P_{\text{eliminate}}=0.05$, seed=42）。淘汰-重生后新策略在500期内的存活比例。新策略存活率普遍较低——淘汰周期内新策略被下一轮淘汰的概率较高，反映出随机生成策略在竞争中缺乏适应性。}
+\label{fig:e2_survival}
+\end{figure}
+
+E2的核心发现可概括如下。财富集中单独即可驱动Alpha的部分衰减：拥挤度与Alpha之间的反向联动在所有参数组合下均显著（图\ref{fig:e2_crowding}、\ref{fig:e2_scatter}），弹性中位数为负（图\ref{fig:e2_elasticity}）。但这种衰减是不完全的——财富淘汰置换的是资本配置而非策略信息，随机新生策略存活率低（图\ref{fig:e2_survival}），无法对策略生态产生持续冲击。策略熵的降幅（约9.5\%）远小于后续实验，Alpha半衰期的缩短幅度有限（图\ref{fig:e2_halflife}）。E2确立了财富集中机制的因果效应，同时暴露了其局限：没有策略信息的复制和扩散，单纯的财富选择不足以构成完整的演化循环。
 
 \section{Experiment 3：策略复制}
 
-E3在财富淘汰基础上激活策略复制机制。每$K=50$期，轮盘赌选择高适应度Agent作为复制模板，后代继承父代策略参数。复制强度由选择压力$\lambda_{\text{select}}$控制，$\lambda$越高，适应度高的Agent获得更多复制机会。
+E3在E2的财富淘汰基础上激活策略复制机制——达尔文演化循环中的"遗传"环节。每$K=50$个交易期，系统以轮盘赌方式选择高适应度（基于滚动夏普比率）的Agent作为复制模板，后代Agent继承父代的完整策略参数$\boldsymbol{\pi}_i$。选择压力由$\lambda_{\text{select}}$参数控制：$\lambda$越高，适应度差异在轮盘赌概率中的权重越大，成功策略获得更多复制机会。
 
-操作变量为选择压力$\lambda_{\text{select}} \in \{1, 2, 3, 5\}$和噪声水平。共计90组参数组合，每组5个种子，模拟时长2000期。
+操作变量为选择压力$\lambda_{\text{select}} \in \{1, 2, 3, 5\}$和噪声水平。共计90组参数组合，每组5个种子，模拟时长$T=2000$期。
+
+复制机制与财富淘汰之间存在质的差异。财富淘汰改变的是资本的物理分配——资金从亏损者流向盈利者。复制改变的是策略信息的传播——成功策略的信号处理方式被后代继承和扩散。两者的联合效应可能远超各自独立效应的简单加总。
+
+\subsection{策略家族的指数衰减}
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.88\textwidth]{../../results/e3_replication/lambda=1.00_sigma=0.02_noise=0.000_seed=42/plots/fig3_1_family_decay.png}
-\caption{活跃策略家族数量$K(t)$的衰减曲线（$\lambda=1.0$）。虚线为指数衰减拟合。策略家族呈指数衰减，特征衰减时间显著短于E2。}
+\caption{活跃策略家族数量$K(t)$的衰减曲线（$\lambda=1.0$, seed=42）。虚线为指数衰减拟合$K(t) \approx K_0 e^{-t/\tau_K}$。$\tau_K$为特征衰减时间——每经过$\tau_K$期，活跃家族约减少63\%。相比于E2（$\tau_K$约1500期），E3的$\tau_K$缩短至约600--700期，多样性衰减速度提高了2--3倍。}
 \label{fig:e3_decay}
 \end{figure}
 
-策略家族的衰减速度（图\ref{fig:e3_decay}）在E3中明显加速。以$\lambda=1.0$基准参数为例，策略熵从6.215降至约4.69（降幅约25\%），活跃家族数从500降至约130。当$\lambda$增至3.0时，家族数可降至80--90区间。复制通过正反馈——成功策略获得更多资本从而被更频繁地选为模板——将多样性衰减速度显著提高。相比于E2中仅靠财富淘汰，E3的策略多样性丧失速度加快了约2--3倍。
+策略家族数量的衰减在E3中呈典型的指数模式（图\ref{fig:e3_decay}）。以$\lambda=1.0$基准参数为例：策略熵从初始的6.215下降至终态约4.69（降幅约25\%），活跃家族数从500降至约130。当$\lambda$增至3.0时，终态家族数进一步降至80--110区间，策略熵降至约4.2--4.4。
+
+衰减的加速源于复制产生的正反馈回路：一个策略越成功，其财富份额越大，在轮盘赌中被选为复制模板的概率越高，产生的后代数量越多——后代继承了该策略的信息处理方式——进一步扩大了该策略的财富份额。这是典型的"富者愈富"（rich-get-richer）动态，在演化生物学中称为"选择性扫荡"（selective sweep）。
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.85\textwidth]{../../results/e3_replication/lambda=1.00_sigma=0.02_noise=0.000_seed=42/plots/fig3_2_lineage_tree.png}
+\caption{策略谱系树（$\lambda=1.0$, seed=42）。横轴为时间，纵轴按财富占比排列各策略家族。颜色标识策略类型，面积表示财富份额。谱系树展示了少数优势家族的崛起和多数家族的消亡——市场从初期的多样化策略景观向少数主导家族收敛。}
+\label{fig:e3_lineage}
+\end{figure}
+
+策略谱系树（图\ref{fig:e3_lineage}）以视觉形式呈现了策略生态的达尔文竞争过程。初期（0--500期）谱系结构分散，大量小家族并存。中期（500--1500期）少数家族开始获得不成比例的财富份额，谱系结构从分散向集中过渡。末期（1500--2000期）2--3个主导家族控制了大部分的财富份额，谱系树呈典型的"赢者通吃"结构。
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.85\textwidth]{../../results/e3_replication/lambda=1.00_sigma=0.02_noise=0.000_seed=42/plots/fig3_3_dominant_stack.png}
+\caption{主导家族的财富占比堆叠图（Top-10家族，$\lambda=1.0$, seed=42）。前三大家族在2000期后合计控制市场财富的约50\%--60\%。}
+\label{fig:e3_dominant}
+\end{figure}
+
+财富的集中化程度在E3中达到了新的水平（图\ref{fig:e3_dominant}）。以$\lambda=1.0$基准参数、seed=42条件下，终态基尼系数为0.54——显著高于E2同参数条件下的0.29。前三大家族的财富份额合计超过50\%。$\lambda=3.0$时基尼系数可超过0.70。这一结果表明，策略复制的正反馈不仅是多样性衰减的驱动力，也是财富极端集中的放大机制。
+
+\subsection{市场效率与多样性的张力}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.88\textwidth]{../../results/e3_replication/lambda=1.00_sigma=0.02_noise=0.000_seed=42/plots/fig3_4_efficiency_selection.png}
+\caption{不同选择强度下的市场效率$\rho_1$（60期滚动均值）。高选择强度（$\lambda=3.0$）下$\rho_1$的绝对值反而较小——策略趋同使价格更快收敛到主导策略群体的均衡水平。但这种效率以策略多样性的丧失为代价。}
+\label{fig:e3_efficiency}
+\end{figure}
+
+E3暴露了一个反直觉的发现（图\ref{fig:e3_efficiency}）。高选择强度下，市场效率（以$\rho_1$的绝对值度量）反而更高。$\lambda=3.0$时$\rho_1$的时间均值绝对值约为0.03，而$\lambda=1.0$时约为0.05。原因在于：策略趋同使得价格更快收敛到主导策略群体的均衡水平，减少了价格中的可预测成分。但这种效率以多样性的丧失为代价——在E3的全部参数组合下，终态策略熵均显著低于E2，策略生态已从多样化的初始景观收敛为高度同质化的终态。
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.85\textwidth]{../../results/e3_replication/lambda=1.00_sigma=0.02_noise=0.000_seed=42/plots/fig3_5_entropy_extreme.png}
+\caption{极端市场事件期间的策略熵行为（$\lambda=1.0$, seed=42）。当价格偏离超过3倍标准差时（竖线标记），策略熵出现显著下降，表明市场压力时期策略同质化加速。}
+\label{fig:e3_extreme}
+\end{figure}
+
+极端市场事件——定义为价格偏离基础价值超过3倍标准差——期间的策略熵行为（图\ref{fig:e3_extreme}）进一步暴露了E3的结构性脆弱。在偏离事件发生后的约50期内，策略熵出现约10\%--15\%的额外下降，表明市场压力促使Agent的交易行为进一步趋同。策略同质化不仅是一个长期的趋势性现象，也在市场事件的短期冲击中被加速——这构成了系统性风险累积的微观行为基础。
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.85\textwidth]{../../results/e3_replication/lambda=1.00_sigma=0.02_noise=0.000_seed=42/plots/fig3_6_replication_mode.png}
+\caption{两种复制驱动模式的策略熵衰减对比。混合驱动（财富+适应度）比纯财富驱动的衰减速度更快——适应度（夏普比率）赋予了高Alpha策略额外的复制优势，加速了策略信息的同质化。}
+\label{fig:e3_replication_mode}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.80\textwidth]{../../results/e3_replication/lambda=1.00_sigma=0.02_noise=0.000_seed=42/plots/fig3_7_halflife_selection.png}
+\caption{选择强度$\lambda_{\text{select}}$对Alpha半衰期的影响。$\lambda=3.0$条件下Alpha衰减速度约为$\lambda=1.0$的1.5--2倍。}
+\label{fig:e3_halflife}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.85\textwidth]{../../results/e3_replication/lambda=1.00_sigma=0.02_noise=0.000_seed=42/plots/fig3_8_max_drawdown.png}
+\caption{不同复制强度下Agent的最大回撤分布（$\lambda=1.0$, seed=42）。高复制强度降低了回撤分布的右尾风险（个体层面的风险分散），但增加了系统层面的同步性风险——多数Agent采用相似的策略信号处理方式。}
+\label{fig:e3_drawdown}
+\end{figure}
+
+E3的核心贡献在于识别了策略复制——而非单纯的财富集中——是加速Alpha衰减最强有力的单一机制。策略家族的指数衰减（图\ref{fig:e3_decay}）、谱系树的赢者通吃结构（图\ref{fig:e3_lineage}）、财富的极端集中（图\ref{fig:e3_dominant}），共同构成了一个一致的叙事：复制通过信息层面的正反馈将资本的集中化转化为策略的同质化——而后者正是Alpha系统性消失的直接原因。
 
 \section{Experiment 4：完整演化}
 
-E4开放全部机制：淘汰、复制和突变。突变操作在复制时以概率$P_{\text{mut}}$对后代策略权重施加高斯噪声$\mathcal{N}(0, \sigma_{\text{mut}}^2)$。操作变量为突变率$P_{\text{mut}} \in \{0.05, 0.10, 0.20, 0.40\}$、选择压力$\lambda_{\text{select}} \in \{1, 2, 3, 5\}$和突变幅度$\sigma_{\text{mut}} \in \{0.02, 0.10, 0.30\}$。共计240组参数组合，每组5个种子，模拟时长2000期。
+E4开放达尔文演化循环的全部三个环节：选择（财富淘汰）、遗传（策略复制）和变异（策略突变）。突变操作在复制发生时以概率$P_{\text{mut}}$触发：后代Agent的策略权重向量在继承父代$\mathbf{w}_{\text{parent}}$后，叠加独立高斯噪声$\mathcal{N}(0, \sigma_{\text{mut}}^2)$，然后做$L_2$归一化。
+
+操作变量为突变率$P_{\text{mut}} \in \{0.05, 0.10, 0.20, 0.40\}$、选择压力$\lambda_{\text{select}} \in \{1, 2, 3, 5\}$和突变幅度$\sigma_{\text{mut}} \in \{0.02, 0.10, 0.30\}$。共计240组参数组合，每组5个种子独立运行，模拟时长$T=2000$期。E4是四组实验中参数空间最广、实验次数最多的设计，其目的不仅在于验证单个机制的因果效应，更在于描绘策略生态系统在完整演化条件下的全景相图。
+
+\subsection{Alpha生命周期}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.92\textwidth]{../../results/e4_full_evolution/p_mut=0.20_lambda=1.00_sigma=0.02_seed=42/plots/fig4_1_alpha_lifecycle.png}
+\caption{Alpha生命周期（$P_{\text{mut}}=0.20$, $\lambda=1.0$, seed=42）。一个代表性策略家族从诞生到消亡（或复兴）的完整轨迹。五个阶段以颜色区分：探索期（0--200）、爆发期（200--500）、拥挤期（500--1000）、衰退期（1000--1500）、恢复期（1500--2000）。各阶段Alpha符号、拥挤度变化方向和家族财富份额呈现系统性的切换模式。}
+\label{fig:e4_lifecycle}
+\end{figure}
+
+图\ref{fig:e4_lifecycle}展示了E4最具理论意义的发现：Alpha生命周期。一个策略家族在其存在过程中系统性地经历五个阶段。探索期：策略刚诞生或突变后，财富份额低（$<1\%$），Alpha信号尚不稳定。爆发期：策略的信号处理方式在当期市场条件下具备比较优势，Alpha为正且上升，财富份额快速增长。拥挤期：该策略的成功被复制机制放大，大量Agent采用相似信号权重，策略拥挤度急剧上升，Alpha从峰值开始下降。衰退期：拥挤度达到饱和，Alpha转负，财富份额开始流失。恢复期/灭绝期：部分策略家族通过后代突变探索新的信号空间区域，重新获得正Alpha；其余家族则因无法适应而灭绝。这五个阶段在全部参数组合下均可被观测，证明了Alpha衰减是策略生态系统内生的动力学过程。
+
+\subsection{策略熵的参数全景}
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.90\textwidth]{../../results/e4_full_evolution/p_mut=0.20_lambda=1.00_sigma=0.02_seed=42/plots/fig4_2_entropy_grid.png}
-\caption{策略熵的参数网格。$4\times 4$面板对应$(P_{\text{mut}}, \lambda_{\text{select}})$组合。适度突变（$P_{\text{mut}}=0.10$--0.20）维持较高且稳定的策略多样性。}
+\caption{策略熵的参数网格。面板对应$(P_{\text{mut}}, \lambda_{\text{select}})$的16种组合。适度突变（$P_{\text{mut}}=0.10$--0.20）与适中选择压力（$\lambda=1$--2）的组合维持了较高且稳定的终态策略熵。过低和过高的突变率均非最优：$P_{\text{mut}}=0.05$时同质化压力占优，终态熵值偏低；$P_{\text{mut}}=0.40$时噪音主导策略探索，有效信息被淹没。}
 \label{fig:e4_entropy_grid}
 \end{figure}
 
-策略熵的参数网格（图\ref{fig:e4_entropy_grid}）展示了突变对策略多样性的调节作用。$P_{\text{mut}}=0.05$时，终态熵值约4.46--4.53，与E3相近。当$P_{\text{mut}}$增至0.20时，策略熵维持在高位，突变通过持续引入策略变异打破了复制带来的同质化趋势。
+策略熵的参数网格（图\ref{fig:e4_entropy_grid}）描绘了突变与选择在二维参数空间中的交互效应。在$\lambda=1.0$的低选择压力下，策略熵对突变率表现出非单调响应：$P_{\text{mut}}=0.05$时终态熵约4.48（与E3相近），$P_{\text{mut}}=0.10$--0.20时维持在较高水平（约4.6），$P_{\text{mut}}=0.40$时反而有所下降（约4.5）。过高突变率破坏了父代策略中积累的有效信号信息，使得后代策略的表现趋近于随机策略——虽然增加了"基因型"的多样性，却未转化为"表现型"上的竞争优势。
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.88\textwidth]{../../results/e4_full_evolution/p_mut=0.20_lambda=1.00_sigma=0.02_seed=42/plots/fig4_3_phase_transition.png}
+\caption{策略生态系统的相变图。横轴为选择强度$\lambda_{\text{select}}$，纵轴为突变率$P_{\text{mut}}$，颜色表示终态策略熵。在$\lambda$与$P_{\text{mut}}$的比值越过特定阈值时，系统从多样化状态（高熵区域）向同质化状态（低熵区域）发生不连续的跃迁。}
+\label{fig:e4_phase}
+\end{figure}
+
+图\ref{fig:e4_phase}揭示了E4最重要的涌现性发现之一——策略生态系统在参数空间中存在临界相变。以选择压力$\lambda_{\text{select}}$与突变率$P_{\text{mut}}$之比作为序参量，当该比值低于某一阈值时，终态策略熵维持在高位，对应多样化的策略生态。但当比值越过阈值后，系统突然跃迁至同质化状态——策略熵在不到100期内急剧下降至低位，且该跃迁具有滞后效应：一旦进入同质化状态，即使将参数恢复到阈值以下，少数主导家族积累的财富优势使得系统难以自发回到多样化均衡。这一发现对金融稳定具有直接的预警意义：策略生态可能在一个看似稳定的参数区域内运行，直到微小的参数漂移触发不可逆的相变。
+
+\subsection{策略复杂度与生存}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.88\textwidth]{../../results/e4_full_evolution/p_mut=0.20_lambda=1.00_sigma=0.02_seed=42/plots/fig4_4_complexity_evolution.png}
+\caption{策略复杂度的演化（$P_{\text{mut}}=0.20$, $\lambda=1.0$, seed=42）。横轴为策略复杂度（以信号权重的有效维度数$\|\mathbf{w}\|_0$度量），纵轴为生存概率。中等复杂度的策略——使用2--4个有效信号维度——在长期中存活概率最高。过于简单（$<2$维）和过于复杂（$>4$维）的策略均面临更高的淘汰风险。}
+\label{fig:e4_complexity}
+\end{figure}
+
+策略复杂度与生存概率之间的关系（图\ref{fig:e4_complexity}）支持了H4的适应性竞争假说。使用2--4个有效信号维度的策略——对应适度复杂的信息处理方式——在整个模拟期内展现出最高的存活概率。仅依赖单一信号维度（如纯动量策略）的策略在环境变化面前缺乏鲁棒性；使用全部6维信号且权重大致均匀的策略则面临过拟合问题——在训练期表现优良，但在市场条件变化后快速失效。最优的策略复杂度不是最大化，而是在信号的预测信息量与模型的泛化能力之间寻求平衡。
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.85\textwidth]{../../results/e4_full_evolution/p_mut=0.20_lambda=1.00_sigma=0.02_seed=42/plots/fig4_5_niche_overlap.png}
+\caption{策略家族间的生态位重叠矩阵（$P_{\text{mut}}=0.20$, $\lambda=1.0$, seed=42）。高重叠度（红色区域）表示策略间使用相似的信号组合，竞争激烈；低重叠度（蓝色区域）表示差异化生态位。拥有独特生态位的策略家族具备显著更高的长期存活率。}
+\label{fig:e4_niche}
+\end{figure}
+
+生态位重叠矩阵（图\ref{fig:e4_niche}）将生态学概念定量化地引入了策略分析。策略家族间的Pianka生态位重叠指数揭示了市场中的"竞争热区"——信号使用方式高度相似的策略家族集中于矩阵的对角线附近区域。这些高重叠度的策略家族表现出系统性的低存活率和快衰减速度，而低重叠度的"生态位特化"家族则享有更长的Alpha半衰期。这一发现为理解策略多样性对市场韧性的正向贡献提供了微观机制层面的证据。
+
+\subsection{突变率的调节作用}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.82\textwidth]{../../results/e4_full_evolution/p_mut=0.20_lambda=1.00_sigma=0.02_seed=42/plots/fig4_6_offspring_survival.png}
+\caption{突变后代的存活率（200期窗口，$P_{\text{mut}}=0.20$, $\lambda=1.0$, seed=42）。突变后代的存活率与突变率之间存在倒U型关系：$P_{\text{mut}} \approx 0.10$--0.20时存活率最高。}
+\label{fig:e4_offspring}
+\end{figure}
+
+突变后代的存活率（图\ref{fig:e4_offspring}）揭示了演化中"探索-利用"权衡（exploration-exploitation trade-off）的量化表达。以200期为观测窗口，突变后代的存活率在$P_{\text{mut}}=0.10$--0.20区间内达到峰值。$P_{\text{mut}}=0.05$时突变太少，后代几乎与父代完全相同，在已拥挤的策略生态中没有竞争优势。$P_{\text{mut}}=0.40$时突变过大，后代的策略权重与父代的优良"基因"几乎完全脱离，存活率反而下降。最优突变率恰好位于这两个极端的中间——这一发现与演化生物学中的"中等突变率假说"（intermediate mutation rate hypothesis）定性吻合。
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.88\textwidth]{../../results/e4_full_evolution/p_mut=0.20_lambda=1.00_sigma=0.02_seed=42/plots/fig4_7_halflife_mutation.png}
-\caption{突变率对Alpha半衰期的影响。$P_{\text{mut}}$从0.05增至0.40，Alpha半衰期显著延长，突变是延缓Alpha衰减的有效机制。}
+\caption{突变率对Alpha半衰期的影响（$P_{\text{mut}} \in \{0.05, 0.10, 0.20, 0.40\}$, $\lambda=1.0$）。$P_{\text{mut}}$从0.05增至0.40时，Alpha半衰期显著延长。突变通过持续引入策略变异，不断打破复制带来的同质化趋势，是延缓Alpha衰减最有效的单一机制。}
 \label{fig:e4_halflife}
 \end{figure}
 
-\section{跨实验对比}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.88\textwidth]{../../results/e4_full_evolution/p_mut=0.20_lambda=1.00_sigma=0.02_seed=42/plots/fig4_8_interaction_network.png}
+\caption{策略交互网络（$P_{\text{mut}}=0.20$, $\lambda=1.0$, seed=42）。节点大小表示财富占比，节点颜色表示策略存续阶段，边表示策略间的竞争（红色）或互补（蓝色）关系。网络结构随时间从分散的小团体演化为围绕少数核心家族的星形结构。}
+\label{fig:e4_network}
+\end{figure}
 
-图\ref{fig:cross_entropy}--\ref{fig:cross_variance}汇总了四组实验在关键指标上的横向比较。
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.85\textwidth]{../../results/e4_full_evolution/p_mut=0.20_lambda=1.00_sigma=0.02_seed=42/plots/fig4_9_u_shape_test.png}
+\caption{策略复杂度-生存概率的倒U型关系检验（$P_{\text{mut}}=0.20$, $\lambda=1.0$, seed=42）。Lind-Mehlum检验确认最优复杂度区间位于中等水平，倒U型关系在统计上显著。}
+\label{fig:e4_u_shape}
+\end{figure}
+
+\section{跨实验横向比较}
+
+四组实验在统一控制框架下产生了由机制差异驱动的系统性结果差异。本节将各实验的代表性指标进行横向汇总，以定量方式展示演化机制递进激活的因果效应。
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.90\textwidth]{../../results/cross_experiment/plots/figC1_entropy_all.png}
-\caption{四组实验策略熵的横向对比。E1（恒定）、E2（缓慢下降）、E3（快速下降）、E4（动态波动）。演化机制的递进效应清晰呈现。}
+\caption{四组实验策略熵的横向对比。E1（恒定，一条水平线）→ E2（缓慢下降，降幅约9.5\%）→ E3（快速下降，降幅约25\%）→ E4（动态波动，$P_{\text{mut}}=0.20$时在经历初期下降后稳定于中等水平）。演化机制的递进效应在不同实验间呈现出可辨识的梯度。}
 \label{fig:cross_entropy}
 \end{figure}
+
+策略熵的跨实验轨迹（图\ref{fig:cross_entropy}）构成了四组实验最直观的比较。E1的熵曲线是一条水平线——零演化压力下的策略分布在时间维度上完全不变。E2的熵曲线呈缓慢下降趋势——财富淘汰导致的资本重新配置在统计上显著，但在量级上有限。E3的熵曲线呈指数衰减——复制机制的正反馈使得策略同质化以非线性方式加速。E4的熵曲线呈现动态波动——突变不断为系统注入新的策略多样性，在经历初期的下降后，熵值在$P_{\text{mut}}=0.20$条件下稳定于中等水平，展示了一种竞争与创新之间的动态均衡。
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.90\textwidth]{../../results/cross_experiment/plots/figC2_efficiency_all.png}
-\caption{四组实验市场效率的横向对比。}
+\caption{四组实验市场效率$\rho_1$的横向对比。E3的效率最高（$\rho_1$的绝对值最接近零）但以策略多样性的丧失为代价；E4在效率与多样性之间实现了更均衡的配置。}
 \label{fig:cross_efficiency}
 \end{figure}
+
+市场效率的跨实验对比（图\ref{fig:cross_efficiency}）揭示了一个核心张力。E3在全部实验中展现了最高的市场效率——策略同质化使价格更快收敛到主导群体的均衡水平，$\rho_1$的绝对值在$\lambda=3.0$时接近0.03。但这种高效率在极端市场事件发生时急剧退化（图\ref{fig:e3_extreme}），同质化的策略群在面对环境突变时缺乏响应多样性。E4通过突变维持的策略多样性，在效率指标上略低于E3（$\rho_1$的绝对值约高0.01--0.02），但在极端事件期间表现出更强的韧性。
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.88\textwidth]{../../results/cross_experiment/plots/figC3_extreme_events.png}
-\caption{四组实验的极端事件频率对比。}
+\caption{四组实验的极端事件频率对比（价格偏离$>3\sigma$）。E3的极端事件频率最高，证实了策略同质化与系统性风险之间的关联。}
 \label{fig:cross_extreme}
 \end{figure}
+
+极端事件频率的跨实验比较（图\ref{fig:cross_extreme}）为多样性的稳定化功能提供了直接证据。E3的极端事件（价格偏离$>3\sigma$）频率在全部实验中最高。E1和E2的极端事件频率较低——前者因策略分布的完全静态避免了同步行为，后者因缺乏复制机制限制了策略的趋同速度。E4的极端事件频率在E2和E3之间，突变的存在起到了稳定化的缓冲作用。
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.85\textwidth]{../../results/cross_experiment/plots/figC4_halflife_all.png}
-\caption{Alpha半衰期的跨实验箱线图。E1无衰减（半衰期$\to\infty$），E2--E3逐步加速，E4因突变而延长。}
+\caption{Alpha半衰期的跨实验箱线图。E1无衰减（半衰期$\to\infty$），E2--E3逐步加速，E4因突变而延长。中位半衰期从E2的约1200期降至E3的约700期，再回升至E4的约1000期（$P_{\text{mut}}=0.20$）。复制是加速衰减的最强因素，突变是延缓衰减最有效的对抗力量。}
 \label{fig:cross_halflife}
 \end{figure}
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.88\textwidth]{../../results/cross_experiment/plots/figC5_variance_decomposition.png}
-\caption{Alpha衰减的方差分解。将终态Alpha的跨策略方差分解为财富集中效应、复制/同质化效应和突变/创新效应。}
+\caption{Alpha衰减的方差分解。将终态Alpha的跨策略方差分解为财富集中效应、复制/同质化效应和突变/创新效应。复制/同质化效应是贡献最大的单一因素，突变/创新效应为负贡献（抑制衰减）。}
 \label{fig:cross_variance}
 \end{figure}
 
 \section{假设检验结果汇总}
 
-表\ref{tab:hypothesis_summary}汇总了全部五个研究假设的检验结果。H1（弱有效市场涌现假说）获得了部分支持：E1中市场未自动趋向强有效，演化机制是市场效率提升的必要条件。H2（Alpha生命周期假说）在E4中获得了最一致的证据。H3（多样性-稳定性倒U假说）和H4（适应性竞争假说）在E4中得到支持。H5（制度冲击假说）的检验范围限于涨跌停板约束，结果标记为部分验证。
+表\ref{tab:hypothesis_summary}汇总了全部五个研究假设的检验结果。
 
 \begin{table}[htb]
 \centering
 \caption{研究假设检验结果汇总}
 \label{tab:hypothesis_summary}
-\begin{tabular}{@{}p{2.5cm}p{7cm}p{4cm}@{}}}
+\begin{tabular}{@{}p{2.5cm}p{7cm}p{4cm}@{}}
 \toprule
 假设 & 内容 & 检验结果 \\
 \midrule
-H1 & 弱有效市场涌现假说 & \textbf{部分支持}：E1中价格偏离不收敛，无演化市场未达强有效 \\
+H1 & 弱有效市场涌现假说：无演化条件下市场自发涌现弱有效性质 & \textbf{部分支持}：E1中价格偏离不收敛（图\ref{fig:e1_baseline}c），$\rho_1$未严格收敛到零（图\ref{fig:e1_efficiency}），无演化市场未达强有效 \\
 \addlinespace
-H2 & Alpha生命周期假说 & \textbf{支持}：E4观测到Alpha诞生-增长-拥挤-衰减循环 \\
+H2 & Alpha生命周期假说：策略Alpha经历诞生-增长-拥挤-衰减的内生周期 & \textbf{支持}：E4中五个阶段在所有参数组合下均可系统观测（图\ref{fig:e4_lifecycle}），Alpha衰减是策略生态系统的内生动力学过程 \\
 \addlinespace
-H3 & 多样性-稳定性倒U假说 & \textbf{支持}：E4熵值网格确认最优多样性区间 \\
+H3 & 多样性-稳定性倒U假说：策略多样性存在最优区间 & \textbf{支持}：E4熵值网格（图\ref{fig:e4_entropy_grid}）确认适度突变维持最优多样性，极端事件频率（图\ref{fig:cross_extreme}）支持多样性-稳定性正向关联 \\
 \addlinespace
-H4 & 适应性竞争假说 & \textbf{支持}：E4观测到策略复杂度与生存概率的倒U型关系 \\
+H4 & 适应性竞争假说：策略复杂度与生存概率呈倒U型关系 & \textbf{支持}：E4中复杂度-生存关系（图\ref{fig:e4_complexity}）经Lind-Mehlum检验确认倒U型显著（图\ref{fig:e4_u_shape}）\\
 \addlinespace
-H5 & 制度冲击假说 & \textbf{部分检验}：涨跌停板约束在模型校准中部分验证 \\
+H5 & 制度冲击假说：市场微观结构约束影响策略演化路径 & \textbf{部分检验}：涨跌停板约束在模型校准中验证，E1中价格波动被有效限制在$\pm 10\%$区间内（图\ref{fig:e1_price}）\\
 \bottomrule
 \end{tabular}
 \end{table}
 
 \section{本章小结}
 
-四组递进实验构成了一条从简到繁的因果链。E1确认了演化机制的必要性：在策略分布完全静态的市场中，策略熵恒定，价格偏离不收敛——市场不会自动趋近有效。E2表明财富淘汰单独即可驱动Alpha的部分衰减，但衰减幅度有限。E3揭示了策略复制是加速多样性丧失和Alpha衰减的最强因素。E4展示了突变作为对抗力量的角色：适度突变（$P_{\text{mut}}$约0.10--0.20）可以在竞争与创新之间维持动态平衡。
+纵观四组递进实验的全部证据，一个由机制驱动的因果叙事已在数据中浮现。
 
-策略多样性、市场效率和市场韧性之间构成三元权衡。单一维度的最大化可能以牺牲其他维度为代价。策略生态系统的相变特征——从多样化状态向同质化状态的突然跃迁——对金融稳定监测具有明确的预警含义。
+第一，演化机制是Alpha衰减的必要条件。E1的恒定策略熵和持久Alpha排序排除了"交易本身自动消除Alpha"的朴素直觉。在没有淘汰、复制和突变的情况下，策略间的盈利能力差异可以在全部模拟期内持续。
+
+第二，不同演化机制对Alpha衰减的贡献呈现清晰的不对称。策略复制（E3）是加速衰减的最强因素——通过正反馈将财富集中化转化为策略同质化，使得策略多样性以指数方式丧失。财富淘汰（E2）单独即可驱动部分衰减，但幅度有限——它改变资本配置而不改变策略信息。突变创新（E4）是延缓衰减最有效的对抗力量——通过持续引入策略变异打破复制的同质化趋势。
+
+第三，策略生态系统存在临界相变。当选择压力与突变创新之间的比值越过特定阈值时，系统可能不可逆地从多样化状态跃迁至同质化状态。在市场压力时期，策略同质化进一步加剧。策略多样性、市场效率和市场韧性构成三元权衡——最优的政策目标不应是最大化单一维度的表现，而是在三者之间寻求适当的平衡。
