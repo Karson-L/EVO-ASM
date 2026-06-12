@@ -69,38 +69,30 @@ E1的目标是在最简市场环境中回答一个前提性问题：如果策略
 
 \subsection{策略生态的静态特征}
 
+% ===== 图3.4：E1基线三面板 =====
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.88\textwidth]{../../results/e1_no_evolution/baseline_seed42/plots/fig1_4_entropy_constant.png}
-\caption{无演化条件下的策略熵时序。$H_{\text{strat}}(t)$在整个模拟期内保持恒定，水平取决于初始策略多样性$\sigma_{\text{init}}$。验证了策略分布在缺乏演化压力时的静态性质。}
-\label{fig:e1_entropy}
+\subfloat[策略熵恒定]{
+  \includegraphics[width=0.32\textwidth]{../../results/e1_no_evolution/baseline_seed42/plots/fig1_4_entropy_constant.png}
+  \label{fig:e1_baseline_a}
+}
+\hfill
+\subfloat[财富基尼上升]{
+  \includegraphics[width=0.32\textwidth]{../../results/e1_no_evolution/baseline_seed42/plots/fig1_6_wealth_gini.png}
+  \label{fig:e1_baseline_b}
+}
+\hfill
+\subfloat[价格偏离不收敛]{
+  \includegraphics[width=0.32\textwidth]{../../results/e1_no_evolution/baseline_seed42/plots/fig1_7_price_deviation.png}
+  \label{fig:e1_baseline_c}
+}
+\caption{E1基线验证：演化压力的三个缺失效应。\textbf{(a)}~策略香农熵$H_{\text{strat}}(t)$全程恒定——无淘汰、无复制、无突变，策略分布完全静态。\textbf{(b)}~财富基尼系数从0持续上升至0.35--0.45——即使策略不变，复利效应本身足以产生显著财富不平等。\textbf{(c)}~价格偏离度$\text{MAE}(P_t,F_t)/F_t$维持在1\%--3\%区间，不随时间收敛——无演化市场未自动趋向强有效。三张图共同构成E1的基线使命：确认演化机制是Alpha衰减的必要条件，而非市场交易的附带结果。}
+\label{fig:e1_baseline}
 \end{figure}
 
-策略熵在2000期内保持恒定（图\ref{fig:e1_entropy}），这是策略分布完全静态的直接证据。没有淘汰就没有选择压力，没有复制就没有优势扩散，没有突变就没有策略创新——策略熵的时间序列是一条水平线，其位置取决于初始多样性的设定。
+图\ref{fig:e1_baseline}以三面板形式汇总了E1的三个基线事实。面板(a)给出了最干净的结果：在策略分布完全静态的条件下，$H_{\text{strat}}(t)$是一条水平线——没有淘汰就没有选择压力，没有复制就没有优势扩散，没有突变就没有策略创新。面板(b)展示了一个反直觉的发现：即使策略熵恒定，财富基尼系数仍从0.0持续上升至0.35--0.45，表明财富不平等是复利动力学的内生结果，无需借助演化机制。面板(c)则揭示了一个关键局限：价格偏离度稳定在1\%--3\%，从未收敛到零，意味着无演化的市场不会自发趋近强有效。三张图联合传递的信息是清晰的：E1作为对照组，排除了"市场交易本身就会自动消除Alpha"这一朴素直觉。
 
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=0.90\textwidth]{../../results/e1_no_evolution/baseline_seed42/plots/fig1_5_alpha_heatmap.png}
-\caption{策略家族Alpha持续性热图。横轴为时间窗口，纵轴按初始Alpha降序排列各策略家族。颜色深浅表示Alpha大小。热图在垂直方向呈现稳定的分层结构，表明各家族的相对盈利能力排序在时间维度上基本不变。}
-\label{fig:e1_alpha}
-\end{figure}
-
-Alpha持续性热图（图\ref{fig:e1_alpha}）进一步揭示了策略盈利能力的截面分布。各策略家族的Alpha虽然在时间维度上有所波动（受市场价格随机性的影响），但其截面排序保持高度稳定——初始阶段排名靠前的策略家族在模拟末期依然领先。Alpha不存在系统性衰减趋势，其均值在统计上无法拒绝零假设。
-
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=0.85\textwidth]{../../results/e1_no_evolution/baseline_seed42/plots/fig1_6_wealth_gini.png}
-\caption{财富基尼系数的演化轨迹。尽管策略分布完全静态，基尼系数仍从0.0（完全均等）持续上升，在2000期结束时达0.35--0.45。}
-\label{fig:e1_gini}
-\end{figure}
-
-一个值得注意的现象是，即使策略熵保持恒定，财富不平等仍在加剧（图\ref{fig:e1_gini}）。初始策略之间的微小差异——可能仅是随机初始化产生的信号权重偏差——在复利效应的放大下逐步累积为显著的财富差距。这表明财富不平等并非策略演化或学习的必然结果——市场交易的复利动力学本身就足以产生帕累托式的财富分布。这一模式表明。
-
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=0.85\textwidth]{../../results/e1_no_evolution/baseline_seed42/plots/fig1_7_price_deviation.png}
-\caption{价格偏离度$\text{MAE}(P_t, F_t)/F_t$的时序。偏离度保持在1\%--3\%区间，未随时间收敛到零，表明无演化市场未达到强有效状态。}
-\label{fig:e1_deviation}
+fig:e1_deviation}
 \end{figure}
 
 \begin{figure}[htbp]
@@ -446,7 +438,7 @@ Alpha半衰期的跨实验变化（图\ref{fig:cross_halflife}）定量刻画了
 \toprule
 假设 & 内容 & 检验结果 \\
 \midrule
-H1 & 弱有效市场涌现假说：无演化条件下，市场自发涌现弱有效性质 & \textbf{部分支持}：E1可涌现弱有效性质，但非稳态（图\ref{fig:e1_price}, \ref{fig:e1_deviation}） \\
+H1 & 弱有效市场涌现假说：无演化条件下，市场自发涌现弱有效性质 & \textbf{部分支持}：E1可涌现弱有效性质，但非稳态（图\ref{fig:e1_price}, \ref{fig:e1_baseline}） \\
 \addlinespace
 H2 & Alpha生命周期假说：策略Alpha经历诞生-增长-拥挤-衰减的内生周期 & \textbf{强支持}：四个实验均观测到拥挤-衰减-恢复循环（图\ref{fig:e2_crowding}, \ref{fig:e4_lifecycle}） \\
 \addlinespace
